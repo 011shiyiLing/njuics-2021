@@ -1,5 +1,6 @@
 /***************************************************************************************
 * Copyright (c) 2014-2022 Zihao Yu, Nanjing University
+
 *
 * NEMU is licensed under Mulan PSL v2.
 * You can use this software according to the terms and conditions of the Mulan PSL v2.
@@ -19,6 +20,19 @@
 #include <common.h>
 
 word_t expr(char *e,bool *success);
+
+//监视点结构体定义
+typedef struct watchpoint {
+  int NO;
+  struct watchpoint *next;
+
+  /* TODO: Add more members if necessary */
+  char *expr;//表达式
+  int value;//结果
+} WP;
+
+void test_WP();
+
 
 
 #endif

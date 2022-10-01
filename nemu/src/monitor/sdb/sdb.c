@@ -17,12 +17,18 @@
 #include <cpu/cpu.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "sdb.h"
+#include <memory/paddr.h>
+#include <sdb.h>
+
 
 static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+WP* new_wp(char *ch,int val);
+void free_wp(int no);
+void print_wp();
+void delete_wp(int N);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -54,6 +60,78 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args){
+  char *arg = strtok(NULL," ");
+  int step;
+  if (arg == NULL) step = 1;
+  else sscanf(arg,"%d",&step);
+  cpu_exec(step);
+  return 0;
+}
+
+static int cmd_info(char *args){
+  char *arg = strtok(NULL," ");
+  if (strcmp(arg,"r") == 0){
+    isa_reg_display();
+  }
+  
+  else if(strcmp(arg,"w")== 0)
+  {
+    print_wp();
+  }
+  
+  return 0;
+}
+
+static int cmd_x(char *args){
+  char *N = strtok(NULL," ");
+  char *EXPR = strtok(NULL," ");
+  int len;
+  paddr_t addr;
+  
+  sscanf(N,"%d",&len);
+  sscanf(EXPR,"%x",&addr);
+  
+  printf("0x%x:",addr);
+  for(int i=0;i<len;i++){
+    printf("%08x", paddr_read(addr,4));
+    printf("\t");
+    addr += 4;
+  }
+  printf("\n");
+  return 0;
+}
+
+static int cmd_p(char *args){
+  char *EXPR = strtok(args,"");
+  //printf("%s\n",EXPR);
+  bool s = true;
+  int val;
+  val = expr(EXPR,&s);
+  printf("%d\n",val);
+  return 0;
+}
+
+static int cmd_w(char *args)
+{
+ char *EXPR = strtok(NULL," ");
+ int val;
+ bool s = true;
+ val = expr(EXPR,&s);
+ new_wp(EXPR,val);
+ return 0;
+}
+
+static int cmd_d(char *args)
+{
+  char *s = strtok(NULL," ");
+  int N;
+  N = atoi(s);
+  free_wp(N);//把N号监视点归还给free_
+  delete_wp(N);
+  return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -62,6 +140,12 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+  { "si", "单步执行", cmd_si},
+  { "info", "打印程序状态", cmd_info},
+  { "x", "扫描内存", cmd_x},
+  { "p", "表达式求值", cmd_p},
+  { "w", "设置监视点", cmd_w},
+  { "d", "删除序号为N的监视器",cmd_d},
 
   /* TODO: Add more commands */
 
