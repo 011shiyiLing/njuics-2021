@@ -33,7 +33,7 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   int i;
   for(i=0;i<32;i++)
   {
-    if(s == '$'+regs[i]) break;
+    if(s == regs[i]) break;
   }
   if (i == 32)
   {
