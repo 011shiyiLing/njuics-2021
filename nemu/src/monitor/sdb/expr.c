@@ -114,12 +114,19 @@ static bool make_token(char *e) {
         {
        	  case 256:
        	    break;
+       	  case REGNAME:
+       	    tokens[nr_token].type = rules[i].token_type;
+            strncpy(tokens[nr_token].str,substr_start+1,substr_len);
+            tokens[nr_token].str[substr_len] = '\0';
+            nr_token++;
+            break;
           default: 
             if (substr_len > 32) assert(0); 
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start,substr_len);
             tokens[nr_token].str[substr_len] = '\0';
             nr_token++;
+            break;
         }
         break;
       }
@@ -246,8 +253,8 @@ word_t eval(int p,int q)
       bool s = true;
       char string[2];
       string[0] = tokens[p].str[1];
-      //string[1] = tokens[p].str[2];
-      printf("%d\n",tokens[p].str[1]);
+      string[1] = tokens[p].str[2];
+      //printf("%d\n",tokens[p].str[1]);
       return isa_reg_str2val(string,&s);
     }
   }
