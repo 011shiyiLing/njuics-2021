@@ -249,7 +249,7 @@ word_t eval(int p,int q)
       {
         string[i] = tokens[p].str[i+1];
       }
-      printf("%s\n",string);
+      printf("%s\n",tokens[p].str);
       return isa_reg_str2val(string,&s);
     }
   }
