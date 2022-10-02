@@ -30,8 +30,7 @@ void isa_reg_display() {
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
-  int i=0;
-  printf("%s\n",regs[i]);
+  int i;
   for(i=0;i<32;i++)
   {
     if(s == regs[i]) break;
@@ -40,7 +39,8 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   {
     printf("%s\n","There is no such a register!");
     success = false;
-    assert(0);
+    return cpu.gpr[i];
+    //assert(0);
   }
   else
   {
