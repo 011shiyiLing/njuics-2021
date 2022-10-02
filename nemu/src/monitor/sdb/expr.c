@@ -246,8 +246,8 @@ word_t eval(int p,int q)
       bool s = true;
       char string[2];
       string[0] = tokens[p].str[1];
-      string[1] = tokens[p].str[2];
-      printf("%s\n",string);
+      //string[1] = tokens[p].str[2];
+      printf("%d\n",tokens[p].str[1]);
       return isa_reg_str2val(string,&s);
     }
   }
