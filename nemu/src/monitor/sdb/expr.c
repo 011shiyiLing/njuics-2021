@@ -215,8 +215,8 @@ int hex(char ch)
 
 int eval(int p,int q)
 {
-  if (p>q) assert(0);
-  else if (p == q)//表达式是十进制数字/十六进制数字/寄存器
+  //if (p>q) assert(0);
+  if (p == q)//表达式是十进制数字/十六进制数字/寄存器
   {
     if (tokens[p].type == NUM) 
       return atoi(tokens[p].str);
