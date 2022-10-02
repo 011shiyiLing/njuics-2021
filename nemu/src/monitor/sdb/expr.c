@@ -219,9 +219,9 @@ int hex(char ch)
 word_t eval(int p,int q)
 {
   if (p>q) assert(0);
-  if (p == q)//表达式是十进制数字/十六进制数字/寄存器
+  if (p == q)
   {
-    if (tokens[p].type == NUM) 
+    if (tokens[p].type == NUM)//十进制数
     {
       word_t number = 0;
       for (int i=0;i<strlen(tokens[p].str);i++)
@@ -230,7 +230,7 @@ word_t eval(int p,int q)
       }
       return number;
     }
-    else if (tokens[p].type == HEX_NUM)
+    else if (tokens[p].type == HEX_NUM)//十六进制数
     {
       word_t number = 0;
       for (int i =0;i<strlen(tokens[p].str);i++)
@@ -240,7 +240,7 @@ word_t eval(int p,int q)
       return number;
     }
     
-    else if (tokens[p].type == REGNAME) 
+    else if (tokens[p].type == REGNAME)//寄存器
     {
       bool s = true;
       return isa_reg_str2val(tokens[p].str,&s);
