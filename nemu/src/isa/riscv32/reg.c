@@ -37,10 +37,9 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   }
   if (i == 32)
   {
-    //printf("%s\n","There is no such a register!");
+    printf("%s\n","There is no such a register!");
     success = false;
-    return cpu.gpr[0];
-    //assert(0);
+    assert(0);
   }
   else
   {
