@@ -213,7 +213,7 @@ int hex(char ch)
   else return 0;
 }
 
-int eval(int p,int q)
+word_t eval(int p,int q)
 {
   //if (p>q) assert(0);
   if (p == q)//表达式是十进制数字/十六进制数字/寄存器
