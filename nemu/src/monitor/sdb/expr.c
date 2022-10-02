@@ -155,7 +155,7 @@ bool check_parentheses(int p,int q)
   return true;
 }
 
-//判断操作符优先级
+//判断操作符优先级(C语言标准)
 int op_priority(int i)
 {
   if (tokens[i].type == '!') return 1;
@@ -163,7 +163,7 @@ int op_priority(int i)
   if (tokens[i].type == '+' || tokens[i].type == '-') return 3;
   if (tokens[i].type == TK_EQ || tokens[i].type == TK_NOEQ) return 4;
   if (tokens[i].type == TK_AND || tokens[i].type == TK_OR) return 5;
-  return -1;
+  return 0;
 }
 
 int find_main_operator(int p, int q)
@@ -215,15 +215,21 @@ int hex(char ch)
 
 word_t eval(int p,int q)
 {
-  //if (p>q) assert(0);
+  if (p>q) assert(0);
   if (p == q)//表达式是十进制数字/十六进制数字/寄存器
   {
     if (tokens[p].type == NUM) 
-      return atoi(tokens[p].str);
-    
+    {
+      word_t number = 0;
+      for (int i=0;i<strlen(tokens[p].str);i++)
+      {
+        number = number*10 + (tokens[p].str[i]-'0');
+      }
+      return number;
+    }
     else if (tokens[p].type == HEX_NUM)
     {
-      int number = 0;
+      word_t number = 0;
       for (int i =0;i<strlen(tokens[p].str);i++)
       {
         number = number*16 + hex(tokens[p].str[i]);
@@ -245,8 +251,8 @@ word_t eval(int p,int q)
   {
     int op = find_main_operator(p,q);
     //printf("%i\n",op);
-    int val1 = 0;
-    int val2 = 0;
+    word_t val1 = 0;
+    word_t val2 = 0;
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1);
     val2 = eval(op+1,q);
     
