@@ -251,11 +251,8 @@ word_t eval(int p,int q)
     else if (tokens[p].type == REGNAME)//寄存器
     {
       bool s = true;
-      char string[2];
-      string[0] = tokens[p].str[1];
-      string[1] = tokens[p].str[2];
-      //printf("%d\n",tokens[p].str[1]);
-      return isa_reg_str2val(string,&s);
+      printf("%s\n",tokens[p].str);
+      return isa_reg_str2val(tokens[p].str,&s);
     }
   }
   else if(check_parentheses(p,q) == true)
