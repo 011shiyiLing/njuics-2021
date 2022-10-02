@@ -198,7 +198,7 @@ int find_main_operator(int p, int q)
     if (tokens[i].type == ')') continue;
     
     compare = op_priority(i);
-    if(compare >= pri)
+    if(compare > pri)
     {
       pri = compare;
       //printf("%d\n",pri);
