@@ -249,6 +249,7 @@ word_t eval(int p,int q)
       {
         str[i] = tokens[p].str[i+1];
       }
+      printf("%s\n",str);
       return isa_reg_str2val(str,&s);
     }
   }
