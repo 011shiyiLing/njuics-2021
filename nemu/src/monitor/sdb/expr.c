@@ -43,8 +43,8 @@ static struct rule {
   {"\\-",'-'},         // minus
   {"\\*",'*'},         // multiply
   {"\\/",'/'},         // divide
+  {"0[xX][0-9a-fA-F]+",HEX_NUM}, //hexadecimal number
   {"[0-9]+",NUM},      // decimal number
-  {"0x[0-9,a-f]+",HEX_NUM}, //hexadecimal number
   {"\\(",'('},         // left bracket
   {"\\)",')'},         // right bracket
   {"==", TK_EQ},        // equal
@@ -208,6 +208,7 @@ int find_main_operator(int p, int q)
   return res;
 }
 
+//用于十六进制数的转换
 int hex(char ch)
 {
   if(ch >= 'A' && ch <= 'F') return (ch - 'A'+0x0A);
@@ -243,6 +244,7 @@ word_t eval(int p,int q)
     else if (tokens[p].type == REGNAME)//寄存器
     {
       bool s = true;
+      
       return isa_reg_str2val(tokens[p].str,&s);
     }
   }
