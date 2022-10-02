@@ -244,12 +244,12 @@ word_t eval(int p,int q)
     else if (tokens[p].type == REGNAME)//寄存器
     {
       bool s = true;
-      char string[strlen(tokens[p].str)-1];
-      for (int i=0;i<strlen(string);i++)
+      char string[2];
+      for (int i=0;i<2;i++)
       {
         string[i] = tokens[p].str[i+1];
       }
-      printf("%s\n",tokens[p].str);
+      printf("%s\n",string);
       return isa_reg_str2val(string,&s);
     }
   }
