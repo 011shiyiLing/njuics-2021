@@ -52,7 +52,7 @@ static struct rule {
   {"&&",TK_AND},       //logical and
   {"\\|\\|",TK_OR},    //logical or
   {"!",'!'},           //logical not
-  {"\\$[a-z]{2,3}",REGNAME} //register name
+  {"\\$(\\$0|ra|[sgt]p|t[0-6]|a[0-7]|s([0-9]|1[0-1]))",REGNAME} //register name
   
 };
 
@@ -280,7 +280,7 @@ word_t eval(int p,int q)
       case TK_AND:
         return val1 && val2;
       case TK_NEG:
-        return -val2;
+        return 0-val2;
       case DEREF:
         return paddr_read(val2,4);
       default:assert(0);
