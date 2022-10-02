@@ -166,16 +166,19 @@ int op_priority(int i)
   return 0;
 }
 
+//找表达式的主运算符
 int find_main_operator(int p, int q)
 {
   int i;
   int l_parentheses = 0;
   int res = p;
-  int pri = -1;
-  int compare=-1;
+  int pri = 0;
+  int compare= 0;
   
   for (i = p;i<=q;i++)
   {
+    if(tokens[i].type == NUM) continue;
+    
     if(tokens[i].type == '(')
     {
       l_parentheses ++;
@@ -191,10 +194,10 @@ int find_main_operator(int p, int q)
       }  
       if (i>q) break;
     }
-    else if(tokens[i].type == NUM) continue;
-   
-    compare = op_priority(i);
     
+    if (tokens[i].type == ')') continue;
+    
+    compare = op_priority(i);
     if(compare > pri)
     {
       pri = compare;
