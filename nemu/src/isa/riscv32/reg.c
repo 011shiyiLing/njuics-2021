@@ -40,7 +40,7 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   {
     printf("%s\n","There is no such a register!");
     success = false;
-    assert(0);
+    return 0;
   }
   else
   {

@@ -225,9 +225,13 @@ int hex(char ch)
   else return 0;
 }
 
-word_t eval(int p,int q)
+word_t eval(int p,int q,bool *success)
 {
-  if (p>q) assert(0);
+  if (p>q)
+  {
+    *success = false;
+    return 0;
+  }
   if (p == q)
   {
     if (tokens[p].type == NUM)//十进制数
@@ -255,7 +259,7 @@ word_t eval(int p,int q)
   }
   else if(check_parentheses(p,q) == true)
   {
-    return eval(p+1,q-1);
+    return eval(p+1,q-1,success);
   }
   else
   {
@@ -263,8 +267,8 @@ word_t eval(int p,int q)
     //printf("%i\n",op);
     int val1 = 0;
     int val2 = 0;
-    if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1);
-    val2 = eval(op+1,q);
+    if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1,success);
+    val2 = eval(op+1,q,success);
     
     
     switch(tokens[op].type)
@@ -318,5 +322,6 @@ word_t expr(char *e,bool *success) {
   int p = 0;
   int q = nr_token-1;
   //printf("%i\n",q);
-  return eval(p,q);
+  bool s = true;
+  return eval(p,q,&s);
 }
