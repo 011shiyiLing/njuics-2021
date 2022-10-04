@@ -262,7 +262,6 @@ word_t eval(int p,int q)
   else
   {
     int op = find_main_operator(p,q);
-    if (tokens[op].type == TK_NEG) return -eval(op+1,q);
     printf("%i\n",op);
     word_t val1 = 0;
     word_t val2 = 0;
