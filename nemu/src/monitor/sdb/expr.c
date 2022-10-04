@@ -323,7 +323,7 @@ word_t expr(char *e,bool *success) {
     if(tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != '(' && tokens[i-1].type != ')')))
       tokens[i].type = DEREF;
     //识别负数类型
-    if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM)))
+    if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != ')')))
       tokens[i].type = TK_NEG;
   }
   
