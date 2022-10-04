@@ -232,10 +232,7 @@ word_t eval(int p,int q)
     if (tokens[p].type == NUM)//十进制数
     {
       word_t number = 0;
-      for (int i=0;i<strlen(tokens[p].str);i++)
-      {
-        number = number*10 + (tokens[p].str[i]-'0');
-      }
+      number = atoi(tokens[p].str);
       return number;
     }
     else if (tokens[p].type == HEX_NUM)//十六进制数
