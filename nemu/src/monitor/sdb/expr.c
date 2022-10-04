@@ -79,10 +79,10 @@ void init_regex() {
 
 typedef struct token {
   int type;
-  char str[1000];
+  char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[100] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -121,7 +121,7 @@ static bool make_token(char *e) {
             nr_token++;
             break;
           default: 
-            //if (substr_len > 32) assert(0); 
+            if (substr_len > 32) assert(0); 
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start,substr_len);
             tokens[nr_token].str[substr_len] = '\0';
