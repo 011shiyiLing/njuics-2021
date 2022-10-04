@@ -268,6 +268,20 @@ word_t eval(int p,int q)
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1);
     val2 = eval(op+1,q);
     
+    //多个负号
+    if (tokens[op].type == TK_NEG)
+    {
+      int i;
+      for (i=op;i<q;i++)
+      {
+        if (tokens[i].type == NUM) 
+          break;
+      }
+     
+      for(;i>0;i--) val2 = -val2;
+      return val2;
+    }
+    
     switch(tokens[op].type)
     {
       case '+': return val1+val2;
@@ -312,7 +326,7 @@ word_t expr(char *e,bool *success) {
     if(tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != '(' && tokens[i-1].type != ')')))
       tokens[i].type = DEREF;
     //识别负数类型
-    if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM)))
+    if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != '(')))
       tokens[i].type = TK_NEG;
   }
   
