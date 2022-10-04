@@ -227,7 +227,7 @@ int hex(char ch)
 
 word_t eval(int p,int q)
 {
-  //if (p>q) assert(0);
+  if (p>q) assert(0);
   if (p == q)
   {
     if (tokens[p].type == NUM)//十进制数
