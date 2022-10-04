@@ -166,6 +166,7 @@ bool check_parentheses(int p,int q)
 //判断操作符优先级(C语言标准)
 int op_priority(int i)
 {
+  
   if (tokens[i].type == TK_NEG) return 1;
   if (tokens[i].type == '!') return 2;
   if (tokens[i].type == '*' || tokens[i].type == '/') return 3;
@@ -181,12 +182,12 @@ int find_main_operator(int p, int q)
   int i;
   int l_parentheses = 0;
   int res = p;
-  int pri = 0;
-  int compare= 0;
+  int pri = -1;
+  int compare= -1;
   
   for (i = p;i<=q;i++)
   {
-    if(tokens[i].type == NUM) continue;
+    if(tokens[i].type == NUM || tokens[i].type == HEX_NUM || tokens[i].type == REGNAME) continue;
     
     if(tokens[i].type == '(')
     {
@@ -207,7 +208,7 @@ int find_main_operator(int p, int q)
     if (tokens[i].type == ')') continue;
     
     compare = op_priority(i);
-    if(compare >= pri)
+    if(compare >= pri && compare != -1)
     {
       pri = compare;
       //printf("%d\n",pri);
