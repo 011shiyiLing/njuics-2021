@@ -187,7 +187,7 @@ int find_main_operator(int p, int q)
   
   for (i = p;i<=q;i++)
   {
-    if(tokens[i].type == NUM || tokens[i].type == HEX_NUM || tokens[i].type == REGNAME) continue;
+    if(tokens[i].type == NUM || tokens[i].type == REGNAME) continue;
     
     if(tokens[i].type == '(')
     {
