@@ -244,10 +244,10 @@ word_t eval(int p,int q,bool *success)
     else if (tokens[p].type == HEX_NUM)//十六进制数
     {
      //word_t number = 0;
-      paddr_t addr;
-      sscanf(tokens[p].str,"%x",&addr);
+      paddr_t number;
+      sscanf(tokens[p].str,"%x",&number);
       //number = number*16 + hex(tokens[p].str[i]);
-      return addr;
+      return number;
     }
     
     else if (tokens[p].type == REGNAME)//寄存器
