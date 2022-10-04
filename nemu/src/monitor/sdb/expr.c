@@ -166,7 +166,6 @@ bool check_parentheses(int p,int q)
 //判断操作符优先级(C语言标准)
 int op_priority(int i)
 {
-  if (tokens[i].type == DEREF) return 0;
   if (tokens[i].type == TK_NEG) return 1;
   if (tokens[i].type == '!') return 2;
   if (tokens[i].type == '*' || tokens[i].type == '/') return 3;
@@ -265,7 +264,7 @@ word_t eval(int p,int q,bool *success)
   else
   {
     int op = find_main_operator(p,q);
-    printf("%d\n",tokens[op].type);
+    printf("%d\n",op);
     word_t val1 = 0;
     word_t val2 = 0;
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1,success);
@@ -314,7 +313,7 @@ word_t expr(char *e,bool *success) {
   for (int i =0;i<nr_token;i++)
   {
     //识别指针类型
-    if(tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != '(' && tokens[i-1].type != ')')))
+    if(tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != ')')))
       tokens[i].type = DEREF;
     //识别负数类型
     if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != ')' && tokens[i-1].type != REGNAME)))
