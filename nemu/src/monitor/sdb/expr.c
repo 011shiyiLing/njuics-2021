@@ -165,11 +165,12 @@ bool check_parentheses(int p,int q)
 //判断操作符优先级(C语言标准)
 int op_priority(int i)
 {
-  if (tokens[i].type == '!') return 1;
-  if (tokens[i].type == '*' || tokens[i].type == '/') return 2;
-  if (tokens[i].type == '+' || tokens[i].type == '-') return 3;
-  if (tokens[i].type == TK_EQ || tokens[i].type == TK_NOEQ) return 4;
-  if (tokens[i].type == TK_AND || tokens[i].type == TK_OR) return 5;
+  if (tokens[i].type == TK_NEG) return 1;
+  if (tokens[i].type == '!') return 2;
+  if (tokens[i].type == '*' || tokens[i].type == '/') return 3;
+  if (tokens[i].type == '+' || tokens[i].type == '-') return 4;
+  if (tokens[i].type == TK_EQ || tokens[i].type == TK_NOEQ) return 5;
+  if (tokens[i].type == TK_AND || tokens[i].type == TK_OR) return 6;
   return 0;
 }
 
@@ -310,7 +311,7 @@ word_t expr(char *e,bool *success) {
     if(tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != '(' && tokens[i-1].type != ')')))
       tokens[i].type = DEREF;
     //识别负数类型
-    if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != ')')))
+    if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != ')' && tokens[i-1].type != REGNAME)))
       tokens[i].type = TK_NEG;
   }
   
