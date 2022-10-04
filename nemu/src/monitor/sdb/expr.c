@@ -264,10 +264,6 @@ word_t eval(int p,int q,bool *success)
   }
   else
   {
-    for (int j=p;j<q;j++)
-    {
-      printf("%d\n",tokens[j].type);
-    }
     int op = find_main_operator(p,q);
     //printf("%d\n",op);
     word_t val1 = 0;
