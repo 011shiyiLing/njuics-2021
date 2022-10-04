@@ -262,7 +262,7 @@ word_t eval(int p,int q)
   else
   {
     int op = find_main_operator(p,q);
-    printf("%i\n",op);
+    //printf("%i\n",op);
     word_t val1 = 0;
     word_t val2 = 0;
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1);
@@ -312,7 +312,7 @@ word_t expr(char *e,bool *success) {
     if(tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != '(' && tokens[i-1].type != ')')))
       tokens[i].type = DEREF;
     //识别负数类型
-    if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != '(' && tokens[i-1].type != HEX_NUM)))
+    if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM)))
       tokens[i].type = TK_NEG;
   }
   
