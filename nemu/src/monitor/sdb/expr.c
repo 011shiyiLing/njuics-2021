@@ -21,6 +21,7 @@
 #include <regex.h>
 #include <common.h>
 #include <memory/paddr.h>
+#include <memory/vaddr.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ,NUM,HEX_NUM,TK_NOEQ,TK_AND,TK_OR,REGNAME,DEREF,TK_NEG,
@@ -294,7 +295,7 @@ word_t eval(int p,int q,bool *success)
       case TK_NEG:
         return -val2;
       case DEREF:
-        return paddr_read(val2,4);
+        return vaddr_read(val2,4);
       default:assert(0);
    }  
     
