@@ -259,7 +259,7 @@ word_t eval(int p,int q)
   else
   {
     int op = find_main_operator(p,q);
-    //printf("%i\n",op);
+    printf("%i\n",op);
     int val1 = 0;
     int val2 = 0;
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1);
