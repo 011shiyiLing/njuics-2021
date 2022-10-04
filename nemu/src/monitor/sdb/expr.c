@@ -167,7 +167,7 @@ bool check_parentheses(int p,int q)
 int op_priority(int i)
 {
   
-  if (tokens[i].type == TK_NEG) return 1;
+  if (tokens[i].type == TK_NEG || tokens[i].type == DEREF) return 1;
   if (tokens[i].type == '!') return 2;
   if (tokens[i].type == '*' || tokens[i].type == '/') return 3;
   if (tokens[i].type == '+' || tokens[i].type == '-') return 4;
