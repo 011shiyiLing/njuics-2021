@@ -44,6 +44,6 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   }
   else
   {
-    return cpu.pc;
+    return cpu.gpr[i];
   }
 }
