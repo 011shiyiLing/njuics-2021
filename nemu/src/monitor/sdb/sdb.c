@@ -108,7 +108,7 @@ static int cmd_p(char *args){
   bool s = true;
   int val;
   val = expr(EXPR,&s);
-  printf("%d\n",val);
+  printf("%u\n",val);
   return 0;
 }
 
