@@ -265,7 +265,7 @@ word_t eval(int p,int q,bool *success)
   else
   {
     int op = find_main_operator(p,q);
-    printf("%d\n",op);
+    //printf("%d\n",op);
     word_t val1 = 0;
     word_t val2 = 0;
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1,success);
@@ -295,7 +295,7 @@ word_t eval(int p,int q,bool *success)
       case TK_NEG:
         return -val2;
       case DEREF:
-        //printf("%s\n","WoW");
+        printf("%s\n","WoW");
         return paddr_read(val2,4);
       default:assert(0);
    }  
