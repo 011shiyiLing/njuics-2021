@@ -295,8 +295,8 @@ word_t eval(int p,int q,bool *success)
       case TK_NEG:
         return -val2;
       case DEREF:
-        printf("%s\n","WoW");
-        printf("%d\n",val2);
+        //printf("%s\n","WoW");
+        //printf("%d\n",val2);
         return paddr_read(val2,4);
       default:assert(0);
    }  
