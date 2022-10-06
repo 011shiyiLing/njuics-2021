@@ -315,7 +315,7 @@ word_t expr(char *e,bool *success) {
   for (int i =0;i<nr_token;i++)
   {
     //识别指针类型
-    if(tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != ')')))
+    if(tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != ')' && tokens[i-1].type != REGNAME)))
       tokens[i].type = DEREF;
     //识别负数类型
     if(tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != NUM && tokens[i-1].type != HEX_NUM && tokens[i-1].type != ')' && tokens[i-1].type != REGNAME)))
