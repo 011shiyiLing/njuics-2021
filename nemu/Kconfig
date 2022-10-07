@@ -209,12 +209,4 @@ config RT_CHECK
   bool "Enable runtime checking"
   default y
   
-config WATCHPOINT
-  depends on TARGET_NATIVE_ELF
-  bool "Enable watchpoint"
-  default n
-  help
-    Enable watchpoint with a reference design.
-    Note that this will significantly reduce the performance of NEMU
-
 endmenu
