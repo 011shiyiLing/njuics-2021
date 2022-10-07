@@ -208,7 +208,7 @@ endchoice
 config RT_CHECK
   bool "Enable runtime checking"
   default y
-  
+
 config WATCHPOINT
   depends on TARGET_NATIVE_ELF
   bool "Enable watchpoint"
