@@ -273,34 +273,6 @@ word_t eval(int p,int q,bool *success)
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1,success);
     val2 = eval(op+1,q,success);
     
-    //多个负号/指针的处理
-    if(tokens[op].type == TK_NEG)
-    {
-    	int i;
-    	for (i=op;i<nr_token;i++)
-    	{
-    	    if(tokens[i].type == NUM)
-    	    {
-    	    	sscanf(tokens[i].str,"%x",&val2);
-    	    	break;
-    	    }
-    	}
-    	for(;i>0;i--) val2 = -val2;
-    	return val2;
-    }
-    
-    if(tokens[op].type == DEREF)
-    {
-    	int i;
-    	for(i=op;i<nr_token;i++)
-    	{
-    	    sscanf(tokens[i].str,"%x",&val2);
-    	    break;
-    	}
-    	for(;i>0;i--) paddr_read(val2,4);
-    	return val2;
-    }
-    
     switch(tokens[op].type)
     {
       case '+': return val1+val2;
@@ -321,6 +293,10 @@ word_t eval(int p,int q,bool *success)
         return val1 || val2;
       case TK_AND:
         return val1 && val2;
+      case TK_NEG:
+      	return -val2;
+      case DEREF:
+        return paddr_read(val2,4);
       default:assert(0);
    }  
     
