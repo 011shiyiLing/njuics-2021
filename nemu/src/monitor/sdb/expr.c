@@ -321,12 +321,6 @@ word_t eval(int p,int q,bool *success)
         return val1 || val2;
       case TK_AND:
         return val1 && val2;
-      //case TK_NEG:
-        //return -val2;
-      //case DEREF:
-        //printf("%s\n","WoW");
-        //printf("%d\n",val2);
-        //return paddr_read(val2,4);
       default:assert(0);
    }  
     

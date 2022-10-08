@@ -31,11 +31,14 @@ static char *code_format =
 "  return 0; "
 "}";
 
-//生成小于n的随机数
+//生成小于n(0-n-1)的随机数
 uint32_t choose(uint32_t n)
 {
+  int seed = time(0);
+  srand(seed);//为随机数生成种子
+  
   uint32_t r;
-  r = rand() % (n)+0;
+  r = rand() % (n);
   return r;
 }
 
@@ -43,14 +46,11 @@ static int x = 0;
 
 void gen_num()
 {
-  int seed = time(0);
-  srand(seed);//生成随机种子
-  int n;
-  n = rand() % 10 + 1 + 0 ;
-  switch(n)
+  switch(choose(10))
   {
     case 0:
-      buf[x] = '0';
+      if(buf[x-1] == '/') buf[x] = '2';//过滤除0行为
+      else buf[x] = '0';
       break;
     case 1:
       buf[x] = '1';
@@ -90,34 +90,29 @@ void gen(char s)
   return;
 }
 
+//随机生成运算符
 void gen_rand_op()
 {
-  int r;
-  int seed = time(0);
-  srand(seed);
-  r = rand() % 5 + 1;
-  switch(r)
+  switch(choose(4))
   {
-    case(1):
+    case(0):
       buf[x] = '+';
       break;
-    case(2):
+    case(1):
       buf[x] = '-';
       break;
-    case(3):
+    case(2):
       buf[x] = '*';
       break;
-    case(4):
+    case(3):
       buf[x] = '/';
-      break;
-    case(5):
-      buf[x] = ' ';
       break;
   }
   x ++;
   return;
 }
 
+//递归随机生成表达式
 static void gen_rand_expr() {
   switch(choose(3))
   {
@@ -130,9 +125,6 @@ static void gen_rand_expr() {
       gen(')');
       break;
     case(2):
-      gen(' ');
-      break;
-    default:
       gen_rand_expr();
       gen_rand_op();
       gen_rand_expr();
@@ -144,14 +136,14 @@ static void gen_rand_expr() {
 }
 
 int main(int argc, char *argv[]) {
-  int seed = time(0);
-  srand(seed);//为随机数生成种子
   int loop = 1;
   if (argc > 1) {
     sscanf(argv[1], "%d", &loop);
   }
   int i;
-  for (i = 0; i < loop; i ++) {
+  for (i = 0; i < loop; i ++) 
+  {
+    x = 0;
     gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
