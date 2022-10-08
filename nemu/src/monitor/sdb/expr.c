@@ -242,12 +242,14 @@ word_t eval(int p,int q,bool *success)
       number = atoi(tokens[p].str);
       return number;
     }
+    
     else if (tokens[p].type == HEX_NUM)//十六进制数
     {
-     //word_t number = 0;
-      paddr_t number;
-      sscanf(tokens[p].str,"%x",&number);
-      //number = number*16 + hex(tokens[p].str[i]);
+      word_t number = 0;
+      for(int i=0;i<strlen(tokens[p].str);i++)
+      {
+      	number = number*16+hex(tokens[p].str[i]);
+      }
       return number;
     }
     
@@ -264,13 +266,40 @@ word_t eval(int p,int q,bool *success)
   }
   else
   {
-    int op = find_main_operator(p,q);
+    int op = find_main_operator(p,q);//寻找主运算符的序号
     //printf("%d\n",op);
     word_t val1 = 0;
-    paddr_t val2 = 0;
+    word_t val2 = 0;
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1,success);
     val2 = eval(op+1,q,success);
     
+    //多个负号/指针的处理
+    if(tokens[op].type == TK_NEG)
+    {
+    	int i;
+    	for (i=op;i<nr_token;i++)
+    	{
+    	    if(tokens[i].type == NUM)
+    	    {
+    	    	sscanf(tokens[i].str,"%x",&val2);
+    	    	break;
+    	    }
+    	}
+    	for(;i>0;i--) val2 = -val2;
+    	return val2;
+    }
+    
+    if(tokens[op].type == DEREF)
+    {
+    	int i;
+    	for(i=op;i<nr_token;i++)
+    	{
+    	    sscanf(tokens[i].str,"%x",&val2);
+    	    break;
+    	}
+    	for(;i>0;i--) paddr_read(val2,4);
+    	return val2;
+    }
     
     switch(tokens[op].type)
     {
@@ -292,12 +321,12 @@ word_t eval(int p,int q,bool *success)
         return val1 || val2;
       case TK_AND:
         return val1 && val2;
-      case TK_NEG:
-        return -val2;
-      case DEREF:
+      //case TK_NEG:
+        //return -val2;
+      //case DEREF:
         //printf("%s\n","WoW");
         //printf("%d\n",val2);
-        return paddr_read(val2,4);
+        //return paddr_read(val2,4);
       default:assert(0);
    }  
     
