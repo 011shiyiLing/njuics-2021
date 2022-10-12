@@ -199,9 +199,10 @@ int find_main_operator(int p, int q)
       {
         if(tokens[i].type == '(') l_parentheses ++;
         else if (tokens[i].type == ')') l_parentheses --;
-        i++;
+        //i++;
         if(l_parentheses == 0)
       	  break;
+      	i++;
       }  
       if (i>q) break;
     }
