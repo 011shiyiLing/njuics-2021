@@ -116,6 +116,7 @@ static bool make_token(char *e) {
        	  case 256:
        	    break;
        	  case REGNAME:
+       	    if(substr_len > 32) assert(0);
        	    tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start+1,substr_len);
             tokens[nr_token].str[substr_len] = '\0';
@@ -163,7 +164,7 @@ bool check_parentheses(int p,int q)
   return true;
 }
 
-//判断操作符优先级(C语言标准)
+//判断操作符优先级(C语言标准)(优先级越高的得分越低)
 int op_priority(int i)
 {
   

@@ -42,7 +42,7 @@ uint32_t choose(uint32_t n)
   return r;
 }
 
-static int x = 0;
+static int x = 0;//全局变量，buf数组的序号
 
 void gen_num()
 {

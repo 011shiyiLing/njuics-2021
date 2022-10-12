@@ -69,9 +69,11 @@ static int cmd_si(char *args){
   return 0;
 }
 
-static int cmd_info(char *args){
+static int cmd_info(char *args)
+{
   char *arg = strtok(NULL," ");
-  if (strcmp(arg,"r") == 0){
+  if (strcmp(arg,"r") == 0)
+  {
     isa_reg_display();
   }
   
@@ -83,7 +85,8 @@ static int cmd_info(char *args){
   return 0;
 }
 
-static int cmd_x(char *args){
+static int cmd_x(char *args)
+{
   char *N = strtok(NULL," ");
   char *EXPR = strtok(NULL," ");
   int len;

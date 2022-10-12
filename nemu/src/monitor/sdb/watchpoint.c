@@ -141,7 +141,7 @@ void print_wp()
   return;
 }
 
-//删除序号为N的监视点
+//删除序号为N的监视点(从free里查删)
 void delete_wp(int N)
 {
   
