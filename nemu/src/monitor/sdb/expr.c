@@ -269,8 +269,8 @@ word_t eval(int p,int q,bool *success)
   {
     int op = find_main_operator(p,q);//寻找主运算符的序号
     //printf("%d\n",op);
-    word_t val1 = 0;
-    word_t val2 = 0;
+    int val1 = 0;
+    int val2 = 0;
     if(tokens[op].type != TK_NEG && tokens[op].type != DEREF) val1 = eval(p,op-1,success);
     val2 = eval(op+1,q,success);
     switch(tokens[op].type)
