@@ -51,6 +51,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   s->snpc = pc;//static next PC(in codes)
   isa_exec_once(s);
   cpu.pc = s->dnpc;//dynamic next PC(in the program execution)
+  
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
