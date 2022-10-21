@@ -35,7 +35,7 @@ enum
 
 #define src1R() do { *src1 = R(rs1); } while (0)
 #define src2R() do { *src2 = R(rs2); } while (0)
-#define shamt() do { *src2 = BITS(i,25,20); } while (0)
+#define shamt() do { *src2 = rs2; } while (0)
 #define immI()  do { *imm = SEXT(BITS(i, 31, 20), 12); } while (0)
 #define immU()  do { *imm = SEXT(BITS(i, 31, 12), 20) << 12; } while (0)
 #define immS()  do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while (0)
@@ -116,7 +116,7 @@ static int decode_exec(Decode *s)
 
   INSTPAT("0000000 ????? ????? 000 ????? 01100 11", add, R, R(dest) = src1 + src2);//1
   INSTPAT("0100000 ????? ????? 000 ????? 01100 11", sub, R, R(dest) = src1 - src2);
-  INSTPAT("0000000 ????? ????? 001 ????? 01100 11", sll, R, R(dest) = (src1 << src2));//0
+  INSTPAT("0000000 ????? ????? 001 ????? 01100 11", sll, R, R(dest) = (src1 << (src2 & 0x1f)));//0
   INSTPAT("0000000 ????? ????? 111 ????? 01100 11", and, R, R(dest) = src1 & src2);
   INSTPAT("0000000 ????? ????? 110 ????? 01100 11", or, R, R(dest) = src1 | src2);
   INSTPAT("0000000 ????? ????? 100 ????? 01100 11", xor, R, R(dest) = src1 ^ src2);
