@@ -47,7 +47,7 @@ char *itoa(int value, char *str, int radix)
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   char *s;
-  int d;
+  //int d;
 
   va_start(args,fmt);
   while(*fmt)
@@ -58,10 +58,10 @@ int sprintf(char *out, const char *fmt, ...) {
         s = va_arg(args,char *);
         strcat(out,s);
         break;
-      case 'd':
-        d = va_arg(args,int);
-        out = itoa(d,out,10);
-        break;
+      //case 'd':
+        //d = va_arg(args,int);
+        //out = itoa(d,out,10);
+        //break;
       default:
         return -1;
     }
