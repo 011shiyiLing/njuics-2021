@@ -85,14 +85,17 @@ int strcmp(const char *s1, const char *s2) {
 int strncmp(const char *s1, const char *s2, size_t n) {
   assert(s1 && s2);
   if(n < 0) assert(0);
+  int res = 0;
 
-  while(n != 0 && (s1 == s2))
+  while(n != 0 )
   {
+    res = *s1 - *s2;
+    if(res != 0) break;
     s1++;
     s2++;
     n--;
   }
-  int res = *s1 - *s2;
+  
   return res;
 }
 
@@ -160,15 +163,17 @@ int memcmp(const void *s1, const void *s2, size_t n) {
 
   char *p1 = (char *)s1;
   char *p2 = (char *)s2;
+  int res = 0;
 
-  while((n != 0) && (*p1 == *p2))
+  while(n != 0)
   {
+    res = *p1 - *p2;
+    if (res != 0) break;
     p1++;
     p2++;
     n--;
   }
 
-  int res = *p1 - *p2;
   return res;
 }
 
