@@ -55,16 +55,17 @@ char *strncpy(char *dst, const char *src, size_t n) {
 
 char *strcat(char *dst, const char *src) {
   char *res = dst;
-  const char *t = (const char *)dst;
-  size_t n = strlen(t);
-  int i = 0;
-  while(src[i] != '\0')
+  while(*dst != '\0')
   {
-    dst[n] = src[i];
-    n++;
-    i++;
+    dst++;
   }
-  //dst[n] = '\0';
+  while(*src != '\0')
+  {
+    *dst = *src;
+    src++;
+    dst++;
+  }
+  *dst = '\0';
   return res;
 }
 
