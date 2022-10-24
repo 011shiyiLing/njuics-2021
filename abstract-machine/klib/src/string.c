@@ -30,8 +30,9 @@ char *strcpy(char *dst, const char *src) {
 }
 
 char *strncpy(char *dst, const char *src, size_t n) {
-  assert(src);
+  assert(dst && src);
   if(n < 0) assert(0);
+
   char *res = dst;
 
   while((n >0) && (*src != '\0'))
@@ -53,6 +54,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
 }
 
 char *strcat(char *dst, const char *src) {
+  assert(dst && src);
   char *res = dst;
   while(*dst != '\0')
   {
@@ -104,11 +106,13 @@ void *memset(void *s, int c, size_t n) {
   if(n < 0) assert(0);
 
   char* temp = (char*) s;
-  while (n --)
+  while (n != 0)
   {
     *temp = c;
     temp ++;
+    n --;
   }
+  *temp = '\0';
   return s;
 }
 
@@ -119,20 +123,23 @@ void *memmove(void *dst, const void *src, size_t n) {
   void *res = dst;
   char *p1 = (char *)dst;
   char *p2 = (char *)src;
+  //memory overlap
   if(dst > src && (p1 < p2 + n))
   {
-    while(n --)
+    while(n != 0)
     {
       *(p1 + n) = *(p2 + n);
+      n--;
     }
   }
   else
   {
-    while(n --)
+    while(n != 0)
     {
       *p1 = *p2;
       p1++;
       p2++;
+      n--;
     }
   }
  
@@ -147,11 +154,12 @@ void *memcpy(void *out, const void *in, size_t n) {
   char *p1 = (char *)out;
   char *p2 = (char *)in;
 
-  while ( n --)
+  while ( n != 0)
   {
     *p1 = *p2;
     p1++;
     p2++;
+    n--;
   }
 
   return res;
