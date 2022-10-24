@@ -17,7 +17,7 @@ size_t strlen(const char *s) {
 
 char *strcpy(char *dst, const char *src) {
   assert(dst && src);
-
+  
   char *res = dst;
   while (*src != '\0')
   {
