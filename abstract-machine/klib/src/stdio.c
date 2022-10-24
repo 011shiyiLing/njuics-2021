@@ -56,11 +56,10 @@ int sprintf(char *out, const char *fmt, ...) {
     {
       case 's':
         s = va_arg(args,char *);
-        strcat(out,s);
+        out = strcat(out,s);
         break;
       //case 'd':
         //d = va_arg(args,int);
-        //out = itoa(d,out,10);
         //break;
       default:
         return -1;
@@ -68,7 +67,7 @@ int sprintf(char *out, const char *fmt, ...) {
   }
   
  va_end(args);
- return -1;
+ return 0;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
