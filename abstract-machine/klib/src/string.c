@@ -17,7 +17,6 @@ size_t strlen(const char *s) {
 
 char *strcpy(char *dst, const char *src) {
   assert(dst && src);
-  if(strlen(dst) < strlen(src)) assert(0);
 
   char *res = dst;
   while (*src != '\0')
@@ -26,7 +25,7 @@ char *strcpy(char *dst, const char *src) {
      dst++;
      src++;
   }
-  *dst = *src;
+  *dst = '\0';
   return res;
 }
 
@@ -94,11 +93,7 @@ int strncmp(const char *s1, const char *s2, size_t n) {
     n--;
   }
   int res = *s1 - *s2;
-  if(res == 0) return 0;
-  else if(res < 0) return -1;
-  else if(res > 0) return 1;
-
-  return 0;
+  return res;
 }
 
 void *memset(void *s, int c, size_t n) {
@@ -162,16 +157,18 @@ void *memcpy(void *out, const void *in, size_t n) {
 int memcmp(const void *s1, const void *s2, size_t n) {
   assert(s1 && s2);
   if(n < 0) assert(0);
+
   char *p1 = (char *)s1;
   char *p2 = (char *)s2;
-  int res = 0;
-  while(n--)
+
+  while((n != 0) && (*p1 == *p2))
   {
-    res = *p1 - *p2;
-    if(res != 0) return res;
     p1++;
     p2++;
+    n--;
   }
+
+  int res = *p1 - *p2;
   return res;
 }
 
