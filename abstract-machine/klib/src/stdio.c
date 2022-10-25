@@ -29,11 +29,10 @@ char *itoa(int value, char *str, int radix)
     p--;
   } 
 
-  while (*p != '\0')
+  while (p >= reverse)
   {
     *str++ = *p--;
   }
-  *str = '\0';
   return str;
 }
 
