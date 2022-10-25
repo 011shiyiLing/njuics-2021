@@ -30,7 +30,7 @@ char *itoa(int value, char *str, int radix)
     p--;
   }
 
-  while(p >= reverse)
+  while(*p != '\0')
   {
     *str++ = *p--;
   }
@@ -80,6 +80,7 @@ int sprintf(char *out, const char *fmt, ...) {
       default:
         return -1;
     }
+
   }
 
   *p = '\0';
