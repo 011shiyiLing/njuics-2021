@@ -9,7 +9,8 @@ char *itoa(int value, char *str, int radix)
 {
   char reverse[36];
   char *p = reverse;
-  bool sign = (value >= 0)? true:false;
+  char *res = str;
+  int sign = value;
 
   value = (value >= 0) ? value : -value;
   *p++ = '\0';
@@ -20,7 +21,7 @@ char *itoa(int value, char *str, int radix)
     if (value == 0) break;
   }
 
-  if(!sign)
+  if(sign < 0)
   {
     *p = '-';
   }
@@ -33,7 +34,7 @@ char *itoa(int value, char *str, int radix)
   {
     *str++ = *p--;
   }
-  return str;
+  return res;
 }
 
 int printf(const char *fmt, ...) {
