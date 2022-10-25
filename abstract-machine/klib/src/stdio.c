@@ -8,7 +8,7 @@
 
 char *itoa(int value, char *str, int radix)
 {
-  char reverse[36];
+  char reverse[2];
   int sign = value;
   char *p = reverse;
   *p++ = '\0';
