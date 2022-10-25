@@ -75,8 +75,7 @@ int sprintf(char *out, const char *fmt, ...) {
       case 'd':
         d = va_arg(args,int);
         p = itoa(d,p,10);
-        p++;
-        //p += strlen(p);
+        p += strlen(p);
         break;
       default:
         return -1;
