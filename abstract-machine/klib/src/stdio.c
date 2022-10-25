@@ -5,14 +5,6 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-int printf(const char *fmt, ...) {
-  panic("Not implemented");
-}
-
-int vsprintf(char *out, const char *fmt, va_list ap) {
-  panic("Not implemented");
-}
-
 char *itoa(int value, char *str, int radix)
 {
   char reverse[36];
@@ -28,9 +20,10 @@ char *itoa(int value, char *str, int radix)
     if (value == 0) break;
   }
 
-  if(!sign)
+  if(sign == 0)
   {
-    *p++ = '-';
+    *p = '-';
+    p++;
   }
   else
   {
@@ -44,30 +37,53 @@ char *itoa(int value, char *str, int radix)
   return str;
 }
 
+int printf(const char *fmt, ...) {
+  panic("Not implemented");
+}
+
+int vsprintf(char *out, const char *fmt, va_list ap) {
+  panic("Not implemented");
+}
+
+
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
+  char *p;
   char *s;
-  //int d;
+  int d;
 
   va_start(args,fmt);
-  while(*fmt)
+  for(p = out; *fmt; fmt++)
   {
-    switch (*fmt++)
+    if(*fmt != '%')
+    {
+      *p++ = *fmt++;
+      continue;
+    }
+
+    fmt++;
+  
+    switch (*fmt)
     {
       case 's':
+        *p = '\0';
         s = va_arg(args,char *);
-        out = strcat(out,s);
+        strcat(p,s);
+        p += strlen(p);
         break;
-      //case 'd':
-        //d = va_arg(args,int);
-        //break;
+      case 'd':
+        d = va_arg(args,int);
+        itoa(d,p,10);
+        p += strlen(p);
+        break;
       default:
         return -1;
     }
   }
-  
- va_end(args);
- return 0;
+
+  *p = '\0';
+  va_end(args);
+  return 0;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
