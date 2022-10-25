@@ -8,7 +8,7 @@
 
 char *itoa(int value, char *str, int radix)
 {
-  char reverse[2];
+  char reverse[100];
   int sign = value;
   char *p = reverse;
   *p++ = '\0';
@@ -57,7 +57,8 @@ int sprintf(char *out, const char *fmt, ...) {
   {
     if(*fmt != '%')
     {
-      *p++ = *fmt;
+      *p = *fmt;
+      p++;
       continue;
     }
 
