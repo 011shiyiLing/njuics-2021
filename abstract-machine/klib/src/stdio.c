@@ -5,15 +5,13 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
+
 char *itoa(int value, char *str, int radix)
 {
-  char reverse[36];
-  char *p = reverse;
-  char *res = str;
   int sign = value;
-
   value = (value >= 0) ? value : -value;
-  *p++ = '\0';
+  char *p = '\0';
+  p++;
   while(value >= 0)
   {
     *p++ = "0123456789abcdef"[value%radix];
@@ -29,12 +27,13 @@ char *itoa(int value, char *str, int radix)
   {
     p--;
   } 
-
-  while (p >= reverse)
+  
+  while(*p != '\0')
   {
     *str++ = *p--;
   }
-  return res;
+  *str = '\0';
+  return str;
 }
 
 int printf(const char *fmt, ...) {
