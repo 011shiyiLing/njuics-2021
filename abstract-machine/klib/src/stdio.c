@@ -57,7 +57,7 @@ int sprintf(char *out, const char *fmt, ...) {
   {
     if(*fmt != '%')
     {
-      *p++ = *fmt++;
+      *p++ = *fmt;
       continue;
     }
 
