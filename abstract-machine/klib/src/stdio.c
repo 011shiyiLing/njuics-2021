@@ -11,7 +11,6 @@ char *itoa(int value, char *str, int radix)
   char reverse[36];
   int sign = value;
   char *p = reverse;
-  *p++ = '\0';
   value = (value >= 0) ? value : -value;
 
   while(value >= 0)
@@ -34,7 +33,6 @@ char *itoa(int value, char *str, int radix)
   {
     *str++ = *p--;
   }
-  str--;
   return str;
 }
 
@@ -74,8 +72,7 @@ int sprintf(char *out, const char *fmt, ...) {
         break;
       case 'd':
         d = va_arg(args,int);
-        itoa(d,p,10);
-        p += strlen(p);
+        p = itoa(d,p,10);
         break;
       default:
         return -1;
