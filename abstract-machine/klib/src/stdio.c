@@ -9,7 +9,7 @@ char *itoa(int value, char *str, int radix)
 {
   char reverse[36];
   char *p = reverse;
-  int sign = (value >= 0)? 1:0;
+  bool sign = (value >= 0)? true:false;
 
   value = (value >= 0) ? value : -value;
   *p++ = '\0';
@@ -20,7 +20,7 @@ char *itoa(int value, char *str, int radix)
     if (value == 0) break;
   }
 
-  if(sign == 0)
+  if(!sign)
   {
     *p = '-';
   }
