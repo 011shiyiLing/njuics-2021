@@ -23,17 +23,17 @@ char *itoa(int value, char *str, int radix)
   if(sign == 0)
   {
     *p = '-';
-    p++;
   }
   else
   {
     p--;
   } 
 
-  while (p >= reverse)
+  while (*p != '\0')
   {
     *str++ = *p--;
   }
+  *str = '\0';
   return str;
 }
 
