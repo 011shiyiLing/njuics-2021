@@ -8,10 +8,12 @@
 
 char *itoa(int value, char *str, int radix)
 {
+  char reverse[36];
   int sign = value;
+  char *p = reverse;
+  *p++ = '\0';
   value = (value >= 0) ? value : -value;
-  char *p = '\0';
-  p++;
+
   while(value >= 0)
   {
     *p++ = "0123456789abcdef"[value%radix];
@@ -28,11 +30,11 @@ char *itoa(int value, char *str, int radix)
     p--;
   } 
   
-  while(*p != '\0')
+  while(p >= reverse)
   {
     *str++ = *p--;
   }
-  *str = '\0';
+ 
   return str;
 }
 
