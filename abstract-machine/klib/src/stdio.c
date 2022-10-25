@@ -11,6 +11,7 @@ char *itoa(int value, char *str, int radix)
   char reverse[36];
   int sign = value;
   char *p = reverse;
+  *p++ = '\0';
   value = (value >= 0) ? value : -value;
 
   while(value >= 0)
