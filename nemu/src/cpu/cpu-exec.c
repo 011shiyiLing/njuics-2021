@@ -18,7 +18,6 @@
 #include <cpu/difftest.h>
 #include <locale.h>
 #include <sdb.h>
-#include <cpu/ring_buffer.h>
 #include <cpu/ifetch.h>
 
 

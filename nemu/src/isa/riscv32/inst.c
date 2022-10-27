@@ -17,7 +17,6 @@
 #include <cpu/cpu.h>
 #include <cpu/ifetch.h>
 #include <cpu/decode.h>
-#include <cpu/ring_buffer.h>
 
 
 #define R(i) gpr(i)
