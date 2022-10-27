@@ -25,6 +25,7 @@
 #define Mw vaddr_write
 
 ring_buffer_t *iringbuffer;
+void write_ring_buffer(ring_buffer_t *iringbuffer,uint32_t val);
 
 enum
 {

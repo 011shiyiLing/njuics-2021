@@ -35,6 +35,8 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
+ring_buffer_t *ring_buffer_create_init(int length);
+int read_ring_buffer_byte(ring_buffer_t *ring_buffer, uint32_t *data);
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
