@@ -18,6 +18,8 @@
 #include <cpu/difftest.h>
 #include <locale.h>
 #include <sdb.h>
+#include <cpu/ring_buffer.h>
+#include <cpu/ifetch.h>
 
 
 /* The assembly code of instructions executed is only output to the screen
@@ -76,11 +78,26 @@ static void exec_once(Decode *s, vaddr_t pc) {
 
 static void execute(uint64_t n) {
   Decode s;
+  //init iringbuffer
+  ring_buffer_t *iringbuffer = ring_buffer_create_init(10);
+  uint32_t temp_read[10] = {0};
   for (;n > 0; n --) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
+
+    //print instructions in iringbuffer
+    if(nemu_state.state == NEMU_ABORT)
+    {
+      for(int i=0;i<10;i++)
+      {
+         read_ring_buffer_byte(iringbuffer, temp_read+i);
+	       printf("%ls\n", temp_read);
+      }
+    }
+
     if (nemu_state.state != NEMU_RUNNING) break;
+
     IFDEF(CONFIG_DEVICE, device_update());
   }
 }
@@ -109,6 +126,7 @@ void cpu_exec(uint64_t n) {
     default: nemu_state.state = NEMU_RUNNING;
   }
 
+  
   uint64_t timer_start = get_time();
 
   execute(n);
