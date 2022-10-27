@@ -48,12 +48,11 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 
 }
 
-ring_buffer_t *iringbuffer;
 static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;//static next PC(in codes)
   isa_exec_once(s);
-  write_ring_buffer(iringbuffer,s->isa.inst.val);
+  //write_ring_buffer(iringbuffer,s->isa.inst.val);
   cpu.pc = s->dnpc;//dynamic next PC(in the program execution)
   
 #ifdef CONFIG_ITRACE
