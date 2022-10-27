@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 typedef struct{
   uint32_t *buff;
   int length;

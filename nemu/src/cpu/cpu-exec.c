@@ -19,6 +19,7 @@
 #include <locale.h>
 #include <sdb.h>
 #include <cpu/ifetch.h>
+#include <cpu/ring_buffer.h>
 
 
 /* The assembly code of instructions executed is only output to the screen
