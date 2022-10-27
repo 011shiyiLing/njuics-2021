@@ -20,7 +20,7 @@ ring_buffer_t *ring_buffer_create_init(int length)
 }
 
 
-//写一个字节到ring buffer，如果ring buffer满了head、tail递增，覆盖旧数据
+//write a byte
 void write_ring_buffer(ring_buffer_t *ring_buffer, uint32_t data)
 {
     ring_buffer->buff[ring_buffer->head] = data;
@@ -32,7 +32,7 @@ void write_ring_buffer(ring_buffer_t *ring_buffer, uint32_t data)
     }
 }
 
-//读一个字节
+//read a byte
 int read_ring_buffer_byte(ring_buffer_t *ring_buffer, uint32_t *data)
 {
     if(ring_buffer->head == ring_buffer->tail)
