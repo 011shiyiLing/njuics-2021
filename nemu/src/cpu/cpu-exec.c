@@ -35,8 +35,6 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 void device_update();
-ring_buffer_t *ring_buffer_create_init(int length);
-int read_ring_buffer_byte(ring_buffer_t *ring_buffer, uint32_t *data);
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -80,23 +78,25 @@ static void exec_once(Decode *s, vaddr_t pc) {
 
 static void execute(uint64_t n) {
   Decode s;
+
   //init iringbuffer
-  ring_buffer_t *iringbuffer = ring_buffer_create_init(10);
-  uint32_t temp_read[10] = {0};
+  //ring_buffer_t *iringbuffer = ring_buffer_create_init(10);
+  //uint32_t temp_read[10] = {0};
+
   for (;n > 0; n --) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
 
     //print instructions in iringbuffer
-    if(nemu_state.state == NEMU_ABORT)
-    {
-      for(int i=0;i<10;i++)
-      {
-         read_ring_buffer_byte(iringbuffer, temp_read+i);
-	       printf("%ls\n", temp_read);
-      }
-    }
+    //if(nemu_state.state == NEMU_ABORT)
+    //{
+      //for(int i=0;i<10;i++)
+      //{
+         //read_ring_buffer_byte(iringbuffer, temp_read+i);
+	       //printf("%ls\n", temp_read);
+      //}
+    //}
 
     if (nemu_state.state != NEMU_RUNNING) break;
 
