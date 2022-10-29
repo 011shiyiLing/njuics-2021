@@ -25,3 +25,4 @@ static inline uint32_t inst_fetch(vaddr_t *pc, int len) {
 }
 
 #endif
+
