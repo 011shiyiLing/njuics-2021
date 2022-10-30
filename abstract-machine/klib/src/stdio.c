@@ -37,8 +37,75 @@ char *itoa(int value, char *str, int radix)
   return str;
 }
 
+void itoa_printf(int value,int radix)
+{
+  char reverse[100];
+  int sign = value;
+  char *p = reverse;
+  *p++ = '\0';
+  value = (value >= 0) ? value : -value;
+
+  while(value >= 0)
+  {
+    *p++ = "0123456789abcdef"[value%radix];
+    value /= radix;
+    if (value == 0) break;
+  }
+  
+  if(sign < 0)
+  {
+    *p = '-';
+  }
+  else
+  {
+    p--;
+  }
+
+  while(p >= reverse)
+  {
+    putch(*p);
+    p--;
+  }
+}
+
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+  va_list args;
+  char *s;
+  int d;
+
+  va_start(args,fmt);
+  for(;*fmt;fmt++)
+  {
+    if(*fmt != '%')
+    {
+      putch(*fmt);
+      continue;
+    }
+
+    fmt++;
+
+    switch(*fmt)
+    {
+      case 's':
+        s = va_arg(args,char *);
+        while(*s != '\0')
+        {
+          putch(*s);
+          s ++;
+        }
+        putch(*s);
+        break;
+      case 'd':
+        d = va_arg(args,int);
+        itoa_printf(d,10);
+        break;
+      default:
+        return -1;
+    }
+  }
+
+  va_end(args);
+  return 0;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
