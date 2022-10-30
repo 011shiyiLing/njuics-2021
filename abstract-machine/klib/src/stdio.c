@@ -37,9 +37,9 @@ char *itoa(int value, char *str, int radix)
   return str;
 }
 
-void itoa_printf(int value,int radix)
+int itoa_printf(int value,int radix)
 {
-  char reverse[100];
+  char reverse[36];
   int sign = value;
   char *p = reverse;
   *p++ = '\0';
@@ -66,6 +66,7 @@ void itoa_printf(int value,int radix)
     putch(*p);
     p--;
   }
+  return 0;
 }
 
 int printf(const char *fmt, ...) {
@@ -93,17 +94,20 @@ int printf(const char *fmt, ...) {
           putch(*s);
           s ++;
         }
-        putch(*s);
         break;
       case 'd':
         d = va_arg(args,int);
         itoa_printf(d,10);
         break;
+      case 'x':
+        d = va_arg(args,int);
+        itoa_printf(d,16);
+        break;
       default:
         return -1;
     }
   }
-
+  putch('\0');
   va_end(args);
   return 0;
 }
