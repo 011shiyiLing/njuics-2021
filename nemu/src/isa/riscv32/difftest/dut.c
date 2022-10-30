@@ -15,10 +15,17 @@
 
 #include <isa.h>
 #include <cpu/difftest.h>
+#include <memory/vaddr.h>
 #include "../local-include/reg.h"
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-  return false;
+  CPU_state r = *ref_r;
+  if(r.pc != pc) return false;
+  for(int i=0;i<32;i++)
+  {
+    if(r.gpr[i] != vaddr_read(pc,4)) return false;
+  }
+  return true;
 }
 
 void isa_difftest_attach() {
