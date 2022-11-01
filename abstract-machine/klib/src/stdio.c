@@ -8,7 +8,7 @@
 
 char *itoa(int value, char *str, int radix)
 {
-  char reverse[100];
+  char reverse[36];
   int sign = value;
   char *p = reverse;
   *p++ = '\0';
@@ -73,6 +73,7 @@ int printf(const char *fmt, ...) {
   va_list args;
   char *s;
   int d;
+  int h;
 
   va_start(args,fmt);
   for(;*fmt;fmt++)
@@ -100,8 +101,8 @@ int printf(const char *fmt, ...) {
         itoa_printf(d,10);
         break;
       case 'x':
-        d = va_arg(args,int);
-        itoa_printf(d,16);
+        h = va_arg(args,int);
+        itoa_printf(h,16);
         break;
       default:
         return -1;
