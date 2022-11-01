@@ -4,7 +4,7 @@
 
 static uint32_t boot_time;
 void __am_timer_init() {
-  boot_time = (uint32_t)(inl(RTC_ADDR))/1000000;
+  boot_time = (uint32_t)(inl(RTC_ADDR))*100000;
   //printf("%d\n" , boot_time);
 }
 
