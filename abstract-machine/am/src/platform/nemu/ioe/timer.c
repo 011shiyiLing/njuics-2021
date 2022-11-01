@@ -2,7 +2,7 @@
 #include <nemu.h>
 #include <stdio.h>
 
-static int boot_time;
+static uint32_t boot_time;
 void __am_timer_init() {
   boot_time = inl(RTC_ADDR);
   //printf("%d\n" , boot_time);
@@ -10,7 +10,7 @@ void __am_timer_init() {
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   __am_timer_init();
-  int now_time = inl(RTC_ADDR+4);
+  uint32_t now_time = inl(RTC_ADDR+4);
   printf("%d\n",now_time);
   uptime->us = (uint64_t)(now_time-boot_time);
 }
