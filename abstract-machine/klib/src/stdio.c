@@ -59,6 +59,35 @@ char *uitoa(uint32_t value,char *str, int radix)
 
 }
 
+/*char *gcvt(double value,int ndigit,char *buf)
+{
+  char temp[72];
+  int int_part;
+  double float_part;
+
+  int_part = (int)value;
+  float_part = value - int_part;
+  if (float_part < 0) float_part = -float_part;
+
+  itoa(int_part,temp,10);
+
+  char *p = temp;
+  while(*p != '\0') p++;
+  *p = '.';
+  
+  while(ndigit > 0 && float_part > 0.00000001)
+  {
+    *p = (int)(float_part*10) + '0';
+    p++;
+    float_part = (float_part * 10) - (int)(float_part*10);
+    ndigit--;
+  }
+
+  *p = '\0';
+  strcpy(buf,temp);
+  return buf;
+}*/
+
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   va_list args = ap;
@@ -66,6 +95,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char *s;
   int d;
   uint32_t u;
+  //double f;
 
   for(p = out; *fmt; fmt++)
   {
@@ -100,6 +130,11 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         uitoa(u,p,16);
         p += strlen(p);
         break;
+      /*case 'f':
+        f = va_arg(args,double);
+        gcvt(f,6,p);
+        p += strlen(p);*/
+        break;
       default:
         break;
     }
@@ -117,6 +152,7 @@ int sprintf(char *out, const char *fmt, ...) {
   char *s;
   int d;
   uint32_t u;
+  //double f;
 
   va_start(args,fmt);
   for(p = out; *fmt; fmt++)
@@ -149,9 +185,14 @@ int sprintf(char *out, const char *fmt, ...) {
         break;
       case 'x':
         u = va_arg(args,uint32_t);
-        itoa(u,p,16);
+        uitoa(u,p,16);
         p += strlen(p);
         break;
+      /*case 'f':
+        f = va_arg(args,double);
+        gcvt(f,6,p);
+        p += strlen(p);
+        break;*/
       default:
         break;
     }
