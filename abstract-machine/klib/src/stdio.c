@@ -95,7 +95,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char *s;
   int d;
   uint32_t u;
-  //double f;
 
   for(p = out; *fmt; fmt++)
   {
@@ -131,10 +130,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         p += strlen(p);
         break;
       /*case 'f':
-        f = va_arg(args,double);
-        gcvt(f,6,p);
-        p += strlen(p);*/
-        break;
+        gcvt(va_arg(args,double),6,p);
+        p += strlen(p);
+        break;*/
       default:
         break;
     }
@@ -152,7 +150,6 @@ int sprintf(char *out, const char *fmt, ...) {
   char *s;
   int d;
   uint32_t u;
-  //double f;
 
   va_start(args,fmt);
   for(p = out; *fmt; fmt++)
