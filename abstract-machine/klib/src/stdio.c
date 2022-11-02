@@ -59,7 +59,7 @@ char *uitoa(uint32_t value,char *str, int radix)
 
 }
 
-/*char *gcvt(double value,int ndigit,char *buf)
+char *gcvt(double value,int ndigit,char *buf)
 {
   char temp[72];
   int int_part;
@@ -86,7 +86,7 @@ char *uitoa(uint32_t value,char *str, int radix)
   *p = '\0';
   strcpy(buf,temp);
   return buf;
-}*/
+}
 
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
