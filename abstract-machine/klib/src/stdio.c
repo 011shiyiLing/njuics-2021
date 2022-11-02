@@ -135,7 +135,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         break;*/
       default:
         assert(0);
-        break;
     }
 
   }
