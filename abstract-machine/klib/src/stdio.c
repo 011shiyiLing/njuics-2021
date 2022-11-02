@@ -92,8 +92,8 @@ char *uitoa(uint32_t value,char *str, int radix)
 int vsprintf(char *out, const char *fmt, va_list ap) {
   va_list args = ap;
   char *p;
-  //char *s;
-  int d;
+  char *s;
+  //int d;
   uint32_t u;
 
   for(p = out; *fmt; fmt++)
@@ -109,24 +109,24 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   
     switch (*fmt)
     {
-      /*case 's':
+      case 's':
         *p = '\0';
         s = va_arg(args,char *);
         strcat(p,s);
         p += strlen(p);
-        break;*/
-      case 's':
+        break;
+      case 'd':
         *p++ = '0';
         break;
       case 'c':
         *p = va_arg(args,int);
         p++;
         break;
-      case 'd':
+      /*case 'd':
         d = va_arg(args,int);
         itoa(d,p,10);
         p += strlen(p);
-        break;
+        break;*/
       case 'x':
         u = va_arg(args,uint32_t);
         uitoa(u,p,16);
