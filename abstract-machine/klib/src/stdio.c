@@ -37,84 +37,49 @@ char *itoa(int value, char *str, int radix)
   return str;
 }
 
-int itoa_printf(int value,int radix)
-{
-  char reverse[36];
-  int sign = value;
-  char *p = reverse;
-  *p++ = '\0';
-  value = (value >= 0) ? value : -value;
 
-  while(value >= 0)
-  {
-    *p++ = "0123456789abcdef"[value%radix];
-    value /= radix;
-    if (value == 0) break;
-  }
-  
-  if(sign < 0)
-  {
-    *p = '-';
-  }
-  else
-  {
-    p--;
-  }
-
-  while(p >= reverse)
-  {
-    putch(*p);
-    p--;
-  }
-  return 0;
-}
-
-int printf(const char *fmt, ...) {
-  va_list args;
+int vsprintf(char *out, const char *fmt, va_list ap) {
+  va_list args = ap;
+  char *p;
   char *s;
   int d;
-  int h;
 
-  va_start(args,fmt);
-  for(;*fmt;fmt++)
+  for(p = out; *fmt; fmt++)
   {
     if(*fmt != '%')
     {
-      putch(*fmt);
+      *p = *fmt;
+      p++;
       continue;
     }
 
     fmt++;
-
-    switch(*fmt)
+  
+    switch (*fmt)
     {
       case 's':
         s = va_arg(args,char *);
-        while(*s != '\0')
-        {
-          putch(*s);
-          s ++;
-        }
+        strcat(p,s);
+        p += strlen(p);
         break;
       case 'd':
         d = va_arg(args,int);
-        itoa_printf(d,10);
+        itoa(d,p,10);
+        p += strlen(p);
         break;
       case 'x':
-        h = va_arg(args,int);
-        itoa_printf(h,16);
+        d = va_arg(args,int);
+        itoa(d,p,16);
+        p += strlen(p);
         break;
       default:
         return -1;
     }
-  }
-  putch('\0');
-  va_end(args);
-  return 0;
-}
 
-int vsprintf(char *out, const char *fmt, va_list ap) {
-  panic("Not implemented");
+  }
+
+  *p = '\0';
+  return 0;
 }
 
 
@@ -148,6 +113,11 @@ int sprintf(char *out, const char *fmt, ...) {
         itoa(d,p,10);
         p += strlen(p);
         break;
+      case 'x':
+        d = va_arg(args,int);
+        itoa(d,p,16);
+        p += strlen(p);
+        break;
       default:
         return -1;
     }
@@ -157,6 +127,20 @@ int sprintf(char *out, const char *fmt, ...) {
   *p = '\0';
   va_end(args);
   return 0;
+}
+
+int printf(const char *fmt,...)
+{
+  char buf[256];
+  va_list args;
+  memset(buf,0,sizeof(buf));
+  va_start(args,fmt);
+  vsprintf(buf,fmt,args);
+  va_end(args);
+
+  putstr(buf);
+  return 0;
+  
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
