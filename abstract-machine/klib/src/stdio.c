@@ -86,6 +86,10 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         strcat(p,s);
         p += strlen(p);
         break;
+      case 'c':
+        *p = va_arg(args,int);
+        p++;
+        break;
       case 'd':
         d = va_arg(args,int);
         itoa(d,p,10);
@@ -97,7 +101,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         p += strlen(p);
         break;
       default:
-        return -1;
+        break;
     }
 
   }
@@ -134,6 +138,10 @@ int sprintf(char *out, const char *fmt, ...) {
         strcat(p,s);
         p += strlen(p);
         break;
+      case 'c':
+        *p = va_arg(args,int);
+        p++;
+        break;
       case 'd':
         d = va_arg(args,int);
         itoa(d,p,10);
@@ -145,7 +153,7 @@ int sprintf(char *out, const char *fmt, ...) {
         p += strlen(p);
         break;
       default:
-        return -1;
+        break;
     }
 
   }
