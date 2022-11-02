@@ -3,16 +3,13 @@
 
 static uint32_t boot_time;
 void __am_timer_init() {
-  boot_time = 0;
+  boot_time = (uint32_t)inl(RTC_ADDR);
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   __am_timer_init();
-  uint32_t lo = inl(RTC_ADDR);
-  uint32_t hi = inl(RTC_ADDR + 4);
-  uint64_t time = ((uint64_t)hi << 32) | lo;
-  time = time/10;
-  uptime->us = time - boot_time;
+  uint32_t time = (uint32_t)inl(RTC_ADDR + 4);
+  uptime->us = (uint64_t)(boot_time - time);
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
