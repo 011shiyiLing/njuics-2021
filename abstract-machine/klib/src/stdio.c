@@ -134,7 +134,17 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         p += strlen(p);
         break;*/
       default:
-        assert(0);
+        d = va_arg(args,int);
+        //char *q;
+        //if(*fmt != 'd')
+        //{
+          //*q = *fmt;
+          //fmt++;
+          //q++;
+        //}
+        itoa(d,p,10);
+        p += strlen(p);
+        break;
     }
 
   }
