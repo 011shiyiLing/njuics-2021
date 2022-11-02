@@ -109,11 +109,14 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   
     switch (*fmt)
     {
-      case 's':
+      /*case 's':
         *p = '\0';
         s = va_arg(args,char *);
         strcat(p,s);
         p += strlen(p);
+        break;*/
+      case 's':
+        *p++ = '0';
         break;
       case 'c':
         *p = va_arg(args,int);
@@ -134,16 +137,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         p += strlen(p);
         break;*/
       default:
-        d = va_arg(args,int);
-        //char *q;
-        //if(*fmt != 'd')
-        //{
-          //*q = *fmt;
-          //fmt++;
-          //q++;
-        //}
-        itoa(d,p,10);
-        p += strlen(p);
+        assert(0);
         break;
     }
 
