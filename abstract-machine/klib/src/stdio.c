@@ -37,12 +37,35 @@ char *itoa(int value, char *str, int radix)
   return str;
 }
 
+char *uitoa(uint32_t value,char *str, int radix)
+{
+  char reverse[36];
+  char *p = reverse;
+  *p++ = '\0';
+
+  while(value != 0)
+  {
+    *p++ = "0123456789abcdef"[value%radix];
+    value /= radix;
+    if (value == 0) break;
+  }
+  p--;
+
+  while(p >= reverse)
+  {
+    *str++ = *p--;
+  }
+  return str;
+
+}
+
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   va_list args = ap;
   char *p;
   char *s;
   int d;
+  uint32_t u;
 
   for(p = out; *fmt; fmt++)
   {
@@ -58,6 +81,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     switch (*fmt)
     {
       case 's':
+        *p = '\0';
         s = va_arg(args,char *);
         strcat(p,s);
         p += strlen(p);
@@ -68,8 +92,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         p += strlen(p);
         break;
       case 'x':
-        d = va_arg(args,int);
-        itoa(d,p,16);
+        u = va_arg(args,uint32_t);
+        uitoa(u,p,16);
         p += strlen(p);
         break;
       default:
@@ -88,6 +112,7 @@ int sprintf(char *out, const char *fmt, ...) {
   char *p;
   char *s;
   int d;
+  uint32_t u;
 
   va_start(args,fmt);
   for(p = out; *fmt; fmt++)
@@ -104,6 +129,7 @@ int sprintf(char *out, const char *fmt, ...) {
     switch (*fmt)
     {
       case 's':
+        *p = '\0';
         s = va_arg(args,char *);
         strcat(p,s);
         p += strlen(p);
@@ -114,8 +140,8 @@ int sprintf(char *out, const char *fmt, ...) {
         p += strlen(p);
         break;
       case 'x':
-        d = va_arg(args,int);
-        itoa(d,p,16);
+        u = va_arg(args,uint32_t);
+        itoa(u,p,16);
         p += strlen(p);
         break;
       default:
