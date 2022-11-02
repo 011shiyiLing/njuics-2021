@@ -92,7 +92,7 @@ char *uitoa(uint32_t value,char *str, int radix)
 int vsprintf(char *out, const char *fmt, va_list ap) {
   va_list args = ap;
   char *p;
-  char *s;
+  //char *s;
   int d;
   uint32_t u;
 
