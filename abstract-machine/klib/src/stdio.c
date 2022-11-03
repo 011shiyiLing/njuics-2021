@@ -8,7 +8,7 @@
 
 char *itoa(int value, char *str, int radix)
 {
-  char reverse[36];
+  char reverse[256];
   int sign = value;
   char *p = reverse;
   *p++ = '\0';
@@ -39,7 +39,7 @@ char *itoa(int value, char *str, int radix)
 
 char *uitoa(uint32_t value,char *str, int radix)
 {
-  char reverse[36];
+  char reverse[256];
   char *p = reverse;
   *p++ = '\0';
 
@@ -129,10 +129,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         uitoa(u,p,16);
         p += strlen(p);
         break;
-      /*case 'f':
-        gcvt(va_arg(args,double),6,p);
-        p += strlen(p);
-        break;*/
       default:
         break;
     }
@@ -185,11 +181,6 @@ int sprintf(char *out, const char *fmt, ...) {
         uitoa(u,p,16);
         p += strlen(p);
         break;
-      /*case 'f':
-        f = va_arg(args,double);
-        gcvt(f,6,p);
-        p += strlen(p);
-        break;*/
       default:
         break;
     }
@@ -203,14 +194,14 @@ int sprintf(char *out, const char *fmt, ...) {
 
 int printf(const char *fmt,...)
 {
-  /*char buf[256];
+  char buf[256];
   va_list args;
   memset(buf,0,sizeof(buf));
   va_start(args,fmt);
   vsprintf(buf,fmt,args);
   va_end(args);
 
-  putstr(buf);*/
+  putstr(buf);
   return 0;
   
 }
