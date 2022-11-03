@@ -90,11 +90,7 @@ char *uitoa(uint32_t value,char *str, int radix)
 
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  va_list args = ap;
   char *p;
-  char *s;
-  int d;
-  uint32_t u;
 
   for(p = out; *fmt; fmt++)
   {
@@ -111,28 +107,24 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     {
       case 's':
         *p = '\0';
-        s = va_arg(args,char *);
-        strcat(p,s);
+        strcat(p,va_arg(ap,char *));
         p += strlen(p);
         break;
       case 'c':
-        *p = va_arg(args,int);
+        *p = va_arg(ap,int);
         p++;
         break;
       case 'd':
-        d = va_arg(args,int);
-        itoa(d,p,10);
+        itoa(va_arg(ap,int),p,10);
         p += strlen(p);
         break;
       case 'x':
-        u = va_arg(args,uint32_t);
-        uitoa(u,p,16);
+        uitoa(va_arg(ap,uint32_t),p,16);
         p += strlen(p);
         break;
       default:
         break;
     }
-
   }
 
   *p = '\0';
@@ -143,9 +135,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   char *p;
-  char *s;
-  int d;
-  uint32_t u;
 
   va_start(args,fmt);
   for(p = out; *fmt; fmt++)
@@ -163,8 +152,7 @@ int sprintf(char *out, const char *fmt, ...) {
     {
       case 's':
         *p = '\0';
-        s = va_arg(args,char *);
-        strcat(p,s);
+        strcat(p,va_arg(args,char *));
         p += strlen(p);
         break;
       case 'c':
@@ -172,19 +160,16 @@ int sprintf(char *out, const char *fmt, ...) {
         p++;
         break;
       case 'd':
-        d = va_arg(args,int);
-        itoa(d,p,10);
+        itoa(va_arg(args,int),p,10);
         p += strlen(p);
         break;
       case 'x':
-        u = va_arg(args,uint32_t);
-        uitoa(u,p,16);
+        uitoa(va_arg(args,uint32_t),p,16);
         p += strlen(p);
         break;
       default:
-        break;
+        assert(0);
     }
-
   }
 
   *p = '\0';
