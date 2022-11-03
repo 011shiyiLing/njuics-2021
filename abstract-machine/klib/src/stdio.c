@@ -90,7 +90,7 @@ char *uitoa(uint32_t value,char *str, int radix)
 
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  va_list args = ap;
+  /*va_list args = ap;
   char *p;
   char *s;
   int d;
@@ -135,7 +135,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
   }
 
-  *p = '\0';
+  *p = '\0';*/
   return 0;
 }
 
@@ -194,14 +194,14 @@ int sprintf(char *out, const char *fmt, ...) {
 
 int printf(const char *fmt,...)
 {
-  char buf[256];
+  /*char buf[256];
   va_list args;
   memset(buf,0,sizeof(buf));
   va_start(args,fmt);
   vsprintf(buf,fmt,args);
   va_end(args);
 
-  putstr(buf);
+  putstr(buf);*/
   return 0;
   
 }
