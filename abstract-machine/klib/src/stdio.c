@@ -6,9 +6,9 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 
-/*char *itoa(int value, char *str, int radix)
+char *itoa(int value, char *str, int radix)
 {
-  char reverse[256];
+  char reverse[1000];
   int sign = value;
   char *p = reverse;
   *p++ = '\0';
@@ -39,7 +39,7 @@
 
 char *uitoa(uint32_t value,char *str, int radix)
 {
-  char reverse[256];
+  char reverse[1000];
   char *p = reverse;
   *p++ = '\0';
 
@@ -57,7 +57,7 @@ char *uitoa(uint32_t value,char *str, int radix)
   }
   return str;
 
-}*/
+}
 
 /*char *gcvt(double value,int ndigit,char *buf)
 {
