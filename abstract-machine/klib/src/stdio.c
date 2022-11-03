@@ -8,7 +8,7 @@
 
 char *itoa(int value, char *str, int radix)
 {
-  char reverse[1000];
+  char reverse[1000000];
   int sign = value;
   char *p = reverse;
   *p++ = '\0';
@@ -39,7 +39,7 @@ char *itoa(int value, char *str, int radix)
 
 char *uitoa(uint32_t value,char *str, int radix)
 {
-  char reverse[1000];
+  char reverse[100000000];
   char *p = reverse;
   *p++ = '\0';
 
