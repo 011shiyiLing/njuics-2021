@@ -90,7 +90,7 @@ char *uitoa(uint32_t value,char *str, int radix)
 
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  /*va_list args = ap;
+  va_list args = ap;
   char *p;
   char *s;
   int d;
@@ -136,13 +136,12 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   }
 
   *p = '\0';
-  return 0;*/
-  panic("Not implemented");
+  return 0;
 }
 
 
 int sprintf(char *out, const char *fmt, ...) {
-  /*va_list args;
+  va_list args;
   char *p;
   char *s;
   int d;
@@ -190,13 +189,12 @@ int sprintf(char *out, const char *fmt, ...) {
 
   *p = '\0';
   va_end(args);
-  return 0;*/
-  panic("Not implemented");
+  return 0;
 }
 
 int printf(const char *fmt,...)
 {
-  /*char buf[256];
+  char buf[1000];
   va_list args;
   memset(buf,0,sizeof(buf));
   va_start(args,fmt);
@@ -204,8 +202,7 @@ int printf(const char *fmt,...)
   va_end(args);
 
   putstr(buf);
-  return 0;*/
-  panic("Not implemented");
+  return 0;
   
 }
 
