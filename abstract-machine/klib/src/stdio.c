@@ -203,14 +203,14 @@ int sprintf(char *out, const char *fmt, ...) {
 
 int printf(const char *fmt,...)
 {
-  char buf[256];
+  /*char buf[256];
   va_list args;
   memset(buf,0,sizeof(buf));
   va_start(args,fmt);
   vsprintf(buf,fmt,args);
   va_end(args);
 
-  putstr(buf);
+  putstr(buf);*/
   return 0;
   
 }
