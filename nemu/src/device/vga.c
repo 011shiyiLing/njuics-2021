@@ -31,7 +31,7 @@ static uint32_t screen_size() {
   return screen_width() * screen_height() * sizeof(uint32_t);
 }
 
-static void *vmem = NULL;
+static void *vmem = NULL; 
 static uint32_t *vgactl_port_base = NULL;
 
 #ifdef CONFIG_VGA_SHOW_SCREEN
@@ -73,6 +73,9 @@ static inline void update_screen() {
 void vga_update_screen() {
   // TODO: call `update_screen()` when the sync register is non-zero,
   // then zero out the sync register
+  //if(AM_GPU_RENDER.root !=0) update_screen();
+  //AM_GPU_RENDER.root = 0;
+
 }
 
 void init_vga() {
