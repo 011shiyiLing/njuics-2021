@@ -66,7 +66,7 @@ enum
 #define immJ()                                                                                                            \
   do                                                                                                                      \
   {                                                                                                                       \
-    *imm = (SEXT(BITS(i, 31, 31), 1) << 20) | (BITS(i, 19, 12) << 12) | (BITS(i, 20, 20) << 11) | (BITS(i, 30, 21) << 1); \
+    *imm = (SEXT(BITS(i, 31, 31), 1) << 21) | (BITS(i, 19, 12) << 13) | (BITS(i, 20, 20) << 12) | (BITS(i, 30, 21) << 1); \
   } while (0)
 #define immB()                                                                                                        \
   do                                                                                                                  \
