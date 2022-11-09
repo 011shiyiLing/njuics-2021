@@ -25,7 +25,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
+  /*int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   if (w == 0 || h == 0) return;
 
   int cp_bytes = w * sizeof(uint32_t);
@@ -33,7 +33,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   for(int j=0;j<h;j++)
   {
     memcpy(&fb[(y+j)*w+x],ctl->pixels,cp_bytes);
-  }
+  }*/
   if (ctl->sync) {
     outl(SYNC_ADDR,1);
   }
