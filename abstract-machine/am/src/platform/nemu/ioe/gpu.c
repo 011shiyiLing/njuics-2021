@@ -28,11 +28,8 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   uint32_t *pixels = ctl->pixels;
   if (w == 0 || h == 0) return;
-  //t = min(w,W-x)
-  int t = w;
-  if(w > W - x) t = W-x;
 
-  int cp_bytes = t * sizeof(uint32_t);
+  int cp_bytes = w * sizeof(uint32_t);
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for(int j=0;j<h && y+j < H;j++)
   {
