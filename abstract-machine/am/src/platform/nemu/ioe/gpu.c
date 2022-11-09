@@ -30,10 +30,14 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 
   int cp_bytes = w * sizeof(uint32_t);
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for(int j=0;j<h;j++)
+  for(int i=0;i<w;i++)
   {
-    memcpy(&fb[(y+j)*w+x],ctl->pixels,cp_bytes);
+    for(int j=0;j<h;j++)
+    {
+      memcpy(&fb[x*w+y*h],ctl->pixels,cp_bytes);
+    }
   }
+
   if (ctl->sync) {
     outl(SYNC_ADDR,1);
   }
