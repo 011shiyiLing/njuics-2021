@@ -11,7 +11,7 @@ char *itoa(int value, char *str, int radix)
   char reverse[36];
   int sign = value;
   char *p = reverse;
-  *p++ = '\0';
+  //*p++ = '\0';
   value = (value >= 0) ? value : -value;
 
   while(value >= 0)
@@ -41,7 +41,7 @@ char *uitoa(uint32_t value,char *str, int radix)
 {
   char reverse[36];
   char *p = reverse;
-  *p++ = '\0';
+  //*p++ = '\0';
 
   while(value != 0)
   {
