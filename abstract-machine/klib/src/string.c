@@ -65,7 +65,7 @@ char *strcat(char *dst, const char *src) {
     src++;
     dst++;
   }
-  *dst = '\0';
+  //*dst = '\0';
   return res;
 }
 
