@@ -14,11 +14,11 @@ char *itoa(int value, char *str, int radix)
   *p++ = '\0';
   value = (value >= 0) ? value : -value;
 
-  while(value > 0)
+  while(value >= 0)
   {
     *p++ = "0123456789abcdef"[value%radix];
     value /= radix;
-    //if (value == 0) break;
+    if (value == 0) break;
   }
   
   if(sign < 0)
@@ -59,35 +59,6 @@ char *uitoa(uint32_t value,char *str, int radix)
 
 }
 
-/*char *gcvt(double value,int ndigit,char *buf)
-{
-  char temp[72];
-  int int_part;
-  double float_part;
-
-  int_part = (int)value;
-  float_part = value - int_part;
-  if (float_part < 0) float_part = -float_part;
-
-  itoa(int_part,temp,10);
-
-  char *p = temp;
-  while(*p != '\0') p++;
-  *p = '.';
-  
-  while(ndigit > 0 && float_part > 0.00000001)
-  {
-    *p = (int)(float_part*10) + '0';
-    p++;
-    float_part = (float_part * 10) - (int)(float_part*10);
-    ndigit--;
-  }
-
-  *p = '\0';
-  strcpy(buf,temp);
-  return buf;
-}*/
-
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   char *p;
@@ -110,10 +81,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         strcat(p,va_arg(ap,char *));
         p += strlen(p);
         break;
-      case 'c':
-        *p = va_arg(ap,int);
-        p++;
-        break;
       case 'd':
         itoa(va_arg(ap,int),p,10);
         p += strlen(p);
@@ -134,7 +101,10 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
-  char *p;
+  va_start(args,fmt);
+  vsprintf(out,fmt,args);
+  va_end(args);
+  /*char *p;
 
   va_start(args,fmt);
   for(p = out; *fmt; fmt++)
@@ -155,10 +125,6 @@ int sprintf(char *out, const char *fmt, ...) {
         strcat(p,va_arg(args,char *));
         p += strlen(p);
         break;
-      case 'c':
-        *p = va_arg(args,int);
-        p++;
-        break;
       case 'd':
         itoa(va_arg(args,int),p,10);
         p += strlen(p);
@@ -173,7 +139,7 @@ int sprintf(char *out, const char *fmt, ...) {
   }
 
   *p = '\0';
-  va_end(args);
+  va_end(args);*/
   return 0;
 }
 
