@@ -67,8 +67,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   {
     if(*fmt != '%')
     {
-      *p = *fmt;
-      p++;
+      *p++ = *fmt;
       continue;
     }
 
@@ -76,15 +75,15 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   
     switch (*fmt)
     {
-      case 's':
-        *p = '\0';
-        strcat(p,va_arg(ap,char *));
-        p += strlen(p);
-        break;
       case 'd':
         itoa(va_arg(ap,int),p,10);
         p += strlen(p);
         break;
+      /*case 's':
+        *p = '\0';
+        strcat(p,va_arg(ap,char *));
+        p += strlen(p);
+        break;*/
       case 'x':
         uitoa(va_arg(ap,uint32_t),p,16);
         p += strlen(p);
@@ -94,7 +93,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
   }
 
-  //*p = '\0';
+  *p = '\0';
   return 0;
 }
 
