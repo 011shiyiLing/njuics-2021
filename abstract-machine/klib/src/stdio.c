@@ -76,12 +76,12 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   
     switch (*fmt)
     {
-      /*case 's':
+      case 's':
         *p = '\0';
         strcat(p,va_arg(ap,char *));
         p += strlen(p);
         break;
-      case 'd':
+      /*case 'd':
         itoa(va_arg(ap,int),p,10);
         p += strlen(p);
         break;
