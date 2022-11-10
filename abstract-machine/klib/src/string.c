@@ -54,7 +54,6 @@ char *strncpy(char *dst, const char *src, size_t n) {
 }
 
 char *strcat(char *dst, const char *src) {
-  assert(dst && src);
   char *res = dst;
   while(*dst != '\0')
   {
