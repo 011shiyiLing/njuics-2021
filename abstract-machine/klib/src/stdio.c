@@ -72,6 +72,19 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
 
     fmt++;
+
+    if(*fmt == '0')
+    {
+      fmt ++;
+      int bit = atoi(fmt);
+      for(int i=0;i<bit; i++)
+      {
+        *p = '0';
+        p++;
+      }
+      fmt++;
+      continue;
+    }
   
     switch (*fmt)
     {
@@ -88,8 +101,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         uitoa(va_arg(ap,uint32_t),p,16);
         p += strlen(p);
         break;
-      case '0':
-        *p++ = '0';
       default:
         break;
     }
