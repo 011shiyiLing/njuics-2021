@@ -79,7 +79,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       case 's':
         *p = '\0';
         strcat(p,va_arg(ap,char *));
-        //p += strlen(p);
+        p += strlen(p);
         break;
       case 'd':
         itoa(va_arg(ap,int),p,10);
