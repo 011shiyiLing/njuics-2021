@@ -78,7 +78,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     {
       case 's':
         *p = '\0';
-        //strcat(p,va_arg(ap,char *));
+        strcat(p,va_arg(ap,char *));
         p += strlen(p);
         break;
       case 'd':
@@ -94,7 +94,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
   }
 
-  *p = '\0';
+  //*p = '\0';
   return 0;
 }
 
