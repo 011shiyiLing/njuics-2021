@@ -104,42 +104,7 @@ int sprintf(char *out, const char *fmt, ...) {
   va_start(args,fmt);
   vsprintf(out,fmt,args);
   va_end(args);
-  /*char *p;
-
-  va_start(args,fmt);
-  for(p = out; *fmt; fmt++)
-  {
-    if(*fmt != '%')
-    {
-      *p = *fmt;
-      p++;
-      continue;
-    }
-
-    fmt++;
-  
-    switch (*fmt)
-    {
-      case 's':
-        *p = '\0';
-        strcat(p,va_arg(args,char *));
-        p += strlen(p);
-        break;
-      case 'd':
-        itoa(va_arg(args,int),p,10);
-        p += strlen(p);
-        break;
-      case 'x':
-        uitoa(va_arg(args,uint32_t),p,16);
-        p += strlen(p);
-        break;
-      default:
-        assert(0);
-    }
-  }
-
-  *p = '\0';
-  va_end(args);*/
+ 
   return 0;
 }
 
