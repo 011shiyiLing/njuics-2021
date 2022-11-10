@@ -14,11 +14,11 @@ char *itoa(int value, char *str, int radix)
   *p++ = '\0';
   value = (value >= 0) ? value : -value;
 
-  while(value >= 0)
+  while(value > 0)
   {
     *p++ = "0123456789abcdef"[value%radix];
     value /= radix;
-    if (value == 0) break;
+    //if (value == 0) break;
   }
   
   if(sign < 0)
@@ -123,7 +123,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         p += strlen(p);
         break;
       default:
-        break;
+        assert(0);
     }
   }
 
