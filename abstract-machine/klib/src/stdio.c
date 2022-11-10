@@ -76,7 +76,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   
     switch (*fmt)
     {
-      case 's':
+      /*case 's':
         *p = '\0';
         strcat(p,va_arg(ap,char *));
         p += strlen(p);
@@ -88,7 +88,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       case 'x':
         uitoa(va_arg(ap,uint32_t),p,16);
         p += strlen(p);
-        break;
+        break;*/
       default:
         assert(0);
     }
@@ -110,7 +110,7 @@ int sprintf(char *out, const char *fmt, ...) {
 
 int printf(const char *fmt,...)
 {
-  char buf[256];
+  char buf[1000];
   va_list args;
   memset(buf,0,sizeof(buf));
   va_start(args,fmt);
