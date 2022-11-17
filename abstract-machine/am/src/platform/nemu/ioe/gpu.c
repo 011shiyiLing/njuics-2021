@@ -15,14 +15,14 @@ void __am_gpu_init() {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
-  //uint32_t info = inl(VGACTL_ADDR);
-  //uint16_t width = (uint16_t)(info >> 16);
-  //uint16_t height = (uint16_t)(info & 0xffff);
+  uint32_t info = inl(VGACTL_ADDR);
+  uint16_t width = (uint16_t)(info >> 16);
+  uint16_t height = (uint16_t)(info & 0xffff);
 
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
-    .width = 300, 
-    .height = 400,
+    .width = width, 
+    .height = height,
     .vmemsz = 0
   };
 }
