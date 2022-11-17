@@ -3,37 +3,46 @@
 #include <string.h>
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
-# define W    400
-# define H    300
+
 
 void __am_gpu_init() {
   int i;
-  int w = W;//TODO:get the correct width
-  int h = H;//TODO:get the correct height
+  int w = io_read(AM_GPU_CONFIG).width;//TODO:get the correct width
+  int h = io_read(AM_GPU_CONFIG).height;//TODO:get the correct height
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for(i=0; i<w*h;i++) fb[i] = i;
   outl(SYNC_ADDR,1);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
+  uint32_t info = inl(VGACTL_ADDR);
+  uint16_t width = (uint16_t)(info >> 16);
+  uint16_t height = (uint16_t)(info & 0xffff);
+
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
-    .width = W, 
-    .height = H,
+    .width = width, 
+    .height = height,
     .vmemsz = 0
   };
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
-  uint32_t *pixels = ctl->pixels;
-  if (w == 0 || h == 0) return;
-  int cp_bytes = w * sizeof(uint32_t);
+  uint32_t *pixels = (uint32_t*)(uintptr_t)ctl->pixels;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for(int j=0;j<h && y+j < H;j++)
+
+  int W = io_read(AM_GPU_CONFIG).width;
+
+  if (w == 0 || h == 0) return;
+  //int cp_bytes = w * sizeof(uint32_t);
+  
+  for(int i=0; i<h; i++)
   {
-    memcpy(&fb[(y+j)*W+x],pixels,cp_bytes);
-    pixels += w;
+    for(int j=0; j<w; j++)
+    {
+      fb[y*W + i*W + x + j] = pixels[i*w + j];
+    }
   }
 
   if (ctl->sync) {
