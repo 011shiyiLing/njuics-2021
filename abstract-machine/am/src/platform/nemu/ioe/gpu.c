@@ -34,7 +34,6 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 
   int win_weight = io_read(AM_GPU_CONFIG).width;
 
-  if (w == 0 || h == 0) return;
   //int cp_bytes = w * sizeof(uint32_t);
   
   for(int i=0; i<h; ++i)
