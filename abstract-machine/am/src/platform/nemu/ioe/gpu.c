@@ -30,21 +30,20 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
-  uint32_t *pixels = ctl->pixels;
+  uint32_t *pixels = (uint32_t*)(uintptr_t)ctl->pixels;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 
   int win_weight = io_read(AM_GPU_CONFIG).width;
-  int win_height = io_read(AM_GPU_CONFIG).height;
 
-  /*for(int i=0; i<h; ++i)
+  for(int i=0; i<h; ++i)
   {
     for(int j=0; j<w; ++j)
     {
       fb[y*win_weight + i*win_weight + x + j] = pixels[i*w + j];
     }
-  }*/
+  }
   
-  int cp_bytes;
+  /*int cp_bytes;
   if(w < win_weight - x)
   {
     cp_bytes = sizeof(uint32_t)*w;
@@ -57,7 +56,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   {
     memcpy(&fb[(y+j)*win_height + x],pixels,cp_bytes);
     pixels += w;
-  }
+  }*/
 
   if (ctl->sync) {
     outl(SYNC_ADDR,1);
