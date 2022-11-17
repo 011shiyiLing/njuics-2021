@@ -37,9 +37,9 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   if (w == 0 || h == 0) return;
   //int cp_bytes = w * sizeof(uint32_t);
   
-  for(int i=0; i<h; i++)
+  for(int i=0; i<h; ++i)
   {
-    for(int j=0; j<w; j++)
+    for(int j=0; j<w; ++j)
     {
       fb[y*W + i*W + x + j] = pixels[i*w + j];
     }
