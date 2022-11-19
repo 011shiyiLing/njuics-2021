@@ -101,8 +101,8 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 }
 
 void *memset(void *s, int c, size_t n) {
-  assert(s);
-  if(n < 0) assert(0);
+  //assert(s);
+  //if(n < 0) assert(0);
 
   char* temp = (char*) s;
   while (n != 0)
