@@ -55,7 +55,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   isa_exec_once(s);
   cpu.pc = s->dnpc;//dynamic next PC(in the program execution)
 
-  //write_ring_buffer(iringbuf,cpu.pc);
+  write_ring_buffer(iringbuf,cpu.pc);
 
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
