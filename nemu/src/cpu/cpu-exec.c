@@ -33,7 +33,7 @@ CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
-static ring_buffer_t* iringbuf;
+//static ring_buffer_t* iringbuf;
 
 void device_update();
 
@@ -55,7 +55,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   isa_exec_once(s);
   cpu.pc = s->dnpc;//dynamic next PC(in the program execution)
 
-  write_ring_buffer(iringbuf,cpu.pc);
+  //write_ring_buffer(iringbuf,cpu.pc);
 
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
@@ -127,7 +127,7 @@ void cpu_exec(uint64_t n) {
   
   uint64_t timer_start = get_time();
 
-  iringbuf = ring_buffer_create_init(10);//creat and init the iringbuf,length = 10
+  //iringbuf = ring_buffer_create_init(10);//creat and init the iringbuf,length = 10
 
   execute(n);
 
