@@ -12,7 +12,7 @@
 *
 * See the Mulan PSL v2 for more details.
 ***************************************************************************************/
-volatile static int dummy;
+
 #ifndef __DEBUG_H__
 #define __DEBUG_H__
 
@@ -41,3 +41,4 @@ volatile static int dummy;
 #define TODO() panic("please implement me")
 
 #endif
+volatile static int dummy;
