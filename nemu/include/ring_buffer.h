@@ -1,5 +1,5 @@
 typedef struct{
-  uint32_t *buff;
+  unsigned *buff;
   int length;
   int head;
   int tail;
@@ -8,7 +8,7 @@ typedef struct{
 ring_buffer_t *ring_buffer_create_init(int length)
 {
     ring_buffer_t *tmp_ring_buffer = (ring_buffer_t *)malloc(sizeof(ring_buffer_t));
-    tmp_ring_buffer->buff = (uint32_t *)malloc(length);
+    tmp_ring_buffer->buff = (unsigned *)malloc(length);
     memset(tmp_ring_buffer->buff, 0, length);
 
     //init
@@ -21,7 +21,7 @@ ring_buffer_t *ring_buffer_create_init(int length)
 
 
 //write a byte
-void write_ring_buffer(ring_buffer_t *ring_buffer, uint32_t data)
+void write_ring_buffer(ring_buffer_t *ring_buffer, unsigned data)
 {
     ring_buffer->buff[ring_buffer->head] = data;
     ring_buffer->head++;
@@ -33,19 +33,20 @@ void write_ring_buffer(ring_buffer_t *ring_buffer, uint32_t data)
 }
 
 //read a byte
-int read_ring_buffer_byte(ring_buffer_t *ring_buffer, uint32_t *data)
+unsigned read_ring_buffer_byte(ring_buffer_t *ring_buffer)
 {
     if(ring_buffer->head == ring_buffer->tail)
     {
         return -1;
     }
-
-    *data = ring_buffer->buff[ring_buffer->tail];
+    
+    unsigned data = ring_buffer->buff[ring_buffer->tail];
     ring_buffer->tail++;
+
     if(ring_buffer->tail == ring_buffer->length){
 	    ring_buffer->tail = 0;
     }
 
-    return 0;
+    return data;
 }
 

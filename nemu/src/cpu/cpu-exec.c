@@ -19,7 +19,7 @@
 #include <locale.h>
 #include <sdb.h>
 #include <cpu/ifetch.h>
-//#include <cpu/ring_buffer.h>
+#include <ring_buffer.h>
 
 
 /* The assembly code of instructions executed is only output to the screen
@@ -33,6 +33,7 @@ CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
+static ring_buffer_t* iringbuf;
 
 void device_update();
 
@@ -53,7 +54,9 @@ static void exec_once(Decode *s, vaddr_t pc) {
   s->snpc = pc;//static next PC(in codes)
   isa_exec_once(s);
   cpu.pc = s->dnpc;//dynamic next PC(in the program execution)
-  
+
+  write_ring_buffer(iringbuf,cpu.pc);
+
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
@@ -83,7 +86,15 @@ static void execute(uint64_t n) {
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
 
-    if (nemu_state.state != NEMU_RUNNING) break;
+    if (nemu_state.state != NEMU_RUNNING) 
+    {
+      for(int i=0;i<10;i++)
+      {
+        uint32_t data = read_ring_buffer_byte(iringbuf);
+        printf("%d",data);
+      }
+      break;
+    }
 
     IFDEF(CONFIG_DEVICE, device_update());
   }
@@ -115,6 +126,8 @@ void cpu_exec(uint64_t n) {
 
   
   uint64_t timer_start = get_time();
+
+  iringbuf = ring_buffer_create_init(10);//creat and init the iringbuf,length = 10
 
   execute(n);
 
