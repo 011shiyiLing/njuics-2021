@@ -4,11 +4,13 @@
 static uint64_t boot_time;
 void __am_timer_init() {
   boot_time = (uint64_t)(inl(RTC_ADDR));
+  //printf("%d\n",boot_time);
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   __am_timer_init();
   uint64_t now_time = (uint64_t)(inl(RTC_ADDR + 4));
+  //printf("%d\n",now_time);
   uptime->us = boot_time - now_time;
 }
 
