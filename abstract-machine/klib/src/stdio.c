@@ -73,19 +73,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
     fmt++;
 
-    /*if(*fmt == '0')
-    {
-      fmt ++;
-      int bit = atoi(fmt);
-      for(int i=0;i<bit; i++)
-      {
-        *p = '0';
-        p++;
-      }
-      fmt++;
-      continue;
-    }*/
-  
     switch (*fmt)
     {
       case 'd':
