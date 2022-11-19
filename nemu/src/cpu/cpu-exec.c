@@ -88,11 +88,11 @@ static void execute(uint64_t n) {
 
     if (nemu_state.state != NEMU_RUNNING) 
     {
-      for(int i=0;i<10;i++)
+      /*for(int i=0;i<10;i++)
       {
         uint32_t data = read_ring_buffer_byte(iringbuf);
         printf("%d",data);
-      }
+      }*/
       break;
     }
 
