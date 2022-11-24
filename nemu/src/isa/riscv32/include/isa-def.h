@@ -20,14 +20,10 @@
 
 typedef struct {
   word_t gpr[32];
+  word_t csr[3];
   vaddr_t pc;
 } riscv32_CPU_state;
 
-typedef struct{
-  word_t mepc;
-  word_t mcause;
-  word_t mtvec;
-}riscv32_CSR_state;
 
 // decode
 typedef struct {
