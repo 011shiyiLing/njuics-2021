@@ -217,7 +217,7 @@ static int decode_exec(Decode *s)
 
  
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak, N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall, I, bool success = true; word_t NO = isa_reg_str2val("a7", &success);if(!success) assert(0);vaddr_t addr = isa_raise_intr(NO,s->pc);s->dnpc = addr);
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall, N, bool success = true; word_t NO = isa_reg_str2val("a7", &success);if(!success) assert(0);vaddr_t addr = isa_raise_intr(NO,s->pc);s->dnpc = addr);
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret, N, s->dnpc = cpu.csr[0]);
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv, N, INV(s->pc));
   INSTPAT_END();
