@@ -112,7 +112,7 @@ int sprintf(char *out, const char *fmt, ...) {
 
 int printf(const char *fmt,...)
 {
-  char buf[1024];
+  char buf[2048];
   va_list args;
   memset(buf,0,sizeof(buf));
   va_start(args,fmt);
