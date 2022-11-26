@@ -142,23 +142,27 @@ static int decode_exec(Decode *s)
   INSTPAT("??????? ????? ????? 101 ????? 00000 11", lhu, I, R(dest) = Mr(src1 + imm, 2));
   INSTPAT("??????? ????? ????? 010 ????? 00100 11", slti, I, sword_t t = (sword_t)src1; sword_t p = (sword_t)imm; R(dest) = (t < p) ?1:0);
   INSTPAT("??????? ????? ????? 000 ????? 00000 11", lb, I, R(dest) = Mr(src1 + imm, 1));
-  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw, I,switch(imm)
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw, I,word_t t ;switch(imm)
   {
     case 0x300://mstatus
-      R(dest) = cpu.csr[3];
+      t = cpu.csr[3];
       cpu.csr[3] = src1;
+      R(dest) = t;
       break;
     case 0x305://mtvec 
-      R(dest) = cpu.csr[0];
+      t = cpu.csr[0];
       cpu.csr[0] = src1;
+      R(dest) = t;
       break;
     case 0x341://mepc
-      R(dest) = cpu.csr[1];
+      t = cpu.csr[1];
       cpu.csr[1] = src1;
+      R(dest) = t;
       break;
     case 0x342://mcause
-      R(dest) =  cpu.csr[2];
+      t =  cpu.csr[2];
       cpu.csr[2] = src1;
+      R(dest) = t;
       break;
     default:
       assert(0);
@@ -217,7 +221,7 @@ static int decode_exec(Decode *s)
 
  
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak, N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall, N, /*bool success = true; word_t no = isa_reg_str2val("a7", &success);*/s->dnpc = isa_raise_intr(cpu.gpr[17],s->snpc));
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall, I, /*bool success = true; word_t no = isa_reg_str2val("a7", &success);*/s->dnpc = isa_raise_intr(cpu.gpr[17],s->snpc));
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret, N, s->dnpc = cpu.csr[1]);//mepc
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv, N, INV(s->pc));
   INSTPAT_END();
