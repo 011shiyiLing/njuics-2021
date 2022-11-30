@@ -16,7 +16,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Phdr phdr; //programming header table
   ramdisk_read(&ehdr,0,sizeof(ehdr));
   ramdisk_read(&phdr,ehdr.e_ehsize,sizeof(phdr)*ehdr.e_phnum);
-  assert(*(uint32_t *)ehdr.e_ident == 0x7f454c46); // check magic number
+  //assert(*(uint32_t *)ehdr.e_ident == 0x7f454c46); // check magic number
 
   for(int i=0; i<ehdr.e_phnum;i++)
   {
