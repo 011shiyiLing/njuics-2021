@@ -14,15 +14,15 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr ehdr;
   ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
-  Elf_Phdr phdr[ehdr.e_phnum]; //programming header table
-  ramdisk_read(phdr,ehdr.e_ehsize,sizeof(Elf_Phdr)*ehdr.e_phnum);
+  Elf_Phdr phdr; //programming header table
+  ramdisk_read(&phdr,ehdr.e_ehsize,sizeof(Elf_Phdr)*ehdr.e_phnum);
   //assert(*(uint32_t *)ehdr.e_ident == 0x7f454c46); // check magic number
 
   for(int i=0; i<ehdr.e_phnum;i++)
   {
-    if(phdr[i].p_type != PT_LOAD) continue;
-    ramdisk_read((void *)(phdr[i].p_vaddr),phdr[i].p_offset,phdr[i].p_memsz);//
-    memset((void *)(phdr[i].p_vaddr + phdr[i].p_filesz), 0, (phdr[i].p_memsz-phdr[i].p_filesz));//将[VirtAddr + FileSiz, VirtAddr + MemSiz)对应的物理区间清零.
+    if(phdr.p_type != PT_LOAD) continue;
+    ramdisk_read((void *)(phdr.p_vaddr),phdr.p_offset,phdr.p_memsz);//
+    memset((void *)(phdr.p_vaddr + phdr.p_filesz), 0, (phdr.p_memsz-phdr.p_filesz));//将[VirtAddr + FileSiz, VirtAddr + MemSiz)对应的物理区间清零.
   }
 
   //return 0;
