@@ -14,9 +14,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr ehdr;
   ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
+  assert(*(uint32_t *)ehdr.e_ident == 0x464c457f); //检查魔数（注意是小端排列）
+
   Elf_Phdr phdr[ehdr.e_phnum]; //programming header table
   ramdisk_read(phdr,ehdr.e_ehsize,sizeof(Elf_Phdr)*ehdr.e_phnum);
-  assert(*(uint32_t *)ehdr.e_ident == 0x464c457f); // check magic number
 
   for(int i=0; i<ehdr.e_phnum;i++)
   {
