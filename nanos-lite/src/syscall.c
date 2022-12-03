@@ -15,7 +15,8 @@ int sys_write(int fd,void *buf,size_t count)
   {
     for(int i=0; i<count; i++)
     {
-      putch(*((char *)buf + i));
+      putch(*(char *)buf);
+      buf++;
     }
     return count;
   }
