@@ -9,21 +9,17 @@ void sys_exit(int status)
   halt(status);
 }
 
-void sys_write(Context *c)
+int sys_write(int fd,void *buf,size_t count)
 {
-  int fd = (int)c->GPR2;
-  char * b = (char *)c->GPR3;
-  size_t count = (size_t)c->GPR4;
-
   if(fd == 1 || fd == 2)
   {
     for(int i=0; i<count; i++)
     {
-      putch(*b);
-      b++;
+      putch(*((char *)buf + i));
     }
-    c->GPRx = count;
+    return count;
   }
+  return -1;
 }
 
 //STRACE(system call trace)
@@ -51,7 +47,7 @@ void do_syscall(Context *c) {
       c->GPRx = 0;
       break;
     case 4://SYS_write
-      sys_write(c);
+      c->GPRx = sys_write((int)a[1],(void *)a[2],(size_t)a[3]);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
