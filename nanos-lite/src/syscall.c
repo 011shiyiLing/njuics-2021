@@ -9,7 +9,7 @@ void sys_exit(int status)
   halt(status);
 }
 
-int sys_write(int fd,void * buf,size_t count)
+size_t sys_write(int fd,void * buf,size_t count)
 {
   if(fd == 1 || fd == 2)
   {
