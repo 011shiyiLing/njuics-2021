@@ -1,9 +1,6 @@
 #include <common.h>
 #include "syscall.h"
 
-#define STRACE 1
-#undef STRACE
-
 //functions sys_xxx() definations
 extern void yield();
 void sys_exit(int status)
@@ -14,10 +11,8 @@ void sys_exit(int status)
 //STRACE(system call trace)
 static void strace(Context *c)
 {
-  #ifdef STRACE
-    printf("System call trace:\nmcause:\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
-    c->mcasue,c->GPR1,c->GPR2,c->GPR3,c->GPR4);
-  #endif  
+  Log("System call trace:\nmcause:\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
+  c->mcause,c->GPR1,c->GPR2,c->GPR3,c->GPR4); 
 }
 
 void do_syscall(Context *c) {
