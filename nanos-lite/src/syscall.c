@@ -1,11 +1,28 @@
 #include <common.h>
 #include "syscall.h"
+#include <unistd.h>
 
 //functions sys_xxx() definations
 extern void yield();
 void sys_exit(int status)
 {
   halt(status);
+}
+
+int sys_write(int fd,void * buf,size_t count)
+{
+  if(fd == 1 || fd == 2)
+  {
+    for(int i=0; i<count; i++)
+    {
+      putch(*(((char *)buf) + i));
+    }
+    return count;
+  }
+  else
+  {
+    return -1;
+  }
 }
 
 //STRACE(system call trace)
@@ -32,14 +49,14 @@ void do_syscall(Context *c) {
       yield(); 
       c->GPRx = 0;
       break;
+    case 4://SYS_write
+      c->GPRx = sys_write((int)a[1],(void *)a[2],(size_t)a[3]);
+      break;
     /*case 2: //SYS_open
       c->GPRx = _open((const char *)c->GPR2,(int)c->GPR3,(mode_t)c->GPR4);
       break;
     case 3://SYS_read
       c->GPRx = _read((int)c->GPR2,(void *)c->GPR3,(size_t)c->GPR4);
-      break;
-    case 4://SYS_write
-      c->GPRx = _write((int)c->GPR2,(void *)c->GPR3,(size_t)c->GPR4);
       break;
     case 5://SYS_kill
       c->GPRx = _kill((int)c->GPR2,(int)c->GPR3);
