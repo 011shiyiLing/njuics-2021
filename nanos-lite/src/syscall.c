@@ -24,11 +24,11 @@ int sys_write(int fd,void *buf,size_t count)
 }
 
 //STRACE(system call trace)
-static void strace(Context *c)
+/*static void strace(Context *c)
 {
   Log("System call trace:\nmcause:0x%x\tGPR1:%d\tGPR2:0x%x\tGPR3:0x%x\tGPR4:0x%x\n",
   c->mcause,c->GPR1,c->GPR2,c->GPR3,c->GPR4); 
-}
+}*/
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -37,7 +37,7 @@ void do_syscall(Context *c) {
   a[2] = c->GPR3;
   a[3] = c->GPR4;
 
-  strace(c);
+  //strace(c);
 
   switch (a[0]) {
     case 0: //SYS_exit 结束运行
