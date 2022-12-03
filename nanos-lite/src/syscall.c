@@ -15,7 +15,7 @@ void sys_exit(int status)
 static void strace(Context *c)
 {
   #ifdef STRACE
-    Log("System call trace:\nmcause:\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
+    printf("System call trace:\nmcause:\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
     c->mcasue,c->GPR1,c->GPR2,c->GPR3,c->GPR4);
   #endif  
 }
