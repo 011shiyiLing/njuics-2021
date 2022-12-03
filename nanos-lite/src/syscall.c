@@ -11,7 +11,7 @@ void sys_exit(int status)
 //STRACE(system call trace)
 static void strace(Context *c)
 {
-  Log("System call trace:\nmcause:\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
+  Log("System call trace:\nmcause:0x%x\tGPR1:%d\tGPR2:0x%x\tGPR3:0x%x\tGPR4:0x%x\n",
   c->mcause,c->GPR1,c->GPR2,c->GPR3,c->GPR4); 
 }
 
