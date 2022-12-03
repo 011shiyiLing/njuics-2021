@@ -26,14 +26,14 @@ void do_syscall(Context *c) {
   a[0] = c->GPR1;
 
   switch (a[0]) {
-    /*case 0: //SYS_exit
-      _exit((int)(c->GPR2));
-      break; 
+    //case 0: //SYS_exit
+      //_exit((int)(c->GPR2));
+      //break; 
     case 1://SYS_yield
       yield(); 
       c->GPRx = 0;
       break;
-    case 2: //SYS_open
+    /*case 2: //SYS_open
       c->GPRx = _open((const char *)c->GPR2,(int)c->GPR3,(mode_t)c->GPR4);
       break;
     case 3://SYS_read
