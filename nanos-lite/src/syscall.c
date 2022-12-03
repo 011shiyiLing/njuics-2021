@@ -25,7 +25,7 @@ void do_syscall(Context *c) {
   strace(c);
 
   switch (a[0]) {
-    case 0: //SYS_exit
+    case 0: //SYS_exit 结束运行
       sys_exit((int)a[1]);
       break; 
     case 1://SYS_yield
