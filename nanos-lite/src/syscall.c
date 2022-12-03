@@ -1,34 +1,24 @@
 #include <common.h>
 #include "syscall.h"
 
-//function declare
-extern void _exit(int status);
+//functions sys_xxx() definations
 extern void yield();
-/*int _open(const char *path, int flags, mode_t mode);
-int _read(int fd, void *buf, size_t count);
-int _write(int fd, void *buf, size_t count);
-int _kill(int pid, int sig);
-pid_t _getpid();
-int _close(int fd);
-off_t _lseek(int fd, off_t offset, int whence);
-void *_sbrk(intptr_t increment);
-int _fstat(int fd, struct stat *buf);
-int _execve(const char *fname, char * const argv[], char *const envp[]);
-pid_t _fork();
-int _link(const char *d, const char *n);
-int _unlink(const char *n);
-pid_t _wait(int *status);
-clock_t _times(void *buf);
-int _gettimeofday(struct timeval *tv, struct timezone *tz);*/
+void sys_exit(int status)
+{
+  halt(status);
+}
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
+  a[1] = c->GPR2;
+  a[2] = c->GPR3;
+  a[3] = c->GPR4;
 
   switch (a[0]) {
-    //case 0: //SYS_exit
-      //_exit((int)(c->GPR2));
-      //break; 
+    case 0: //SYS_exit
+      sys_exit((int)a[1]);
+      break; 
     case 1://SYS_yield
       yield(); 
       c->GPRx = 0;
