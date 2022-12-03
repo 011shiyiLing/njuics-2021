@@ -9,13 +9,15 @@ void sys_exit(int status)
   halt(status);
 }
 
-size_t sys_write(int fd,void * buf,size_t count)
+int sys_write(int fd,void * buf,size_t count)
 {
+  char * b = (char *)buf;
   if(fd == 1 || fd == 2)
   {
     for(int i=0; i<count; i++)
     {
-      putch(*(((char *)buf) + i));
+      putch(*b);
+      b++;
     }
     return count;
   }
