@@ -1,11 +1,23 @@
 #include <common.h>
 #include "syscall.h"
 
+#define STRACE 1
+#undef STRACE
+
 //functions sys_xxx() definations
 extern void yield();
 void sys_exit(int status)
 {
   halt(status);
+}
+
+//STRACE(system call trace)
+static void strace(Context *c)
+{
+  #ifdef STRACE
+    Log("System call trace:\nmcause:\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
+    c->mcasue,c->GPR1,c->GPR2,c->GPR3,c->GPR4);
+  #endif  
 }
 
 void do_syscall(Context *c) {
@@ -14,6 +26,8 @@ void do_syscall(Context *c) {
   a[1] = c->GPR2;
   a[2] = c->GPR3;
   a[3] = c->GPR4;
+
+  strace(c);
 
   switch (a[0]) {
     case 0: //SYS_exit
