@@ -28,7 +28,6 @@ int sys_brk(void *addr)
   return 0;
 }
 
-
 //STRACE(system call trace)
 static void strace(Context *c)
 {
@@ -57,7 +56,7 @@ void do_syscall(Context *c) {
       c->GPRx = sys_write((int)a[1],(void *)a[2],(size_t)a[3]);
       break;
     case 9://SYS_brk
-      c->GPRx = (int)sys_brk((void *)a[1]);
+      c->GPRx = sys_brk((void *)a[1]);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
