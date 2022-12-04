@@ -69,7 +69,7 @@ void *_sbrk(intptr_t increment) {
   static intptr_t p_brk = (intptr_t)&end;
   intptr_t old_brk = p_brk;
   intptr_t new_brk = p_brk + increment;
-  int flag = _syscall_((intptr_t)SYS_brk,(intptr_t)new_brk,0,0);
+  int flag = _syscall_(SYS_brk,new_brk,0,0);
   if(flag == 0)
   {
     p_brk = new_brk;
