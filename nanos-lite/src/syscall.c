@@ -23,10 +23,10 @@ int sys_write(int fd,void *buf,size_t count)
   return -1;
 }
 
-/*int sys_brk(void *addr)
+int sys_brk(void *addr)
 {
   return 0;
-}*/
+}
 
 
 //STRACE(system call trace)
@@ -57,7 +57,7 @@ void do_syscall(Context *c) {
       c->GPRx = sys_write((int)a[1],(void *)a[2],(size_t)a[3]);
       break;
     case 9://SYS_brk
-      c->GPRx = 0;
+      c->GPRx = sys_brk((void *)a[1]);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
