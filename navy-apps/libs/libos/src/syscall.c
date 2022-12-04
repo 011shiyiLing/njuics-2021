@@ -63,8 +63,18 @@ int _open(const char *path, int flags, mode_t mode) {
 int _write(int fd, void *buf, size_t count) {
   return _syscall_(SYS_write,fd,buf,count);
 }
-
+//堆区管理
+extern char _end;
+static intptr_t p_brk = (intptr_t)&_end;
 void *_sbrk(intptr_t increment) {
+  intptr_t old_brk = p_brk;
+  intptr_t new_brk = old_brk + increment;
+  int succcess = _syscall_(SYS_brk,increment,0,0);
+  if(succcess == 0)
+  {
+    p_brk = new_brk;
+    return (void *)old_brk;
+  }
   return (void *)-1;
 }
 
