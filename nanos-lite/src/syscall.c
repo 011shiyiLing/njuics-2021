@@ -61,7 +61,6 @@ void do_syscall(Context *c) {
       break;
     case 2://SYS_open
       c->GPRx = fs_open((const char*)a[1],(int)a[2],(int)a[3]);
-      Log("File name open:%s\n",(const char *)a[1]);
       break;
     case 3://SYS_read
       c->GPRx = fs_read((int)a[1],(void *)a[2],(size_t)a[3]);
