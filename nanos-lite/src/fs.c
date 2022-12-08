@@ -61,8 +61,8 @@ size_t fs_write(int fd,const void *buf,size_t len)
   size_t count;
   if(fd > 0 && fd < 2)
   {
-    count = file_table[fd].write(buf,0,len);
-    file_table[fd].open_offset += count;
+    return file_table[fd].write(buf,0,len);
+    //file_table[fd].open_offset += count;
   }
   else
   {
