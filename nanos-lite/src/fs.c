@@ -56,7 +56,7 @@ int fs_open(const char *pathname,int flags,int mode)
   assert(0);
 }
 
-size_t fs_wirte(int fd,const void *buf,size_t len)
+size_t fs_write(int fd,const void *buf,size_t len)
 {
   size_t count;
   if(file_table[fd].write != NULL)

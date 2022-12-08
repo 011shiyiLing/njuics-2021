@@ -2,6 +2,12 @@
 #include "syscall.h"
 #include <unistd.h>
 
+int fs_open(const char *pathname,int flags,int mode);
+size_t fs_write(int fd,const void *buf,size_t len);
+size_t fs_read(int fd,void *buf,size_t len);
+size_t fs_lseek(int fd,size_t offset,int whence);
+int fs_close(int fd);
+
 //functions sys_xxx() definations
 extern void yield();
 void sys_exit(int status)
@@ -9,7 +15,7 @@ void sys_exit(int status)
   halt(status);
 }
 
-int sys_write(int fd,void *buf,size_t count)
+/*int sys_write(int fd,void *buf,size_t count)
 {
   if(fd == 1 || fd == 2)
   {
@@ -21,7 +27,7 @@ int sys_write(int fd,void *buf,size_t count)
     return count;
   }
   return -1;
-}
+}*/
 
 int sys_brk(void *addr)
 {
@@ -52,8 +58,20 @@ void do_syscall(Context *c) {
       yield(); 
       c->GPRx = 0;
       break;
+    case 2://SYS_open
+      c->GPRx = fs_open((const char*)a[1],(int)a[2],(int)a[3]);
+      break;
+    case 3://SYS_read
+      c->GPRx = fs_read((int)a[1],(void *)a[2],(size_t)a[3]);
+      break;
     case 4://SYS_write
-      c->GPRx = sys_write((int)a[1],(void *)a[2],(size_t)a[3]);
+      c->GPRx = fs_write((int)a[1],(const void *)a[2],(size_t)a[3]);
+      break;
+    case 7://SYS_close
+      c->GPRx = fs_close((int)a[1]);
+      break;
+    case 8://SYS_lseek
+      c->GPRx = fs_lseek((int)a[1],(size_t)a[2],(int)a[3]);
       break;
     case 9://SYS_brk
       c->GPRx = sys_brk((void *)a[1]);
