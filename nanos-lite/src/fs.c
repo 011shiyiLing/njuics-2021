@@ -88,7 +88,7 @@ size_t fs_read(int fd,void *buf,size_t len)
   }
   else
   {
-    if(file_table[fd].size - file_table[fd].open_offset <= len)
+    if(file_table[fd].open_offset + len <= file_table[fd].size)
     {
       count = len;
     }
