@@ -59,10 +59,16 @@ int fs_open(const char *pathname,int flags,int mode)
 size_t fs_write(int fd,const void *buf,size_t len)
 {
   size_t count;
-  if(file_table[fd].write)
+  if(fd == 1 || fd == 2)
   {
-    count = file_table[fd].write(buf,file_table[fd].open_offset,len);
-    file_table[fd].open_offset += count;
+    //count = file_table[fd].write(buf,file_table[fd].open_offset,len);
+    //file_table[fd].open_offset += count;
+    for(int i=0; i<len; i++)
+    {
+      putch(*(char *)buf);
+      buf++;
+    }
+    return len;
   }
   else
   {
