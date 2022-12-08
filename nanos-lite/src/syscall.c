@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 int fs_open(const char *pathname,int flags,int mode);
-//size_t fs_write(int fd,const void *buf,size_t len);
+size_t fs_write(int fd,const void *buf,size_t len);
 size_t fs_read(int fd,void *buf,size_t len);
 size_t fs_lseek(int fd,size_t offset,int whence);
 int fs_close(int fd);
@@ -17,7 +17,7 @@ void sys_exit(int status)
 
 int sys_write(int fd,void *buf,size_t count)
 {
-  if(fd == 1 || fd == 2)
+  /*if(fd == 1 || fd == 2)
   {
     for(int i=0; i<count; i++)
     {
@@ -26,8 +26,8 @@ int sys_write(int fd,void *buf,size_t count)
     }
     return count;
   }
-  return -1;
-  //return fs_write(fd,(const void*)buf,count);
+  return -1;*/
+  return fs_write(fd,(const void*)buf,count);
 }
 
 int sys_brk(void *addr)
