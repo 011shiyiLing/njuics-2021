@@ -53,7 +53,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Phdr phdr;
   for(int i=0;i<ehdr.e_phnum;i++)
   {
-    ph_offset += fs_read(fd,&phdr,ehdr.e_phentsize);
+    ph_offset += fs_read(fd,&phdr,sizeof(Elf_Phdr));
     if(phdr.p_type == PT_LOAD)
     {
       fs_lseek(fd,phdr.p_offset,SEEK_SET);
