@@ -59,9 +59,9 @@ int fs_open(const char *pathname,int flags,int mode)
 size_t fs_write(int fd,const void *buf,size_t len)
 {
   size_t count;
-  if(file_table[fd].write)
+  if(fd > 0 && fd < 2)
   {
-    count = file_table[fd].write(buf,file_table[fd].open_offset,len);
+    count = file_table[fd].write(buf,0,len);
     file_table[fd].open_offset += count;
   }
   else
