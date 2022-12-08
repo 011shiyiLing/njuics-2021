@@ -15,9 +15,9 @@ void sys_exit(int status)
   halt(status);
 }
 
-/*int sys_write(int fd,void *buf,size_t count)
+int sys_write(int fd,void *buf,size_t count)
 {
-  if(fd == 1 || fd == 2)
+  /*if(fd == 1 || fd == 2)
   {
     for(int i=0; i<count; i++)
     {
@@ -26,8 +26,9 @@ void sys_exit(int status)
     }
     return count;
   }
-  return -1;
-}*/
+  return -1;*/
+  return fs_write(fd,(const void*)buf,count);
+}
 
 int sys_brk(void *addr)
 {
@@ -65,7 +66,7 @@ void do_syscall(Context *c) {
       c->GPRx = fs_read((int)a[1],(void *)a[2],(size_t)a[3]);
       break;
     case 4://SYS_write
-      c->GPRx = fs_write((int)a[1],(const void *)a[2],(size_t)a[3]);
+      c->GPRx = sys_write((int)a[1],(void *)a[2],(size_t)a[3]);
       break;
     case 7://SYS_close
       c->GPRx = fs_close((int)a[1]);
