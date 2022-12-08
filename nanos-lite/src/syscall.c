@@ -39,7 +39,7 @@ int sys_brk(void *addr)
 static void strace(Context *c)
 {
   Log("System call trace:\nmcause:0x%x\tGPR1:%d\tGPR2:0x%x\tGPR3:0x%x\tGPR4:0x%x\n",
-  c->mcause,c->GPR1,c->GPR2,c->GPR3,c->GPR4); 
+  c->mcause,c->GPR1,c->GPR2,c->GPR3,c->GPR4);
 }
 
 void do_syscall(Context *c) {
@@ -61,6 +61,7 @@ void do_syscall(Context *c) {
       break;
     case 2://SYS_open
       c->GPRx = fs_open((const char*)a[1],(int)a[2],(int)a[3]);
+      Log("File name:%s\n",(const char *)a[1]);
       break;
     case 3://SYS_read
       c->GPRx = fs_read((int)a[1],(void *)a[2],(size_t)a[3]);
