@@ -61,10 +61,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memset((void *)(phdr.p_vaddr + phdr.p_filesz), 0, (phdr.p_memsz-phdr.p_filesz));
       fs_lseek(fd,ph_offset,SEEK_SET);
     }
-    else continue;
+    else break;
   }
 
-  //return 0;
   fs_close(fd);
   return ehdr.e_entry;
 }
