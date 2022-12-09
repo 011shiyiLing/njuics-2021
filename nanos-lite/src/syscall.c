@@ -2,6 +2,12 @@
 #include "syscall.h"
 #include <unistd.h>
 
+struct timezone
+{
+  int tz_minuteswest;		/* Minutes west of GMT.  */
+  int tz_dsttime;		/* Nonzero if DST is ever in effect.  */
+};
+
 int fs_open(const char *pathname,int flags,int mode);
 size_t fs_write(int fd,const void *buf,size_t len);
 size_t fs_read(int fd,void *buf,size_t len);
@@ -32,6 +38,14 @@ int sys_write(int fd,void *buf,size_t count)
 
 int sys_brk(void *addr)
 {
+  return 0;
+}
+//参数tv是保存获取时间结果的结构体，参数tz用于保存时区结果(一般传NULL),函数执行成功后返回0，失败后返回-1
+int sys_gettimeofday(struct timeval *tv, struct timezone *tz)
+{
+  __uint64_t time = io_read(AM_TIMER_UPTIME).us;
+  tv->tv_sec = (time / 1000000);
+  tv->tv_usec = (time % 1000000);
   return 0;
 }
 
@@ -76,6 +90,9 @@ void do_syscall(Context *c) {
       break;
     case 9://SYS_brk
       c->GPRx = sys_brk((void *)a[1]);
+      break;
+    case 19://SYS_gettimeofday
+      c->GPRx = sys_gettimeofday((struct timeval *)a[1],(struct timezone *)a[2]);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
