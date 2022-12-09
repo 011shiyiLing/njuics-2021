@@ -5,13 +5,14 @@ typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+size_t serial_write(const void *buf, size_t offset, size_t len); 
 
 typedef struct {
   char *name;
   size_t size;
   size_t disk_offset;
-  ReadFn read;
-  WriteFn write;
+  ReadFn read; // 读函数指针
+  WriteFn write; // 写函数指针
   ////为每一个已经打开的文件引入偏移量属性open_offset, 来记录目前文件操作的位置. 每次对文件读写了多少个字节, 偏移量就前进多少
   size_t open_offset;
 } Finfo;
@@ -31,8 +32,8 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
-  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, invalid_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, invalid_write},
+  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
+  [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
 #include "files.h"
 };
 
@@ -60,7 +61,7 @@ int fs_open(const char *pathname,int flags,int mode)
 size_t fs_write(int fd,const void *buf,size_t len)
 {
   size_t count;
-  if(fd == 1 || fd == 2) //stdout stderr
+  /*if(fd == 1 || fd == 2) //stdout stderr
   {
     count = len;
     for(int i=0; i<len; i++)
@@ -68,6 +69,12 @@ size_t fs_write(int fd,const void *buf,size_t len)
       putch(*(char *)buf);
       buf++;
     }
+  }*/
+  //特殊文件
+  if(file_table[fd].write != NULL)
+  {
+    count = file_table[fd].write(buf,0,len);
+    file_table[fd].open_offset += count;
   }
   else
   {
