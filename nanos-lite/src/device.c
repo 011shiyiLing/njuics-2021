@@ -29,7 +29,11 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   int key;
   key = ev.keycode;
 
-  if(key != AM_KEY_NONE)
+  if(key == AM_KEY_NONE)
+  {
+    return 0;
+  }
+  else
   {
     if(ev.keydown)
     {
