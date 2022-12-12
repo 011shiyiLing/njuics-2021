@@ -23,9 +23,26 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
   }
   return len;
 }
-
+//把事件写入到buf中, 最长写入len字节, 然后返回写入的实际长度.
 size_t events_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
+  int key;
+  key = ev.keycode;
+
+  if(key != AM_KEY_NONE)
+  {
+    if(ev.keydown)
+    {
+      sprintf(buf,"kd %s\n",keyname[key]);
+    }
+    else
+    {
+      sprintf(buf,"ku %s\n",keyname[key]);
+    }
+  }
+
+  return len;
+  //return 0;
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
