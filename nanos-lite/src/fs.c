@@ -54,7 +54,7 @@ int fs_open(const char *pathname,int flags,int mode)
     {
       file_table[i].open_offset = 0;
       return i;
-      Log("File open:%s\n",pathname);
+      //Log("File open:%s\n",pathname);
     }
   }
   assert(0);
