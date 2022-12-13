@@ -29,6 +29,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   ioe_read(AM_INPUT_KEYBRD,&ev);
   int key;
   key = ev.keycode;
+  printf("%d\n",key);
 
   if(key == AM_KEY_NONE)
   {
