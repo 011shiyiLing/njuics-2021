@@ -4,19 +4,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <fcntl.h>
 //NJU DirectMedia Layer 
 
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
-
-int gettimeofday(struct timeval *tv, struct timezone *tz)
-{
-  __uint64_t time = io_read(AM_TIMER_UPTIME).us;
-  tv->tv_sec = (time / 1000000);
-  tv->tv_usec = (time % 1000000);
-  return 0;
-}
 
 // 以毫秒为单位返回系统时间
 uint32_t NDL_GetTicks() {
@@ -25,7 +18,6 @@ uint32_t NDL_GetTicks() {
   gettimeofday(&tv, NULL);
   uint32_t res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
   return res;
-  //return 0;
 }
 
 // 读出一条事件信息, 将其写入`buf`中, 最长写入`len`字节

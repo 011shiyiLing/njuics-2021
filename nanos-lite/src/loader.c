@@ -25,12 +25,12 @@
 
 // 从ramdisk中`offset`偏移处的`len`字节读入到`buf`中
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
-int fs_open(const char *pathname,int flags,int mode);
+/*int fs_open(const char *pathname,int flags,int mode);
 size_t fs_read(int fd,void *buf,size_t len);
 size_t fs_lseek(int fd,size_t offset,int whence);
-int fs_close(int fd);
+int fs_close(int fd);*/
 
-/*static uintptr_t loader(PCB *pcb, const char *filename) {
+static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr ehdr; //FLF header
   ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
@@ -48,9 +48,9 @@ int fs_close(int fd);
   }
 
   return ehdr.e_entry;
-}*/
+}
 
-static uintptr_t loader(PCB *pcb, const char *filename) {
+/*static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr ehdr; //FLF header
   //ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
@@ -76,7 +76,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   fs_close(fd);
   return ehdr.e_entry;
-}
+}*/
 
 void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
