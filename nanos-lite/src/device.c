@@ -1,4 +1,5 @@
 #include <common.h>
+#include <stdio.h>
 
 #if defined(MULTIPROGRAM) && !defined(TIME_SHARING)
 # define MULTIPROGRAM_YIELD() yield()
@@ -38,11 +39,11 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   {
     if(ev.keydown)
     {
-      sprintf(buf,"kd %s\n",keyname[key]);
+      len = sprintf(buf,"kd %s\n",keyname[key]);
     }
     else
     {
-      sprintf(buf,"ku %s\n",keyname[key]);
+      len = sprintf(buf,"ku %s\n",keyname[key]);
     }
   }
 
