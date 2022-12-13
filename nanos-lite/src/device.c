@@ -1,5 +1,4 @@
 #include <common.h>
-#include <stdio.h>
 
 #if defined(MULTIPROGRAM) && !defined(TIME_SHARING)
 # define MULTIPROGRAM_YIELD() yield()
@@ -26,8 +25,7 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 }
 //把事件写入到buf中, 最长写入len字节, 然后返回写入的实际长度.
 size_t events_read(void *buf, size_t offset, size_t len) {
-  strcpy(buf,"000");
-  /*AM_INPUT_KEYBRD_T ev;
+  AM_INPUT_KEYBRD_T ev;
   ioe_read(AM_INPUT_KEYBRD,&ev);
   int key;
   key = ev.keycode;
@@ -40,13 +38,15 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   {
     if(ev.keydown)
     {
-      len = sprintf(buf,"kd %s\n",keyname[key]);
+      strcpy(buf,"kd ");
+      strcat(buf,keyname[key]);
     }
     else
     {
-      len = sprintf(buf,"ku %s\n",keyname[key]);
+      strcpy(buf,"ku ");
+      strcat(buf,keyname[key]);
     }
-  }*/
+  }
 
   return len;
   //return 0;
