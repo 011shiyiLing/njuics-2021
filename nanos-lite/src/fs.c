@@ -54,7 +54,7 @@ int fs_open(const char *pathname,int flags,int mode)
     {
       file_table[i].open_offset = 0;
       return i;
-      //Log("File open:%s\n",pathname);
+      Log("File open:%s\n",pathname);
     }
   }
   assert(0);
@@ -113,7 +113,7 @@ size_t fs_read(int fd,void *buf,size_t len)
     file_table[fd].open_offset += count;
   }
 
-  Log("File read:%s\n",file_table[fd].name);
+  //Log("File read:%s\n",file_table[fd].name);
   return count;
 }
 
