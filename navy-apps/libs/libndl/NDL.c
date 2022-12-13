@@ -24,10 +24,7 @@ uint32_t NDL_GetTicks() {
 // 若读出了有效的事件, 函数返回1, 否则返回0
 int NDL_PollEvent(char *buf, int len) {
   int fp = open("/dev/events",O_RDONLY);
-  int flag;
-  flag = read(fp,buf,sizeof(char)*len);
-  if(flag > 0) return 1;
-  else return 0;
+  return read(fp,buf,len);
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
