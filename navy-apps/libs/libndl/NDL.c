@@ -81,6 +81,7 @@ int NDL_Init(uint32_t flags) {
   int fp = open("/proc/dispinfo",0);
   read(fp,buf,sizeof(buf));
   printf("%s",buf);
+  printf("%s",buf);
   sscanf(buf,"WIDTH : %d\nHEIGHT : %d\n",&screen_w,&screen_h);
   printf("screnn_width : %d\nscreen_height : %d\n",screen_w,screen_h);
   return 0;
