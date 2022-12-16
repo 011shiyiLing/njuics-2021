@@ -13,6 +13,8 @@ static const char *keyname[256] __attribute__((used)) = {
   [AM_KEY_NONE] = "NONE",
   AM_KEYS(NAME)
 };
+
+void ioe_read (int reg, void *buf);
 //串口
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   assert(len >= 0);
