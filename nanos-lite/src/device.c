@@ -25,25 +25,28 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 }
 //把事件写入到buf中, 最长写入len字节, 然后返回写入的实际长度.
 size_t events_read(void *buf, size_t offset, size_t len) {
-  AM_INPUT_KEYBRD_T ev;
+  uint32_t ev;
   ioe_read(AM_INPUT_KEYBRD,&ev);
-  printf("%d\n",ev.keycode);
-
-  if(ev.keycode == AM_KEY_NONE)
+  //printf("%d\n",ev.keycode);
+  int keycode;
+  keycode = ev & ~0x8000;
+  int keydown;
+  keydown = ev & 0x8000;
+  if(keycode == AM_KEY_NONE)
   {
     return 0;
   }
   else
   {
-    if(ev.keydown)
+    if(keydown)
     {
       strcpy(buf,"kd ");
-      strcat(buf,keyname[ev.keycode]);
+      strcat(buf,keyname[keycode]);
     }
     else
     {
       strcpy(buf,"ku ");
-      strcat(buf,keyname[ev.keycode]);
+      strcat(buf,keyname[keycode]);
     }
   }
 
