@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <fcntl.h>
+#include <assert.h>
 //NJU DirectMedia Layer 
 
 static int evtdev = -1;
@@ -26,8 +27,14 @@ int NDL_PollEvent(char *buf, int len) {
   int fp = open("/dev/events",NULL);
   return read(fp,buf,len);
 }
-
+// 打开一张(*w) X (*h)的画布
+// 如果*w和*h均为0, 则将系统全屏幕作为画布, 并将*w和*h分别设为系统屏幕的大小
 void NDL_OpenCanvas(int *w, int *h) {
+  if(*w == 0) *w = screen_w;
+  if(*h == 0) *h = screen_h;
+
+  if(*w > screen_w || *h > screen_h) assert(0);
+
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
@@ -68,6 +75,13 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+
+  //get screen_w and screen_height
+  char buf[64];
+  int fp = open("/proc/dispinfo",0);
+  read(fp,buf,sizeof(buf));
+  sscanf(buf,"WIDTH : %d\nHEIGHT : %d\n",&screen_w,&screen_h);
+  printf("screnn_width : %d\nscreen_height : %d\n",screen_w,screen_h);
   return 0;
 }
 
