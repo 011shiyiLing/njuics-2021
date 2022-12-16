@@ -77,7 +77,7 @@ int NDL_Init(uint32_t flags) {
   }
 
   //get screen_w and screen_height
-  char buf[128];
+  char buf[64];
   int fp = open("/proc/dispinfo",0);
   read(fp,buf,sizeof(buf));
   printf("%s\n",buf);
