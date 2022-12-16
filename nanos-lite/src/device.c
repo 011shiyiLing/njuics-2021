@@ -33,6 +33,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   keydown = ev.keydown;
   if(keycode == AM_KEY_NONE)
   {
+    sprintf(buf,0);
     return 0;
   }
   else
