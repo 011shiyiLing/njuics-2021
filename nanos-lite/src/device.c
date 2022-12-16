@@ -53,8 +53,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 //获取屏幕大小
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   AM_GPU_CONFIG_T cfg = io_read(AM_GPU_CONFIG);
-  sprintf(buf,"WIDTH : %d\n",cfg.width);
-  sprintf(buf,"HEIGHT : %d\n",cfg.height);
+  sprintf(buf,"WIDTH : %d\nHEIGHT : %d\n",cfg.width,cfg.height);
   return strlen(buf);
 }
 
