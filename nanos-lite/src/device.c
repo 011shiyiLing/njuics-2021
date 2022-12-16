@@ -48,10 +48,12 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   }
 
   return strlen(buf);
-  //return 0;
 }
-
+//按照约定将文件的len字节写到buf中(我们认为这个文件不支持lseek, 可忽略offset)
+//获取屏幕大小
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
+  //AM_GPU_CONFIG_T cfg = io_read(AM_GPU_CONFIG);
+
   return 0;
 }
 

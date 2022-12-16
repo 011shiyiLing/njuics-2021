@@ -30,7 +30,7 @@ size_t fs_read(int fd,void *buf,size_t len);
 size_t fs_lseek(int fd,size_t offset,int whence);
 int fs_close(int fd);
 
-static uintptr_t loader(PCB *pcb, const char *filename) {
+/*static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr ehdr; //FLF header
   ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
@@ -48,9 +48,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   }
 
   return ehdr.e_entry;
-}
+}*/
 
-/*static uintptr_t loader(PCB *pcb, const char *filename) {
+static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   Elf_Ehdr ehdr; //FLF header
   //ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
@@ -76,7 +76,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   fs_close(fd);
   return ehdr.e_entry;
-}*/
+}
 
 void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
