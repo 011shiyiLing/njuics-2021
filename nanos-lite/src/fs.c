@@ -45,7 +45,7 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
-  file_table[5].size = 400 * 300 * 4;
+  file_table[5].size = 400 * 300 * sizeof(uint32_t);
 }
 
 //通过open()系统调用来打开一个文件, 并返回相应的文件描述符
@@ -91,7 +91,7 @@ size_t fs_write(int fd,const void *buf,size_t len)
     file_table[fd].open_offset += count;
   }
 
-  //Log("File write:%s\n",file_table[fd].name);
+  Log("File write:%s\n",file_table[fd].name);
   return count;
 }
 
@@ -118,7 +118,7 @@ size_t fs_read(int fd,void *buf,size_t len)
     file_table[fd].open_offset += count;
   }
 
-  //Log("File read:%s\n",file_table[fd].name);
+  Log("File read:%s\n",file_table[fd].name);
   return count;
 }
 
@@ -139,7 +139,7 @@ size_t fs_lseek(int fd,size_t offset,int whence)
   default:
     break;
   }
-  //Log("File lseek:%s\n",file_table[fd].name);
+  Log("File lseek:%s\n",file_table[fd].name);
   return file_table[fd].open_offset;
 }
 
