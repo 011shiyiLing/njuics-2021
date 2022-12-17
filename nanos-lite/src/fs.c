@@ -45,7 +45,7 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
-  file_table[5].size = 400 * 300 * 4;
+  file_table[5].size = 400 * 300;
 }
 
 //通过open()系统调用来打开一个文件, 并返回相应的文件描述符
