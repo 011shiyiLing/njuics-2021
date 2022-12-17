@@ -87,7 +87,7 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-  fbdev = open("/dev/fp",0,0);
+  fbdev = open("/dev/fp",NULL);
   //get screen_w and screen_height
   char buf[64];
   int fp = open("/proc/dispinfo",NULL);
