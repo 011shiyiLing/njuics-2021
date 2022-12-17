@@ -63,24 +63,11 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 //用于把buf中的len字节写到屏幕上offset处.
 //需要先从offset计算出屏幕上的坐标, 然后调用IOE来进行绘图
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  AM_GPU_FBDRAW_T fbdraw;
-  if(len == 0)
-  {
-    fbdraw.sync = 1;
-    fbdraw.w = 0;
-    fbdraw.h = 0;
-    ioe_write(AM_GPU_FBDRAW,&fbdraw);
-    return 0;
-  }
+  uintptr_t *ptr;
+  ptr = (uintptr_t *)(&buf);
 
-  fbdraw.pixels = (void *)buf;
-  fbdraw.w = len;
-  fbdraw.h = 1;
-  fbdraw.x = offset % width;
-  fbdraw.y = offset / width;
-  fbdraw.sync = 0;
-  ioe_write(AM_GPU_FBDRAW,&fbdraw);
-
+  io_write(AM_GPU_MEMCPY, offset, (void *)*ptr, len);
+  io_write(AM_GPU_FBDRAW, 0, 0, NULL, 0, 0, true);
   return len;
 }
 
