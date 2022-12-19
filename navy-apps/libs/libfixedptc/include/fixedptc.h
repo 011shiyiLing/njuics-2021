@@ -106,11 +106,11 @@ typedef	__uint128_t fixedptud;
 #define FIXEDPT_FMASK	(((fixedpt)1 << FIXEDPT_FBITS) - 1)
 
 #define fixedpt_rconst(R) ((fixedpt)((R) * FIXEDPT_ONE + ((R) >= 0 ? 0.5 : -0.5)))
-#define fixedpt_fromint(I) ((fixedptd)(I) << FIXEDPT_FBITS)
-#define fixedpt_toint(F) ((F) >> FIXEDPT_FBITS)
+#define fixedpt_fromint(I) ((fixedptd)(I) << FIXEDPT_FBITS) //int -> fixedptd
+#define fixedpt_toint(F) ((F) >> FIXEDPT_FBITS) //fixedptd -> int
 #define fixedpt_add(A,B) ((A) + (B))
 #define fixedpt_sub(A,B) ((A) - (B))
-#define fixedpt_fracpart(A) ((fixedpt)(A) & FIXEDPT_FMASK)
+#define fixedpt_fracpart(A) ((fixedpt)(A) & FIXEDPT_FMASK) //取A的小数部分
 
 #define FIXEDPT_ONE	((fixedpt)((fixedpt)1 << FIXEDPT_FBITS))
 #define FIXEDPT_ONE_HALF (FIXEDPT_ONE >> 1)
@@ -127,35 +127,45 @@ typedef	__uint128_t fixedptud;
 
 /* Multiplies a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_muli(fixedpt A, int B) {
+	fixedpt res = (fixedpt)(A * B);
 	return 0;
 }
 
 /* Divides a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_divi(fixedpt A, int B) {
+	fixedpt res = (fixedpt)(A / B);
 	return 0;
 }
 
 /* Multiplies two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
-	return 0;
+	fixedpt res =(fixedpt)(( A * B ) >> 8);
+	return res;
 }
 
 
 /* Divides two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_div(fixedpt A, fixedpt B) {
+	fixedpt res = (fixedpt)((A / B) << 8);
 	return 0;
 }
 
 static inline fixedpt fixedpt_abs(fixedpt A) {
-	return 0;
+	fixedpt res;
+	if(A >= 0) res = A;
+	else res = fixedpt_sub(0,A);
+	return res;
 }
 
 static inline fixedpt fixedpt_floor(fixedpt A) {
-	return 0;
+	if(fixedpt_fracpart(A) == 0) return A;
+	return fixedpt_fromint(fixedpt_toint(A));
 }
 
 static inline fixedpt fixedpt_ceil(fixedpt A) {
-	return 0;
+	if(fixedpt_fracpart(A) == 0) return A;
+	fixedpt A_floor = fixedpt_floor(A);
+	return (A_floor + FIXEDPT_ONE);
 }
 
 /*
