@@ -3,9 +3,6 @@
 #include <unistd.h>
 #include <sys/time.h>
 
-#define SYS_gettimeofday 19
-intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2);
-
 int main()
 {
     struct timeval *timeval;
@@ -14,10 +11,10 @@ int main()
     
     while(1)
     {
-       _syscall_(SYS_gettimeofday,&timeval,&timezone,0);
+       gettimeofday(timeval,timezone);
        while(timeval->tv_usec / 100000 < timeval->tv_sec)
        {
-        _syscall_(SYS_gettimeofday,&timeval,&timezone,0);
+            gettimeofday(timeval,timezone);
        }
        count ++;
        printf("Hello!%d have passed!\n",count*0.5);
