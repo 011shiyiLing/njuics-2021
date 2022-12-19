@@ -11,7 +11,7 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
-static int canvas_w,canvas_h;
+static int canvas_w,canvas_h;//画布大小
 
 // 以毫秒为单位返回系统时间
 uint32_t NDL_GetTicks() {
@@ -32,10 +32,12 @@ int NDL_PollEvent(char *buf, int len) {
 // 打开一张(*w) X (*h)的画布
 // 如果*w和*h均为0, 则将系统全屏幕作为画布, 并将*w和*h分别设为系统屏幕的大小
 void NDL_OpenCanvas(int *w, int *h) {
-  if(*w == 0) *w = canvas_w;
-  if(*h == 0) *h = canvas_h;
+  if(*w == 0) *w = screen_w;
+  if(*h == 0) *h = screen_h;
+  if(*w > screen_w || *h > screen_h) assert(0);
 
-  if(*w > canvas_w || *h > canvas_h) assert(0);
+  canvas_w = *w;
+  canvas_h = *h;
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
@@ -59,7 +61,13 @@ void NDL_OpenCanvas(int *w, int *h) {
 // 向画布`(x, y)`坐标处绘制`w*h`的矩形图像, 并将该绘制区域同步到屏幕上
 // 图像像素按行优先方式存储在`pixels`中, 每个像素用32位整数以`00RRGGBB`的方式描述颜色
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  for(int i=0; i<h; i++)
+  if(w == 0 && h == 0)
+  {
+    w = canvas_w;
+    h = canvas_h;
+  }
+
+  for(size_t i=0; i<h; i++)
   {
       lseek(fbdev, (y + i)*canvas_w + x, SEEK_SET);
       write(fbdev, pixels + i*w, w);
@@ -85,14 +93,13 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-  evtdev = open("/dev/events",NULL);
-  fbdev = open("/dev/fb",NULL);
+  fbdev = open("/dev/fb",0, 0);
   //get screen_w and screen_height
   char buf[64];
   int fp = open("/proc/dispinfo",NULL);
   read(fp,buf,sizeof(buf));
   //printf("%s\n",buf);
-  sscanf(buf,"WIDTH : %d\nHEIGHT : %d\n",&canvas_w,&canvas_h);
+  sscanf(buf,"WIDTH : %d\nHEIGHT : %d\n",&screen_w,&screen_h);
   //printf("screnn_width : %d\nscreen_height : %d\n",screen_w,screen_h);
   return 0;
 }
