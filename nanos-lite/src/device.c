@@ -80,8 +80,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   fbdraw.pixels = (void *)buf;
   fbdraw.w = len*4;
   fbdraw.h = 1*4;
-  fbdraw.x = (offset % width)*10;
-  fbdraw.y = (offset / width)*10;
+  fbdraw.x = (offset % width);
+  fbdraw.y = (offset / width);
   fbdraw.sync = true;
   ioe_write(AM_GPU_FBDRAW, &fbdraw);
   return len;
