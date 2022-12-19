@@ -24,7 +24,7 @@ int main()
         }
         count ++;
         //gettimeofday(&timeval,&timezone);
-        printf("Hello! %fs has passed!\n",0.5*count);
+        printf("Hello! %d 0.5s has passed!\n",count);
         msec += 500;
     }
     NDL_Quit();
