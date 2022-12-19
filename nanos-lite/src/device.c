@@ -78,8 +78,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   }
 
   fbdraw.pixels = (void *)buf;
-  fbdraw.w = len;
-  fbdraw.h = 1;
+  fbdraw.w = len/4;
+  fbdraw.h = 1/4;
   fbdraw.x = (offset % width)/4;
   fbdraw.y = (offset / width)/4;
   fbdraw.sync = true;
