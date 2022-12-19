@@ -48,6 +48,7 @@ void init_fs() {
   int w = io_read(AM_GPU_CONFIG).width;
   int h = io_read(AM_GPU_CONFIG).height;
   file_table[5].size = w * h;
+  printf("%s\n",file_table[5].name);
 }
 
 //通过open()系统调用来打开一个文件, 并返回相应的文件描述符
