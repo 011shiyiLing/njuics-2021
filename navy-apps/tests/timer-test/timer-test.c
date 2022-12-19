@@ -1,23 +1,27 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/time.h>
+//#include <NDL.h>
 
 int main()
 {
-    struct timeval timeval;
-    struct timezone timezone;
-    
+    //struct timeval timeval;
+    //struct timezone timezone;
+    NDL_Init(0);
+    uint32_t sec = 0;
+    uint32_t usec = 0;
+    //gettimeofday(&timeval,&timezone);
     while(1)
     {
-       gettimeofday(&timeval,&timezone);
-       while(timeval.tv_usec / 100000 < timeval.tv_sec)
+       while(usec / 100000 < sec)
        {
-            gettimeofday(&timeval,&timezone);
+            //gettimeofday(&timeval,&timezone);
+            usec = NDL_GetTicks();
        }
-       gettimeofday(&timeval,&timezone);
+       //gettimeofday(&timeval,&timezone);
+       usec = NDL_GetTicks();
        printf("Hello! 0.5s has passed!\n");
-       timeval.tv_usec += 500;
+       sec += 5;
     }
 
     return 0;
