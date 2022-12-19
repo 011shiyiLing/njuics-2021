@@ -14,7 +14,7 @@ int main()
     while(1)
     {
         time = NDL_GetTicks();
-        printf("%d\n",time);
+        //printf("%d\n",time);
         while(time < msec)
         {
                 //gettimeofday(&timeval,&timezone);
