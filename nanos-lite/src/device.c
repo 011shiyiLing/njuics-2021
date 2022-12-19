@@ -70,7 +70,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   fbdraw.h = height;
   fbdraw.x = (offset) % (width);
   fbdraw.y = (offset) / (width);
-  fbdraw.sync = 1;
+  fbdraw.sync = 0;
   ioe_write(AM_GPU_FBDRAW, &fbdraw);
   return len;
 }
