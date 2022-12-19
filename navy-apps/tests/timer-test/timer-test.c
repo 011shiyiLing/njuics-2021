@@ -7,7 +7,6 @@ int main()
 {
     struct timeval timeval;
     struct timezone timezone;
-    int count = 0;
     
     while(1)
     {
@@ -17,8 +16,7 @@ int main()
             gettimeofday(&timeval,&timezone);
        }
        gettimeofday(&timeval,&timezone);
-       count ++;
-       printf("Hello!%f have passed!\n",count*0.5);
+       printf("Hello! 0.5s has passed!\n");
        timeval.tv_usec += 500;
     }
 
