@@ -17,6 +17,7 @@ int main()
        {
             //gettimeofday(&timeval,&timezone);
             usec = NDL_GetTicks();
+            printf("%d\n",usec);
        }
        //gettimeofday(&timeval,&timezone);
        usec = NDL_GetTicks();
