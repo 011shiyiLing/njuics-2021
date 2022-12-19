@@ -38,7 +38,7 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
   {"/dev/events", 0, 0, events_read, invalid_write},
-  {"/proc/dispinfo", 50, 0, dispinfo_read, invalid_write},//获取屏幕大小
+  {"/proc/dispinfo", 1200, 0, dispinfo_read, invalid_write},//获取屏幕大小
   {"/dev/fb", 0, 0, invalid_read, fb_write},
 #include "files.h"
 };
