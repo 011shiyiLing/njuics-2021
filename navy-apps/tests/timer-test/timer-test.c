@@ -19,7 +19,7 @@ int main()
         {
                 //gettimeofday(&timeval,&timezone);
                 time = NDL_GetTicks();
-                printf("%d\n",time);
+                //printf("%d\n",time);
         }
         //gettimeofday(&timeval,&timezone);
         printf("Hello! 0.5s has passed!\n");
