@@ -17,8 +17,8 @@ static int canvas_w,canvas_h;//画布大小
 uint32_t NDL_GetTicks() {
   struct timeval tv;
   struct timezone tz;
-  gettimeofday(&tv, NULL);
-  uint32_t res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+  gettimeofday(&tv, &tz);
+  uint32_t res = tv.tv_sec * 1000 + (tv.tv_usec / 1000);
   return res;
 }
 
