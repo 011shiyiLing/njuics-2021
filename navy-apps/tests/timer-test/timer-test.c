@@ -10,6 +10,7 @@ int main()
     NDL_Init(0);
     uint32_t time;
     uint32_t msec = 500;
+    int count = 0;
     //gettimeofday(&timeval,&timezone);
     while(1)
     {
@@ -21,8 +22,9 @@ int main()
                 time = NDL_GetTicks();
                 //printf("%d\n",time);
         }
+        count ++;
         //gettimeofday(&timeval,&timezone);
-        printf("Hello! 0.5s has passed!\n");
+        printf("Hello! %fs has passed!\n",0.5*count);
         msec += 500;
     }
     NDL_Quit();
