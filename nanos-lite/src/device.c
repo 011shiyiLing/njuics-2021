@@ -66,8 +66,8 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 //需要先从offset计算出屏幕上的坐标, 然后调用IOE来进行绘图
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   fbdraw.pixels = (void *)buf;
-  fbdraw.w = len*sizeof(uint32_t);
-  fbdraw.h = 4;
+  fbdraw.w = len;
+  fbdraw.h = 1;
   fbdraw.x = (offset) % (width);
   fbdraw.y = (offset) / (width);
   fbdraw.sync = 1;
