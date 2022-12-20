@@ -72,13 +72,9 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   fbdraw.sync = 1;
   ioe_write(AM_GPU_FBDRAW, &fbdraw);
   return len;*/
-  AM_GPU_CONFIG_T cfg = io_read(AM_GPU_CONFIG);
-  width = cfg.width;
-  height = cfg.height;
   int x = (offset / 4) % width;
   int y = (offset / 4) / width;
-  if(offset + len > width*height*4) len = width*height*4 - offset;
-  io_write(AM_GPU_FBDRAW, x, y, (uint32_t *)buf, len/4, 1, true);
+  io_write(AM_GPU_FBDRAW, x, y, (uint32_t *)buf, len, 1*4, true);
   return len;
 }
 
