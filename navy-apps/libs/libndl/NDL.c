@@ -32,8 +32,17 @@ int NDL_PollEvent(char *buf, int len) {
 // 打开一张(*w) X (*h)的画布
 // 如果*w和*h均为0, 则将系统全屏幕作为画布, 并将*w和*h分别设为系统屏幕的大小
 void NDL_OpenCanvas(int *w, int *h) {
-  if(*w == 0) *w = screen_w;
-  if(*h == 0) *h = screen_h;
+  if(*w == 0) 
+  { 
+    *w = screen_w;
+    canvas_w = screen_w;
+  }
+  if(*h == 0) 
+  {
+    *h = screen_h;
+    canvas_h = screen_h;
+  }
+
   if(*w > screen_w || *h > screen_h) assert(0);
 
   canvas_w = *w;
@@ -67,10 +76,10 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
     h = canvas_h;
   }
 
-  for(size_t i=0; i<h; i++)
+  for(size_t i=0; i<canvas_h; i++)
   {
 
-      lseek(fbdev, (y + i)*canvas_w + x ,SEEK_SET);
+      lseek(fbdev, (y + i)*screen_w + x ,SEEK_SET);
       write(fbdev, pixels+i*w, w);
   }
   write(fbdev , 0, 0);
