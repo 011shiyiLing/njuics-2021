@@ -15,7 +15,7 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 static int width,height;
-//static AM_GPU_FBDRAW_T fbdraw;
+AM_GPU_FBDRAW_T fbdraw;
 
 //串口
 size_t serial_write(const void *buf, size_t offset, size_t len) {
@@ -64,18 +64,14 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 //用于把buf中的len字节写到屏幕上offset处.
 //需要先从offset计算出屏幕上的坐标, 然后调用IOE来进行绘图
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  /*fbdraw.pixels = (void *)buf;
+  AM_GPU_FBDRAW_T fbdraw;
+  fbdraw.pixels = (void *)buf;
   fbdraw.w = len;
   fbdraw.h = 1;
   fbdraw.x = (offset) % (width);
   fbdraw.y = (offset) / (width);
   fbdraw.sync = 1;
   ioe_write(AM_GPU_FBDRAW, &fbdraw);
-  return len;*/
-  int w = io_read(AM_GPU_CONFIG).width;
-  int x = (offset / 4) % w;
-  int y = (offset / 4) / w;
-  io_write(AM_GPU_FBDRAW, x, y, (uint32_t *)buf, len, 1, true);
   return len;
 }
 
