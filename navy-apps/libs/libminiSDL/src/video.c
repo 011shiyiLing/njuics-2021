@@ -3,14 +3,91 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 
+//将一张画布中的指定矩形区域复制到另一张画布的指定位置
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+
+  //src:被拷贝的SDL_Surface
+  //srecret:SDL_Rect结构表示要复制的矩形的范围，如果为NULL的话，就全部复制
+  //dst:容纳拷贝数据的目标SDL_Surface
+  //dstrect:SDL_Rect结构表示拷贝到的矩形范围，如果为NULL的话，就全部拷贝 
+  int src_x,src_y,src_w,src_h;
+  int dst_x,dst_y,dst_w,dst_h;
+
+  if(dstrect == NULL)
+  {
+    dst_w = dst->w;
+    dst_h = dst->h;
+    dst_x = 0;
+    dst_y = 0;
+  }
+  else
+  {
+    dst_w = dstrect->w;
+    dst_h = dstrect->h;
+    dst_x = dstrect->x;
+    dst_y = dstrect->y;
+  }
+
+  if(srcrect == NULL)
+  {
+    src_w = src->w;
+    src_h = src->h;
+    src_x = 0;
+    src_y = 0;
+  }
+  else
+  {
+    src_w = srcrect->w;
+    src_h = srcrect->h;
+    src_x = srcrect->x;
+    src_y = srcrect->y;
+  }
+
+  uint32_t *dst_pixels = (uint32_t *)dst->pixels;
+  uint32_t *src_pixels = (uint32_t *)src->pixels;
+
+  for(int i=0; i<src_h; i++)
+  {
+    for(int j=0; j<src_w; j++)
+    {
+      dst_pixels[(dst_y + i) * (dst->w) + dst_x + j] = src_pixels[(src_y + i)*(src->w) + src_x + j];
+    }
+  }
 }
 
+//往画布的指定矩形区域中填充指定的颜色
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
+  int rect_h,rect_w,rect_x,rect_y;
+  uint32_t *pixels = (uint32_t*)dst->pixels;
+  //dstrect:SDL_Rect结构表示拷贝到的矩形范围，如果为NULL的话，就全部拷贝
+  if(dstrect == NULL)
+  {
+    rect_h = dst->h;
+    rect_w = dst->w;
+    rect_x = 0;
+    rect_y = 0;
+  }
+  else
+  {
+    rect_h = dstrect->h;
+    rect_w = dstrect->w;
+    rect_x = dstrect->x;
+    rect_y = dstrect->y;
+  }
+
+  for(int i=0; i<rect_h; i++)
+  {
+    for(int j=0; j<rect_w; j++)
+    {
+      pixels[(rect_y + i)*(dst->w) + rect_x + j] = color;
+    }
+  }
 }
+
 //将画布中的指定矩形区域同步到屏幕上
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(s->format->BitsPerPixel == 32)
@@ -19,10 +96,12 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   }
   else
   {
-    if(w == 0 || w > s->w) w = s->w;
-    if(h == 0 || h > s->h) h = s->h;
+    if(w == 0 ) w = s->w;
+    if(h == 0 ) h = s->h;
+    if(w > s->w || h > s->h) assert(0);
+    
     uint32_t * palette = malloc(sizeof(uint32_t)*w*h);
-    memset(palette,0,sizeof(palette));
+  
     for(int i=0; i<h; i++)
     {
       for(int j = 0; j<w; j++)

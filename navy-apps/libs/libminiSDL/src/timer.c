@@ -10,8 +10,9 @@ int SDL_RemoveTimer(SDL_TimerID id) {
   return 1;
 }
 
+//NDL_GetTicks()的功能完全一样
 uint32_t SDL_GetTicks() {
-  return 0;
+  return NDL_GetTicks();
 }
 
 void SDL_Delay(uint32_t ms) {

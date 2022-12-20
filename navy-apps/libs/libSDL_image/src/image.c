@@ -11,8 +11,23 @@ SDL_Surface* IMG_Load_RW(SDL_RWops *src, int freesrc) {
   return NULL;
 }
 
+//接受一个图片文件的路径, 然后把图片的像素信息封装成SDL的Surface结构并返回
 SDL_Surface* IMG_Load(const char *filename) {
-  return NULL;
+  FILE *f = fopen(filename,"r");
+
+  fseek(f,0L,SEEK_END);
+  size_t size = ftell(f);
+  fseek(f,0L,SEEK_SET);
+
+  char *buf = (char*)malloc(size);
+  fread(buf, 1, size, f);
+
+  SDL_Surface *s;
+  s = STBIMG_LoadFromMemory(buf, size);
+
+  free(buf);
+  fclose(f);
+  return s;
 }
 
 int IMG_isPNG(SDL_RWops *src) {
