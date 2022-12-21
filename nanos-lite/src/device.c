@@ -64,21 +64,21 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 //需要先从offset计算出屏幕上的坐标, 然后调用IOE来进行绘图
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   AM_GPU_FBDRAW_T fbdraw;
-  /*if(len == 0)
+  if(len == 0)
   {
     fbdraw.w = 0;
     fbdraw.h = 0;
     fbdraw.sync = 1;
     ioe_write(AM_GPU_FBDRAW, &fbdraw);
     return 0;
-  }*/
+  }
 
   fbdraw.pixels = (void *)buf;
   fbdraw.w = len / 4;
   fbdraw.h = 1;
   fbdraw.x = (offset / 4) % (width);
   fbdraw.y = (offset / 4) / (width);
-  fbdraw.sync = 1;
+  fbdraw.sync = 0;
   ioe_write(AM_GPU_FBDRAW, &fbdraw);
   return len;
 }
