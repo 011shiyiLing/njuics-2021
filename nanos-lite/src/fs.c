@@ -82,7 +82,7 @@ size_t fs_write(int fd,const void *buf,size_t len)
   //特殊文件
   if(file_table[fd].write != NULL)
   {
-    count = file_table[fd].write(buf,0,len);
+    count = file_table[fd].write(buf,file_table[fd].open_offset,len);
     file_table[fd].open_offset += count;
   }
   else
@@ -102,7 +102,7 @@ size_t fs_read(int fd,void *buf,size_t len)
   size_t count;
   if(file_table[fd].read != NULL)
   {
-    count = file_table[fd].read(buf,0,len);
+    count = file_table[fd].read(buf,file_table[fd].open_offset,len);
     file_table[fd].open_offset += count;
   }
   else
