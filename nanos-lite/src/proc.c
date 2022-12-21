@@ -29,10 +29,10 @@ void init_proc() {
   //naive_uload(NULL,"/bin/file-test");
   //naive_uload(NULL,"/bin/timer-test");
   //naive_uload(NULL,"/bin/event-test");
-  //naive_uload(NULL, "/bin/bmp-test");
+  naive_uload(NULL, "/bin/bmp-test");
   //naive_uload(NULL, "/bin/nslider");
   //naive_uload(NULL, "/bin/bird");
-  naive_uload(NULL, "/bin/pal");
+  //naive_uload(NULL, "/bin/pal");
 }
 
 Context* schedule(Context *prev) {
