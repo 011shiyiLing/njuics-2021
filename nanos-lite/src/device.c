@@ -67,10 +67,10 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   AM_GPU_FBDRAW_T fbdraw;
   fbdraw.pixels = (void *)buf;
-  fbdraw.w = len / 4;
+  fbdraw.w = len;
   fbdraw.h = 1;
-  fbdraw.x = (offset / 4) % (width);
-  fbdraw.y = (offset / 4) / (width);
+  fbdraw.x = (offset) % (width);
+  fbdraw.y = (offset) / (width);
   fbdraw.sync = 0;
   ioe_write(AM_GPU_FBDRAW, &fbdraw);
   return len;
