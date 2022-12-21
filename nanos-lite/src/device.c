@@ -40,13 +40,15 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   {
     if(ev.keydown)
     {
-      strcpy(buf,"kd ");
-      strcat(buf,keyname[ev.keycode]);
+      /*strcpy(buf,"kd ");
+      strcat(buf,keyname[ev.keycode]);*/
+      sprintf(buf, "kd %s\n",keyname[ev.keycode]);
     }
     else
     {
-      strcpy(buf,"ku ");
-      strcat(buf,keyname[ev.keycode]);
+      /*strcpy(buf,"ku ");
+      strcat(buf,keyname[ev.keycode]);*/
+      sprintf(buf, "ku %s\n",keyname[ev.keycode]);
     }
   }
 
