@@ -46,15 +46,31 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     src_x = srcrect->x;
     src_y = srcrect->y;
   }
-
-  uint32_t *dst_pixels = (uint32_t *)dst->pixels;
-  uint32_t *src_pixels = (uint32_t *)src->pixels;
-
-  for(int i=0; i<src_h; i++)
+  if(dst->format->BitsPerPixel == 32)
   {
-    for(int j=0; j<src_w; j++)
+    uint32_t *dst_pixels = (uint32_t *)dst->pixels;
+    uint32_t *src_pixels = (uint32_t *)src->pixels;
+
+    for(int i=0; i<src_h; i++)
     {
-      dst_pixels[(dst_y + i) * (dst->w) + dst_x + j] = src_pixels[(src_y + i)*(src->w) + src_x + j];
+      for(int j=0; j<src_w; j++)
+      {
+        dst_pixels[(dst_y + i) * (dst->w) + dst_x + j] = src_pixels[(src_y + i)*(src->w) + src_x + j];
+      }
+    }
+  }
+  //添加对这些8位像素格式的Surface的支持
+  else if(dst->format->BitsPerPixel == 8)
+  {
+    uint8_t *dst_pixels = (uint8_t *)dst->pixels;
+    uint8_t *src_pixels = (uint8_t *)src->pixels;
+
+    for(int i=0; i<src_h; i++)
+    {
+      for(int j=0; j<src_w; j++)
+      {
+        dst_pixels[(dst_y + i) * (dst->w) + dst_x + j] = src_pixels[(src_y + i)*(src->w) + src_x + j];
+      }
     }
   }
 }
@@ -62,7 +78,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 //往画布的指定矩形区域中填充指定的颜色
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   int rect_h,rect_w,rect_x,rect_y;
-  uint32_t *pixels = (uint32_t*)dst->pixels;
   //dstrect:SDL_Rect结构表示拷贝到的矩形范围，如果为NULL的话，就全部拷贝
   if(dstrect == NULL)
   {
@@ -79,36 +94,54 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
     rect_y = dstrect->y;
   }
 
-  for(int i=0; i<rect_h; i++)
+  if(dst->format->BitsPerPixel == 32)
   {
-    for(int j=0; j<rect_w; j++)
+    uint32_t *pixels = (uint32_t*)dst->pixels;
+    for(int i=0; i<rect_h; i++)
     {
-      pixels[(rect_y + i)*(dst->w) + rect_x + j] = color;
+      for(int j=0; j<rect_w; j++)
+      {
+        pixels[(rect_y + i)*(dst->w) + rect_x + j] = color;
+      }
     }
   }
+  //添加对这些8位像素格式的Surface的支持
+  else if (dst->format->BitsPerPixel == 8)
+  {
+    uint8_t *pixels = (uint8_t*)dst->pixels;
+    for(int i=0; i<rect_h; i++)
+    {
+      for(int j=0; j<rect_w; j++)
+      {
+        pixels[(rect_y + i)*(dst->w) + rect_x + j] = color;
+      }
+    }
+  }
+  
 }
 
 //将画布中的指定矩形区域同步到屏幕上
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
+  if(w == 0 ) w = s->w;
+  if(h == 0 ) h = s->h;
+  if(w > s->w || h > s->h) assert(0);
+
   if(s->format->BitsPerPixel == 32)
   {
     NDL_DrawRect((uint32_t *)s->pixels,x,y,w,h);
   }
-  else
+  //添加对这些8位像素格式的Surface的支持
+  else if(s->format->BitsPerPixel == 8)
   {
-    if(w == 0 ) w = s->w;
-    if(h == 0 ) h = s->h;
-    if(w > s->w || h > s->h) assert(0);
-    
-    uint32_t * palette = malloc(sizeof(uint32_t)*w*h);
-  
+    uint32_t *palette = malloc(sizeof(uint32_t)*w*h);
+    uint8_t *pixels = (uint8_t *)s->pixels;
     for(int i=0; i<h; i++)
     {
       for(int j = 0; j<w; j++)
       {
-        uint8_t r = s->format->palette->colors[s->pixels[(i+y)*(s->w) + j + x]].r;
-        uint8_t g = s->format->palette->colors[s->pixels[(i+y)*(s->w) + j + x]].g;
-        uint8_t b = s->format->palette->colors[s->pixels[(i+y)*(s->w) + j + x]].b;
+        uint8_t r = s->format->palette->colors[pixels[(i+y)*(s->w) + j + x]].r;
+        uint8_t g = s->format->palette->colors[pixels[(i+y)*(s->w) + j + x]].g;
+        uint8_t b = s->format->palette->colors[pixels[(i+y)*(s->w) + j + x]].b;
         palette[i*w+j] = ((r << 16) | (g << 8) | b);
       }
     }
@@ -295,8 +328,10 @@ uint32_t SDL_MapRGBA(SDL_PixelFormat *fmt, uint8_t r, uint8_t g, uint8_t b, uint
 }
 
 int SDL_LockSurface(SDL_Surface *s) {
+  printf("SDL_LockSurface\n");
   return 0;
 }
 
 void SDL_UnlockSurface(SDL_Surface *s) {
+  printf("SDL_UnlockSurface\n");
 }
