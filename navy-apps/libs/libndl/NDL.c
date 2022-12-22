@@ -70,6 +70,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 // 向画布`(x, y)`坐标处绘制`w*h`的矩形图像, 并将该绘制区域同步到屏幕上
 // 图像像素按行优先方式存储在`pixels`中, 每个像素用32位整数以`00RRGGBB`的方式描述颜色
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
+  int fp = open("/dev/fb",0, 0);
   if(w == 0 && h == 0)
   {
     w = canvas_w;
@@ -79,10 +80,10 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   for(size_t i=0; i< h; ++i)
   {
 
-      lseek(fbdev, ((y + i)*screen_w + x)*sizeof(uint32_t) ,SEEK_SET);
-      write(fbdev, pixels+i*w, w*sizeof(uint32_t));
+      lseek(fp, ((y + i)*screen_w + x)*sizeof(uint32_t) ,SEEK_SET);
+      write(fp, pixels+i*w, w*sizeof(uint32_t));
   }
-  write(fbdev , 0, 0);
+  write(fp , 0, 0);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
@@ -103,7 +104,6 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-  fbdev = open("/dev/fb",0, 0);
   //get screen_w and screen_height
   char buf[64];
   int fp = open("/proc/dispinfo",NULL);
