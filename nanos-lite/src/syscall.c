@@ -18,10 +18,6 @@ void naive_uload(PCB *pcb, const char *filename);
 
 //functions sys_xxx() definations
 extern void yield();
-void sys_exit(int status)
-{
-  halt(status);
-}
 
 int sys_write(int fd,void *buf,size_t count)
 {
@@ -55,6 +51,12 @@ int sys_gettimeofday(struct timeval *tv, struct timezone *tz)
 void sys_execve(const char *fname, char * const argv[], char *const envp[])
 {
   naive_uload(NULL, fname);
+}
+
+void sys_exit(int status)
+{
+  sys_execve("/bin/menu", NULL, NULL);
+  //halt(status);
 }
 
 //STRACE(system call trace)
