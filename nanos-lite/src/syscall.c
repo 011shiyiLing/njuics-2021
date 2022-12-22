@@ -40,19 +40,17 @@ int sys_brk(void *addr)
   return 0;
 }
 //参数tv是保存获取时间结果的结构体，参数tz用于保存时区结果(一般传NULL),函数执行成功后返回0，失败后返回-1
-int sys_gettimeofday(struct timeval *tv, struct timezone *tz)
+void sys_gettimeofday(struct timeval *tv, struct timezone *tz)
 {
   __uint64_t time = io_read(AM_TIMER_UPTIME).us;
   tv->tv_sec = (time / 1000000);
   tv->tv_usec = (time % 1000000);
-  return 0;
 }
 
 
 void sys_execve(const char *fname, char * const argv[], char *const envp[])
 {
   naive_uload(NULL, fname);
-  //execve(fname, argv, envp);
 }
 
 void sys_exit(int status)
@@ -63,11 +61,11 @@ void sys_exit(int status)
 }
 
 //STRACE(system call trace)
-/*static void strace(Context *c)
+static void strace(Context *c)
 {
   Log("System call trace:\nmcause:0x%x\tGPR1:%d\tGPR2:0x%x\tGPR3:0x%x\tGPR4:0x%x\n",
   c->mcause,c->GPR1,c->GPR2,c->GPR3,c->GPR4);
-}*/
+}
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -76,7 +74,7 @@ void do_syscall(Context *c) {
   a[2] = c->GPR3;
   a[3] = c->GPR4;
 
-  //strace(c);
+  strace(c);
 
   switch (a[0]) {
     case 0: //SYS_exit 结束运行
@@ -108,7 +106,7 @@ void do_syscall(Context *c) {
       sys_execve((const char *)a[1],(char * const*)a[2],(char * const*)a[3]);
       break;
     case 19://SYS_gettimeofday
-      c->GPRx = sys_gettimeofday((struct timeval *)a[1],(struct timezone *)a[2]);
+      sys_gettimeofday((struct timeval *)a[1],(struct timezone *)a[2]);
       break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
