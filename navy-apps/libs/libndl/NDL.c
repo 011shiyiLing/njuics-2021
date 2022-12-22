@@ -42,9 +42,9 @@ void NDL_OpenCanvas(int *w, int *h) {
     *h = screen_h;
     canvas_h = screen_h;
   }
-
   if(*w > screen_w || *h > screen_h) assert(0);
 
+  //记录画布大小
   canvas_w = *w;
   canvas_h = *h;
 
@@ -70,7 +70,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 // 向画布`(x, y)`坐标处绘制`w*h`的矩形图像, 并将该绘制区域同步到屏幕上
 // 图像像素按行优先方式存储在`pixels`中, 每个像素用32位整数以`00RRGGBB`的方式描述颜色
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  int fp = open("/dev/fb",0, 0);
+  int fp = open("/dev/fb", NULL);
   if(w == 0 && h == 0)
   {
     w = canvas_w;
