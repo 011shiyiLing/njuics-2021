@@ -93,7 +93,7 @@ size_t fs_write(int fd,const void *buf,size_t len)
     file_table[fd].open_offset += count;
   }
 
-  //Log("File write:%s\n",file_table[fd].name);
+  Log("File write:%s\n",file_table[fd].name);
   return count;
 }
 
@@ -120,7 +120,7 @@ size_t fs_read(int fd,void *buf,size_t len)
     file_table[fd].open_offset += count;
   }
 
-  //Log("File read:%s\n",file_table[fd].name);
+  Log("File read:%s\n",file_table[fd].name);
   return count;
 }
 
@@ -141,7 +141,7 @@ size_t fs_lseek(int fd,size_t offset,int whence)
   default:
     break;
   }
-  //Log("File lseek:%s\n",file_table[fd].name);
+  Log("File lseek:%s\n",file_table[fd].name);
   return file_table[fd].open_offset;
 }
 
