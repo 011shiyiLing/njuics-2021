@@ -45,6 +45,7 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  //Screen_width = 400 Screen_height = 300
   file_table[5].size = 400 * 300 * sizeof(uint32_t);
 }
 
@@ -111,11 +112,15 @@ size_t fs_read(int fd,void *buf,size_t len)
     }
     else
     {
-      count = file_table[fd].size - file_table[fd].open_offset;
+      //count = file_table[fd].size - file_table[fd].open_offset;
+      if(file_table[fd].size - file_table[fd].open_offset <= len) assert(0);
+      count = len;
+      ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,count);
+      file_table[fd].open_offset += count;
     }
 
-    ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,count);
-    file_table[fd].open_offset += count;
+    /*ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,count);
+    file_table[fd].open_offset += count;*/
   }
 
   //Log("File read:%s\n",file_table[fd].name);
