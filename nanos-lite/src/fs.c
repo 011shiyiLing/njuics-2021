@@ -106,19 +106,19 @@ size_t fs_read(int fd,void *buf,size_t len)
   }
   else
   {
-    if(file_table[fd].open_offset + len <= file_table[fd].size)
+    /*if(file_table[fd].open_offset + len <= file_table[fd].size)
     {
       count = len;
     }
     else
     {
-      //count = file_table[fd].size - file_table[fd].open_offset;
-      if(file_table[fd].size - file_table[fd].open_offset <= len) assert(0);
-      count = len;
-      ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,count);
-      file_table[fd].open_offset += count;
-    }
+      count = file_table[fd].size - file_table[fd].open_offset;
+    }*/
 
+    if(file_table[fd].size - file_table[fd].open_offset <= len) assert(0);
+    count = len;
+    ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,count);
+    file_table[fd].open_offset += count;
     /*ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,count);
     file_table[fd].open_offset += count;*/
   }
