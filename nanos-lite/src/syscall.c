@@ -1,6 +1,7 @@
 #include <common.h>
 #include "syscall.h"
 #include <unistd.h>
+#include <proc.h>
 
 struct timezone
 {
@@ -13,6 +14,7 @@ size_t fs_write(int fd,const void *buf,size_t len);
 size_t fs_read(int fd,void *buf,size_t len);
 size_t fs_lseek(int fd,size_t offset,int whence);
 int fs_close(int fd);
+void naive_uload(PCB *pcb, const char *filename);
 
 //functions sys_xxx() definations
 extern void yield();
@@ -47,6 +49,13 @@ int sys_gettimeofday(struct timeval *tv, struct timezone *tz)
   tv->tv_sec = (time / 1000000);
   tv->tv_usec = (time % 1000000);
   return 0;
+}
+
+
+int sys_execve(const char *fname, char * const argv[], char *const envp[])
+{
+  naive_uload(NULL, fname);
+  return 1;
 }
 
 //STRACE(system call trace)
@@ -90,6 +99,9 @@ void do_syscall(Context *c) {
       break;
     case 9://SYS_brk
       c->GPRx = sys_brk((void *)a[1]);
+      break;
+    case 13://SYS_execve
+      c->GPRx = sys_execve((const char *)a[1],(char * const*)a[2],(char * const*)a[3]);
       break;
     case 19://SYS_gettimeofday
       c->GPRx = sys_gettimeofday((struct timeval *)a[1],(struct timezone *)a[2]);
