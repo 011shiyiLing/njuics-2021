@@ -31,6 +31,8 @@ void init_proc() {
   //naive_uload(NULL,"/bin/event-test");
   //naive_uload(NULL, "/bin/bmp-test");
   naive_uload(NULL, "/bin/nslider");
+  //naive_uload(NULL, menu);
+  //naive_uload(NULL, nterm);
   //naive_uload(NULL, "/bin/bird");
   //naive_uload(NULL, "/bin/pal");
 }
