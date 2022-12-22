@@ -52,10 +52,9 @@ int sys_gettimeofday(struct timeval *tv, struct timezone *tz)
 }
 
 
-int sys_execve(const char *fname, char * const argv[], char *const envp[])
+void sys_execve(const char *fname, char * const argv[], char *const envp[])
 {
   naive_uload(NULL, fname);
-  return 1;
 }
 
 //STRACE(system call trace)
@@ -101,7 +100,7 @@ void do_syscall(Context *c) {
       c->GPRx = sys_brk((void *)a[1]);
       break;
     case 13://SYS_execve
-      c->GPRx = sys_execve((const char *)a[1],(char * const*)a[2],(char * const*)a[3]);
+      sys_execve((const char *)a[1],(char * const*)a[2],(char * const*)a[3]);
       break;
     case 19://SYS_gettimeofday
       c->GPRx = sys_gettimeofday((struct timeval *)a[1],(struct timezone *)a[2]);
