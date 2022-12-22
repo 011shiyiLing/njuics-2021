@@ -1,4 +1,5 @@
 #include <sdl-file.h>
+#include <stdio.h>
 
 SDL_RWops* SDL_RWFromFile(const char *filename, const char *mode) {
   printf("SDL_RWFromFile\n");
