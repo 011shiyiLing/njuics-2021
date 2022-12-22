@@ -15,7 +15,7 @@ size_t fs_read(int fd,void *buf,size_t len);
 size_t fs_lseek(int fd,size_t offset,int whence);
 int fs_close(int fd);
 void naive_uload(PCB *pcb, const char *filename);
-//int execve(const char *filename, char *const argv[], char *const envp[]);
+//extern int execve (const char *__path, char *const __argv[], char *const __envp[]);
 
 //functions sys_xxx() definations
 extern void yield();
@@ -52,13 +52,13 @@ int sys_gettimeofday(struct timeval *tv, struct timezone *tz)
 void sys_execve(const char *fname, char * const argv[], char *const envp[])
 {
   naive_uload(NULL, fname);
-  //return execve(fname, argv, envp);
+  //execve(fname, argv, envp);
 }
 
 void sys_exit(int status)
 {
-  //sys_execve("/bin/menu", NULL, NULL);
-  sys_execve("/bin/nterm", NULL, NULL);
+  sys_execve("/bin/menu", NULL, NULL);
+  //sys_execve("/bin/nterm", NULL, NULL);
   //halt(status);
 }
 
