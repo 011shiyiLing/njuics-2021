@@ -25,7 +25,7 @@ uint32_t NDL_GetTicks() {
 // 读出一条事件信息, 将其写入`buf`中, 最长写入`len`字节
 // 若读出了有效的事件, 函数返回1, 否则返回0
 int NDL_PollEvent(char *buf, int len) {
-  int fp = open("/dev/events",NULL);
+  int fp = open("/dev/events",0, 0);
   return read(fp,buf,len);
 }
 
@@ -70,7 +70,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 // 向画布`(x, y)`坐标处绘制`w*h`的矩形图像, 并将该绘制区域同步到屏幕上
 // 图像像素按行优先方式存储在`pixels`中, 每个像素用32位整数以`00RRGGBB`的方式描述颜色
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  int fp = open("/dev/fb", NULL);
+  int fp = open("/dev/fb", 0, 0);
   if(w == 0 && h == 0)
   {
     w = canvas_w;
@@ -104,10 +104,10 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-  
+
   //get screen_w and screen_height
   char buf[64];
-  int fp = open("/proc/dispinfo",NULL);
+  int fp = open("/proc/dispinfo", 0, 0);
   read(fp,buf,sizeof(buf));
   //printf("%s\n",buf);
   sscanf(buf,"WIDTH : %d\nHEIGHT : %d\n",&screen_w,&screen_h);
