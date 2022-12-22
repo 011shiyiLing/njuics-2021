@@ -30,6 +30,5 @@ int SDL_ShowCursor(int toggle)
 //设置显示窗口的标题和图标
 void SDL_WM_SetCaption(const char *title, const char *icon)
 {
-  printf("SDL_WM_SetCaption\n");
 
 }
