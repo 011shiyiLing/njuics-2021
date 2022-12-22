@@ -55,7 +55,7 @@ void sys_execve(const char *fname, char * const argv[], char *const envp[])
 
 void sys_exit(int status)
 {
-  sys_execve("/bin/menu", NULL, NULL);
+  naive_uload(NULL,"/bin/menu");
   //halt(status);
 }
 
