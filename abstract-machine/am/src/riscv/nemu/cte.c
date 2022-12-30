@@ -42,6 +42,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   c->mepc = (uintptr_t)entry;
   c->mstatus = 0x1800;
   c->pdir = NULL;
+  c->gpr[10] = (uintptr_t)arg; //返回值储存在a0寄存器里，因此arg存储到a0里
   return c;
 }
 
