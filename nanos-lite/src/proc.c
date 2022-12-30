@@ -3,8 +3,9 @@
 
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
-PCB *current = NULL;
+PCB *current = NULL;//用于指向当前运行进程的PCB.
 void naive_uload(PCB *pcb,const char *filename);
+void context_kload(PCB *pcb, void (*entry)(void *),void *arg);
 
 void switch_boot_pcb() {
   current = &pcb_boot;
@@ -20,6 +21,7 @@ void hello_fun(void *arg) {
 }
 
 void init_proc() {
+  context_kload(&pcb[0],hello_fun,NULL);
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -37,6 +39,14 @@ void init_proc() {
   //naive_uload(NULL, "/bin/pal");
 }
 
+// 用于返回将要调度的进程上下文
+// 通过current来决定接下来要调度哪一个进程了.
 Context* schedule(Context *prev) {
-  return NULL;
+  // save the context pointer
+  current->cp = prev;
+  // always select pcb[0] as the new process
+  current = &pcb[0];
+
+  return current->cp;
+
 }
