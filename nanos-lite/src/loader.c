@@ -103,6 +103,6 @@ void context_uload(PCB *pcb,const char *filename)
 
   Context *c = ucontext(&pcb->as, kstack, (void *)entry);
   pcb->cp = c;
-
+  pcb->cp->gpr[10] = (uintptr_t)heap.end;
 }
 
