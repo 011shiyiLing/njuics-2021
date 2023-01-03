@@ -84,7 +84,7 @@ void naive_uload(PCB *pcb, const char *filename) {
   ((void(*)())entry) ();
 }
 
-//行进一步的封装: 调用kcontext()来创建上下文, 并把返回的指针记录到PCB的cp中:
+//进一步的封装: 调用kcontext()来创建上下文, 并把返回的指针记录到PCB的cp中:
 void context_kload(PCB *pcb, void (*entry)(void *),void *arg)
 { 
   Area kstack;
@@ -92,5 +92,10 @@ void context_kload(PCB *pcb, void (*entry)(void *),void *arg)
 
   Context *c = kcontext(kstack,entry,arg);
   pcb->cp = c;
+}
+
+void context_uload(PCB *pcb)
+{
+
 }
 
