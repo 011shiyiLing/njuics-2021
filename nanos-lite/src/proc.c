@@ -6,6 +6,7 @@ static PCB pcb_boot = {};
 PCB *current = NULL;//用于指向当前运行进程的PCB.
 void naive_uload(PCB *pcb,const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *),void *arg);
+void context_uload(PCB *pcb,const char *filename);
 
 void switch_boot_pcb() {
   current = &pcb_boot;
@@ -22,6 +23,7 @@ void hello_fun(void *arg) {
 
 void init_proc() {
   context_kload(&pcb[0],hello_fun,NULL);
+  //context_uload(&pcb[1],"/bin/pal");
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -30,7 +32,7 @@ void init_proc() {
   //naive_uload(NULL,NULL);
   //naive_uload(NULL, "/bin/dummy");
   //naive_uload(NULL, "/bin/hello");
-  naive_uload(NULL,"/bin/file-test");
+  //naive_uload(NULL,"/bin/file-test");
   //naive_uload(NULL,"/bin/timer-test");
   //naive_uload(NULL,"/bin/event-test");
   //naive_uload(NULL, "/bin/bmp-test");

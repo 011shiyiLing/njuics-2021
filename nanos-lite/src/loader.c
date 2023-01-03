@@ -94,8 +94,14 @@ void context_kload(PCB *pcb, void (*entry)(void *),void *arg)
   pcb->cp = c;
 }
 
-void context_uload(PCB *pcb)
+void context_uload(PCB *pcb,const char *filename)
 {
+  uintptr_t entry = loader(pcb,filename);
+  Area kstack;
+  kstack = RANGE(pcb, (char *)pcb + STACK_SIZE);
 
+  Context *c = ucontext(NULL, kstack, (void *)entry);
+
+  pcb->cp = c;
 }
 
