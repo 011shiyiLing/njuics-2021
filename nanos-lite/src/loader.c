@@ -94,14 +94,15 @@ void context_kload(PCB *pcb, void (*entry)(void *),void *arg)
   pcb->cp = c;
 }
 
+//把栈顶位置设置到GPRx中
 void context_uload(PCB *pcb,const char *filename)
 {
   uintptr_t entry = loader(pcb,filename);
   Area kstack;
   kstack = RANGE(pcb, (char *)pcb + STACK_SIZE);
 
-  Context *c = ucontext(NULL, kstack, (void *)entry);
-
+  Context *c = ucontext(&pcb->as, kstack, (void *)entry);
   pcb->cp = c;
+
 }
 
