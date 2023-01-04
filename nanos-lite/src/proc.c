@@ -22,7 +22,7 @@ void hello_fun(void *arg) {
 }
 
 void init_proc() {
-  context_kload(&pcb[0],hello_fun,NULL);
+  //context_kload(&pcb[0],hello_fun,NULL);
   //context_uload(&pcb[1],"/bin/pal");
   switch_boot_pcb();
 
@@ -40,7 +40,7 @@ void init_proc() {
   //naive_uload(NULL, "/bin/menu");
   //naive_uload(NULL, "/bin/nterm");
   //naive_uload(NULL, "/bin/bird");
-  //naive_uload(NULL, "/bin/pal");
+  naive_uload(NULL, "/bin/pal");
 }
 
 // 用于返回将要调度的进程上下文
