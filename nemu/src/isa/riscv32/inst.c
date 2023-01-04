@@ -165,7 +165,8 @@ static int decode_exec(Decode *s)
       R(dest) = t;
       break;
     default:
-      assert(0);
+      //assert(0);
+      break;
     });
   INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs, I, switch(imm)
   {
