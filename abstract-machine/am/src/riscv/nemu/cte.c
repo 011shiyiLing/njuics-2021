@@ -39,7 +39,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 // 需要在kstack的底部创建一个以entry为返回地址的上下文结构
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *c = (Context *)((uint8_t *)(kstack.end) - sizeof(Context));
-  memset(c, 0, sizeof(c));
+
   c->mepc = (uintptr_t)entry;
   c->mstatus = 0x1800;
   c->pdir = NULL;
