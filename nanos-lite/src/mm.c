@@ -2,8 +2,12 @@
 
 static void *pf = NULL;
 
+//获得用户栈的内存空间
+//用于分配一段大小为nr_page * 4KB的连续内存区域, 并返回这段区域的首地址
 void* new_page(size_t nr_page) {
-  return NULL;
+  void *start_addr = pf;
+  pf += nr_page * 4 * 1024;
+  return start_addr;
 }
 
 #ifdef HAS_VME
