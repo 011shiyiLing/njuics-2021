@@ -22,7 +22,8 @@ void hello_fun(void *arg) {
 }
 
 void init_proc() {
-  context_kload(&pcb[0],hello_fun,NULL);
+  context_kload(&pcb[0],hello_fun,"ONE");
+  context_kload(&pcb[1],hello_fun,"TWO");
   //context_uload(&pcb[1],"/bin/pal");
   switch_boot_pcb();
 
@@ -32,7 +33,7 @@ void init_proc() {
   //naive_uload(NULL,NULL);
   //naive_uload(NULL, "/bin/dummy");
   //naive_uload(NULL, "/bin/hello");
-  naive_uload(NULL, "/bin/file-test");
+  //naive_uload(NULL, "/bin/file-test");
   //naive_uload(NULL,"/bin/timer-test");
   //naive_uload(NULL,"/bin/event-test");
   //naive_uload(NULL, "/bin/bmp-test");
