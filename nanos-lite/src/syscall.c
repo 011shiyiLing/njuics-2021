@@ -53,7 +53,7 @@ void sys_gettimeofday(struct timeval *tv, struct timezone *tz)
 void sys_execve(const char *fname, char * const argv[], char *const envp[])
 {
   //naive_uload(NULL, fname);
-  context_uload(NULL,fname,argv,envp);
+  context_uload(NULL,fname,argv,envp); //pcb参数该传什么???
 }
 
 void sys_exit(int status)
