@@ -1,3 +1,4 @@
+// virtual memory extension
 #include <am.h>
 #include <nemu.h>
 #include <klib.h>
@@ -69,6 +70,13 @@ void __am_switch(Context *c) {
 void map(AddrSpace *as, void *va, void *pa, int prot) {
 }
 
+// as:用于限制用户进程可以访问的内存
+// kstack:内核栈, 用于分配上下文结构
+// entry:用户进程的入口
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
-  return NULL;
+  Context *c = (Context *)((uint8_t *)(kstack.end) - sizeof(Context));
+  c->mepc = (uintptr_t)entry;
+  c->mstatus = 0x1800;
+  c->pdir = NULL;
+  return c;
 }
