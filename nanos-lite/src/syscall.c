@@ -58,9 +58,9 @@ void sys_execve(const char *fname, char * const argv[], char *const envp[])
 
 void sys_exit(int status)
 {
-  sys_execve("/bin/menu", NULL, NULL);
+  //sys_execve("/bin/menu", NULL, NULL);
   //sys_execve("/bin/nterm", NULL, NULL);
-  //halt(status);
+  halt(status);
 }
 
 //STRACE(system call trace)
