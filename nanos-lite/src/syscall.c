@@ -60,7 +60,7 @@ void sys_exit(int status)
 {
   //sys_execve("/bin/menu", NULL, NULL);
   //sys_execve("/bin/nterm", NULL, NULL);
-  halt(status);
+  //halt(status);
 }
 
 //STRACE(system call trace)
