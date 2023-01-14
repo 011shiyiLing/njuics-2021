@@ -45,6 +45,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   return true;
 }
 
+//创建一个默认的地址空间
 void protect(AddrSpace *as) {
   PTE *updir = (PTE*)(pgalloc_usr(PGSIZE));
   as->ptr = updir;
@@ -54,6 +55,7 @@ void protect(AddrSpace *as) {
   memcpy(updir, kas.ptr, PGSIZE);
 }
 
+//销毁指定的地址空间 
 void unprotect(AddrSpace *as) {
 }
 
@@ -67,6 +69,7 @@ void __am_switch(Context *c) {
   }
 }
 
+//用于将地址空间as中虚拟地址va所在的虚拟页, 以prot的权限映射到pa所在的物理页
 void map(AddrSpace *as, void *va, void *pa, int prot) {
 }
 
