@@ -20,7 +20,7 @@
 
 typedef struct {
   word_t gpr[32];
-  word_t csr[4];
+  word_t csr[5];
   vaddr_t pc;
 } riscv32_CPU_state;
 
@@ -32,6 +32,8 @@ typedef struct {
   } inst;
 } riscv32_ISADecodeInfo;
 
-#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
-
+//检查当前系统状态下对内存区间为[vaddr, vaddr + len), 类型为type的访问是否需要经过地址转换.
+//#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
+#define isa_mmu_check(vaddr, len, type) (cpu.csr[4] & (1UL << 31) ? MMU_TRANSLATE : MMU_DIRECT)
+// csr[4] : satp register
 #endif

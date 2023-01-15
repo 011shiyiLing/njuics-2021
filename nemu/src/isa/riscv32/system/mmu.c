@@ -17,6 +17,13 @@
 #include <memory/paddr.h>
 #include <memory/vaddr.h>
 
+// 对内存区间为[vaddr, vaddr + len), 类型为type的内存访问进行地址转换
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
+  if(isa_mmu_check(vaddr, len, type) == MMU_DIRECT) return (paddr_t)vaddr;
+  else
+  {
+    
+  }
+
   return MEM_RET_FAIL;
 }
