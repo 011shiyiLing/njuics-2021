@@ -145,8 +145,8 @@ static int decode_exec(Decode *s)
   INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw, I,word_t t ;switch(imm)
   {
     case 0x300://mstatus
-      t = cpu.csr[3];
-      cpu.csr[3] = src1;
+      t = cpu.mstatus.data;
+      cpu.mstatus.data = src1;
       R(dest) = t;
       break;
     case 0x305://mtvec 
@@ -171,8 +171,8 @@ static int decode_exec(Decode *s)
   INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs, I, switch(imm)
   {
     case 0x300://mstatus
-      R(dest) = cpu.csr[3];
-      cpu.csr[3] = cpu.csr[3]|src1;
+      R(dest) = cpu.mstatus.data;
+      cpu.mstatus.data = cpu.mstatus.data;
       break;
     case 0x305://mtvec 
       R(dest) = cpu.csr[0];

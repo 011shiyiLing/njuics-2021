@@ -20,6 +20,7 @@
 
 typedef struct
 {
+  word_t data;
   uint32_t MIE : 1;
   uint32_t MPIE : 1;
 }CSR;
