@@ -28,6 +28,7 @@ static void rtc_io_handler(uint32_t offset, int len, bool is_write) {
   }
 }
 
+// 触发时钟中断
 #ifndef CONFIG_TARGET_AM
 static void timer_intr() {
   if (nemu_state.state == NEMU_RUNNING) {

@@ -2,6 +2,8 @@
 #include <riscv/riscv.h>
 #include <klib.h>
 
+#define IRQ_TIMER 0x80000007
+
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
@@ -13,6 +15,7 @@ Context* __am_irq_handle(Context *c) {
       case 0:case 1:case 2:case 3:case 4:case 5:case 6:
       case 7:case 8:case 9:case 10:case 11:case 12:case 13:
       case 14:case 15:case 16:case 17:case 18:case 19: ev.event = EVENT_SYSCALL; break;
+      case IRQ_TIMER: ev.event = EVENT_IRQ_TIMER; break;
       default: ev.event = EVENT_ERROR; break;
     }
 
@@ -41,9 +44,10 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *c = (Context *)((uint8_t *)(kstack.end) - sizeof(Context));
 
   c->mepc = (uintptr_t)entry;
-  c->mstatus = 0x1800;
-  c->pdir = NULL;
+  //c->mstatus = 0x1800;
+  c->pdir = NULL; //将上下文的地址空间描述符指针设置为NULL
   c->gpr[10] = (uintptr_t)arg; //返回值储存在a0寄存器里，因此arg存储到a0里
+  c->mstatus = 0x1800 | 0x80;
   return c;
 }
 

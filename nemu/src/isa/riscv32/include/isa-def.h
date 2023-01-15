@@ -18,10 +18,18 @@
 
 #include <common.h>
 
+typedef struct
+{
+  uint32_t MIE : 1;
+  uint32_t MPIE : 1;
+}CSR;
+
 typedef struct {
   word_t gpr[32];
   word_t csr[5];
+  CSR mstatus;
   vaddr_t pc;
+  bool INTR;
 } riscv32_CPU_state;
 
 

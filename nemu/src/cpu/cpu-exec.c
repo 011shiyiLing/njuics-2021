@@ -93,6 +93,13 @@ static void execute(uint64_t n) {
         printf("%d",data);
       }*/
     break;
+    
+    // 每次执行完一条指令就查看是否有硬件中断到来
+    word_t intr = isa_query_intr();
+    if(intr != INTR_EMPTY)
+    {
+      cpu.pc = isa_raise_intr(intr, cpu.pc);
+    }
 
     IFDEF(CONFIG_DEVICE, device_update());
   }

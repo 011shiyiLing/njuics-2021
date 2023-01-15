@@ -14,6 +14,7 @@
 ***************************************************************************************/
 
 #include <isa.h>
+#define IRQ_TIMER 0x80000007
 
 word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
@@ -22,9 +23,18 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   cpu.csr[1] = epc; //mepc
   cpu.csr[2] = NO; // mcause
   return cpu.csr[0]; //mtvec
+
+  //mstatus
+  cpu.mstatus.MPIE = cpu.mstatus.MIE;
+  cpu.mstatus.MIE = 0;
   //return 0;
 }
 
 word_t isa_query_intr() {
+  if(cpu.INTR == true )
+  {
+    cpu.INTR = false;
+    return IRQ_TIMER;
+  }
   return INTR_EMPTY;
 }

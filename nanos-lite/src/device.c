@@ -20,7 +20,7 @@ void yield();
 
 //串口
 size_t serial_write(const void *buf, size_t offset, size_t len) {
-  yield();
+  //yield();
   assert(len >= 0);
   for(int i=0; i<len; i++)
   {
@@ -31,7 +31,7 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 }
 //把事件写入到buf中, 最长写入len字节, 然后返回写入的实际长度.
 size_t events_read(void *buf, size_t offset, size_t len) {
-  yield();
+  //yield();
   //strcpy(buf,"0");
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
   //printf("%d\n",ev.keydown);
@@ -66,7 +66,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 //用于把buf中的len字节写到屏幕上offset处.
 //需要先从offset计算出屏幕上的坐标, 然后调用IOE来进行绘图
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  yield();
+  //yield();
   AM_GPU_FBDRAW_T fbdraw;
   if(len == 0)
   {

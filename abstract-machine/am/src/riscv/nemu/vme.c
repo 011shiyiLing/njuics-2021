@@ -71,6 +71,7 @@ void __am_switch(Context *c) {
 
 //用于将地址空间as中虚拟地址va所在的虚拟页, 以prot的权限映射到pa所在的物理页
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+    
 }
 
 // as:用于限制用户进程可以访问的内存
@@ -79,7 +80,8 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *c = (Context *)((uint8_t *)(kstack.end) - sizeof(Context));
   c->mepc = (uintptr_t)entry;
-  c->mstatus = 0x1800;
-  c->pdir = NULL;
+  //c->mstatus = 0x1800;
+  c->pdir = as->ptr;
+  c->mstatus = 0x1800 | 0x80;
   return c;
 }
