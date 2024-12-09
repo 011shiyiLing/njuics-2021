@@ -17,3 +17,10 @@ The following subprojects/components are included. Some of them are not fully im
 * [Abstract-Machine](https://github.com/NJU-ProjectN/abstract-machine)
 * [Nanos-lite](https://github.com/NJU-ProjectN/nanos-lite)
 * [Navy-apps](https://github.com/NJU-ProjectN/navy-apps)
+
+## Important Notice
+
+- Mandatory tasks in PA1-PA3 have been fully completed.
+- Only part of PA4 has been completed.
+- All experiment reports are located in the report directory.
+- This repository is provided for reference only. Please adhere to academic integrity and avoid directly copying the content.
